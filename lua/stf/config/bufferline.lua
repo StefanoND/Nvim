@@ -1,7 +1,5 @@
 local bufferline = require("bufferline")
 
-vim.opt.termguicolors = true
-vim.opt.mousemoveevent = true
 bufferline.setup({
 	options = {
 		diagnostics = "nvim_lsp",

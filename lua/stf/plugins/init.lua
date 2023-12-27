@@ -156,4 +156,11 @@ return {
 		"stevearc/dressing.nvim",
 		event = "VeryLazy",
 	},
+	{
+		"windwp/nvim-autopairs",
+		event = "InsertEnter",
+		config = function()
+			require("stf.config.autopairs")
+		end,
+	},
 }

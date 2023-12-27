@@ -1,8 +1,15 @@
 local lspconfig = require("lspconfig")
 local lsp_defaults = lspconfig.util.default_config
 
-lsp_defaults.capabilities =
-	vim.tbl_deep_extend("force", lsp_defaults.capabilities, require("cmp_nvim_lsp").default_capabilities())
+lsp_defaults.capabilities = {
+	vim.tbl_deep_extend("force", lsp_defaults.capabilities, require("cmp_nvim_lsp").default_capabilities()),
+}
+
+local clangcapabilities = lspconfig.util.default_config
+clangcapabilities.capabilities = {
+	offsetEncoding = "utf-8",
+	vim.tbl_deep_extend("force", lsp_defaults.capabilities, require("cmp_nvim_lsp").default_capabilities()),
+}
 
 vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(client, bufnr)
@@ -69,7 +76,7 @@ lspconfig.clangd.setup({
 		on_attach(client, bufnr)
 		print("hello clang")
 	end,
-	capabilities = lsp_defaults,
+	capabilities = clangcapabilities,
 })
 
 lspconfig.cmake.setup({

@@ -33,10 +33,11 @@ cmp.setup({
 	}),
 	-- sources for autocompletion
 	sources = cmp.config.sources({
-		{ name = "nvim_lsp" },
-		{ name = "luasnip" }, -- snippets
-		{ name = "buffer" }, -- text within current buffer
-		{ name = "path" }, -- file system paths
+		{ name = "luasnip", priority = 1000 }, -- snippets
+		{ name = "nvim_lua", priority = 800 },
+		{ name = "nvim_lsp", priority = 700 },
+		{ name = "path", priority = 500 }, -- file system paths
+		{ name = "buffer", priority = 250 }, -- text within current buffer
 	}),
 	--  formatting = lsp_zero.cmp_format(),
 	-- configure lspkind for vs-code like pictograms in completion menu

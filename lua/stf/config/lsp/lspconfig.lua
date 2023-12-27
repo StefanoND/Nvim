@@ -157,7 +157,19 @@ end
 
 -- Omnisharp/C#/Unity
 local pid = vim.fn.getpid()
-local omnisharp_bin = "/home/archuser/.config/nvim/omnisharp-linux-x64/run"
+local omnisharp_bin_linux = os.getenv("UserProfile") .. "/.config/nvim/omnisharp-linux-x64/run"
+local omnisharp_bin_win = os.getenv("UserProfile") .. "/AppData/Local/nvim/omnisharp-win-x64/OmniSharp.exe"
+local omnisharp_bin
+
+if vim.fn.exists("g:os") == 0 then
+	local is_windows = vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 or vim.fn.has("win16") == 1
+	if is_windows then
+		omnisharp_bin = omnisharp_bin_win
+	else
+		omnisharp_bin = omnisharp_bin_linux
+	end
+end
+
 require("lspconfig").omnisharp.setup({
 	on_attach = on_attach,
 	flags = {

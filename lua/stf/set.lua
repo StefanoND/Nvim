@@ -14,7 +14,13 @@ vim.opt.wrap = false
 -- Undo
 vim.opt.swapfile = false
 vim.opt.backup = false
-vim.opt.undodir = os.getenv("UserProfile") .. "/.vim/undodir" -- Must create this folder
+
+if vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 or vim.fn.has("win16") == 1 then
+  vim.opt.undodir = os.getenv("UserProfile") .. "/.vim/undodir" -- Must create this folder
+else
+  vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir" -- Must create this folder
+end
+
 vim.opt.undofile = true
 
 -- Search

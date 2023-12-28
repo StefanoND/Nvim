@@ -11,6 +11,16 @@ clangcapabilities.capabilities = {
 	vim.tbl_deep_extend("force", lsp_defaults.capabilities, require("cmp_nvim_lsp").default_capabilities()),
 }
 
+local cmp_nvim_lsp = require("cmp_nvim_lsp")
+local omnicapabilities = cmp_nvim_lsp.default_capabilities()
+omnicapabilities = vim.tbl_deep_extend("force", omnicapabilities, {
+	workspace = {
+		didChangeWatchedFiles = {
+			dynamicRegistration = true,
+		},
+	},
+})
+
 vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(client, bufnr)
 		local opts = { buffer = bufnr, remap = false }
@@ -159,10 +169,13 @@ end
 local pid = vim.fn.getpid()
 local omnisharp_bin
 
+-- Must be version 1.39.8, versions 1.39.9 - 1.39.11 (latest as of this writing) are causing issues:
+--     "Error executing luv callback... Attempt to Index Local 'decoded' (a nil value)..."
+-- Will update when this gets fixed (and if I remember)
 if vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 or vim.fn.has("win16") == 1 then
-	omnisharp_bin = os.getenv("UserProfile") .. "/AppData/Local/nvim/omnisharp-win-x64/OmniSharp.exe"
+	omnisharp_bin = os.getenv("UserProfile") .. "/AppData/Local/nvim/omnisharp-win-x64_1.39.8/OmniSharp.exe"
 else
-	omnisharp_bin = os.getenv("HOME") .. "/.config/nvim/omnisharp-linux-x64/run"
+	omnisharp_bin = os.getenv("HOME") .. "/.config/nvim/omnisharp-linux-x64_1.39.8/run"
 end
 
 require("lspconfig").omnisharp.setup({
@@ -171,6 +184,7 @@ require("lspconfig").omnisharp.setup({
 		debounce_text_changes = 150,
 	},
 	cmd = { omnisharp_bin, "--languageserver", "--hostPID", tostring(pid) },
+	capabilities = omnicapabilities,
 })
 
 lspconfig.rust_analyzer.setup({

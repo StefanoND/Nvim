@@ -45,6 +45,10 @@ return {
 		end,
 	},
 	{
+		"nvim-telescope/telescope-fzf-native.nvim",
+		build = "make",
+	},
+	{
 		"mbbill/undotree",
 		config = function()
 			require("stf.config.undotree")
@@ -147,10 +151,6 @@ return {
 		config = function()
 			require("stf.config.visual-multi")
 		end,
-	},
-	{
-		"nvim-telescope/telescope-fzf-native.nvim",
-		build = "make",
 	},
 	{
 		"stevearc/dressing.nvim",

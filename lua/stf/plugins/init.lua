@@ -163,4 +163,8 @@ return {
 			require("stf.config.autopairs")
 		end,
 	},
+	{
+		"dapt4/vim-autoSurround",
+		lazy = false,
+	},
 }

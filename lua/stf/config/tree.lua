@@ -40,7 +40,31 @@ nvimtree.setup({
 		},
 	},
 	filters = {
-		custom = { ".DS_Store" },
+		custom = {
+			-- UNITY FILES
+			".asset", -- Unity's asset file
+			".meta", -- Unity asset file's settings tracker
+			-- UNITY FOLDERS
+			".utmp", -- Unity's temp folder
+			"[Ll]ibrary",
+			"[Tt]emp",
+			"[Oo]bj",
+			"[Ll]ogs",
+			"[Bb]uild",
+			"[Bb]uilds",
+			"[Pp]ackages",
+			"[Pp]roject[Ss]ettings",
+			"[Uu]ser[Ss]ettings",
+			"[Ee]xportedObj",
+			"[Aa]ssets\\[Ss]treaming[Aa]ssets\\aa\\*",
+			"[Mm]emory[Cc]aptures",
+			"[Rr]ecordings",
+			"[Aa]ssets\\[Aa]sset[Ss]tore[Tt]ools",
+			"[Aa]ssets\\[Pp]lugins\\[Ee]ditor\\[Jj]et[Bb]rains",
+			".consulo", -- Consulo folder
+			".vs", -- Visual Studio Folder
+			".gradle", -- Java folder
+		},
 	},
 	git = {
 		ignore = false,

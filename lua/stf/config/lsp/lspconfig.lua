@@ -124,21 +124,6 @@ lspconfig.lua_ls.setup({
 	capabilities = lsp_defaults,
 })
 
--- local path_to_download = "/home/archuser/.config/nvim/omnisharp-linux-x64"
---
--- lspconfig.omnisharp.setup({
--- 	cmd = {
--- 		"mono",
--- 		"--assembly-loader=strict",
--- 		path_to_download .. "/run",
--- 	},
--- 	on_attach = function(client, bufnr)
--- 		print("hello omnisharp")
--- 	end,
--- 	use_mono = true,
--- 	capabilities = lsp_defaults,
--- })
-
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
@@ -173,6 +158,12 @@ local omnisharp_bin
 --     "Error executing luv callback... Attempt to Index Local 'decoded' (a nil value)..."
 -- Will update when this gets fixed (and if I remember)
 if vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 or vim.fn.has("win16") == 1 then
+	lspconfig.powershell_es.setup({
+		bundle_path = "path/to/your/bundle_path",
+		init_options = {
+			enableProfileLoading = false,
+		},
+	})
 	omnisharp_bin = os.getenv("UserProfile") .. "/AppData/Local/nvim/omnisharp-win-x64_1.39.8/OmniSharp.exe"
 else
 	omnisharp_bin = os.getenv("HOME") .. "/.config/nvim/omnisharp-linux-x64_1.39.8/run"

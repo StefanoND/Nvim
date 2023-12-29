@@ -64,8 +64,8 @@ nvimtree.setup({
 			".consulo", -- Consulo folder
 			".vs", -- Visual Studio Folder
 			".gradle", -- Java folder
-			".csproj",
-			".sln",
+			-- ".csproj",
+			-- ".sln",
 		},
 	},
 	git = {

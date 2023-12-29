@@ -102,4 +102,7 @@ return {
 			-- options
 		},
 	},
+	{
+		"Hoffs/omnisharp-extended-lsp.nvim",
+	},
 }

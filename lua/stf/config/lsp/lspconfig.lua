@@ -42,7 +42,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			vim.lsp.buf.hover()
 		end, opts)
 		vim.keymap.set("n", "gd", function()
-			vim.lsp.buf.definition()
+			require("omnisharp_extended").telescope_lsp_definitions()
 		end, opts)
 		vim.keymap.set("n", "<leader>vrr", function()
 			vim.lsp.buf.references()
@@ -126,7 +126,7 @@ lspconfig.lua_ls.setup({
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
+local omni_on_attach = function(client, bufnr)
 	local function buf_set_keymap(...)
 		vim.api.nvim_buf_set_keymap(bufnr, ...)
 	end
@@ -139,7 +139,7 @@ local on_attach = function(client, bufnr)
 
 	local opts = { noremap = true, silent = true }
 	buf_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-	buf_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+	buf_set_keymap("n", "gd", "<cmd>lua require('omnisharp_extended').telescope_lsp_definitions()<CR>", opts)
 	buf_set_keymap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
 	buf_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
 	buf_set_keymap("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
@@ -158,8 +158,11 @@ local pid = vim.fn.getpid()
 -- Will update when this gets fixed (and if I remember)
 local omnisharp_bin = os.getenv("HOME") .. "/.config/nvim/omnisharp-linux-x64_1.39.8/run"
 
-require("lspconfig").omnisharp.setup({
-	on_attach = on_attach,
+lspconfig.omnisharp.setup({
+	handlers = {
+		["textDocument/definition"] = require("omnisharp_extended").handler,
+	},
+	on_attach = omni_on_attach,
 	flags = {
 		debounce_text_changes = 150,
 	},

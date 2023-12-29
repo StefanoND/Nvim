@@ -4,40 +4,39 @@ local mason = require("mason")
 mason.setup({
 	ensure_installed = {
 		-- BASH
-		"bash-language-server",
+		"bash-language-server", -- LSP
 		"bash-debug-adapter", -- DAP
 		"shellharden", -- formatter and linter
 		-- C/C++
 		-- 'cpptools', -- DAP
-		"clangd",
+		"clangd", -- LSP
 		"codelldb", -- DAP
 		"clang-format", -- formatter
 		"cpplint", -- linter
 		-- CMAKE
-		"cmake-language-server",
+		"cmake-language-server", -- LSP
 		"cmakelang", -- formatter and linter
 		-- CSHARP
-		"csharp-language-server",
-		"omnisharp",
-		"omnisharp-mono",
+		"csharp-language-server", -- LSP
+		"omnisharp", -- LSP
+		"omnisharp-mono", -- LSP
 		"csharpier", -- formatter
 		-- GODOT SCRIPT
-		"gdscript",
+		"gdscript", -- LSP
 		"gdtoolkit", -- formatter and linter
 		-- JSON
 		"biome", -- formatter and linter
 		-- LUA
-		"lua-language-server",
+		"lua-language-server", -- LSP
 		"stylua", -- formatter and linter
 		-- RUST cpptools and ast-grep
-		"rust_analyzer",
-		"rustfmt",
+		"rust_analyzer", -- LSP
 		-- SQL
-		"sqlls",
+		"sqlls", -- LSP
 		"sql-formatter", -- formatter
 		"sqlfluff", -- linter
 		-- YAML
-		"yaml-language-server",
+		"yaml-language-server", -- LSP
 		"prettier", -- formatter
 		"yamllint", -- linter
 	},

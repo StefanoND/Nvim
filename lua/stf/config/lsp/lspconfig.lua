@@ -152,22 +152,11 @@ end
 
 -- Omnisharp/C#/Unity
 local pid = vim.fn.getpid()
-local omnisharp_bin
 
 -- Must be version 1.39.8, versions 1.39.9 - 1.39.11 (latest as of this writing) are causing issues:
 --     "Error executing luv callback... Attempt to Index Local 'decoded' (a nil value)..."
 -- Will update when this gets fixed (and if I remember)
-if vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 or vim.fn.has("win16") == 1 then
-	lspconfig.powershell_es.setup({
-		bundle_path = "path/to/your/bundle_path",
-		init_options = {
-			enableProfileLoading = false,
-		},
-	})
-	omnisharp_bin = os.getenv("UserProfile") .. "/AppData/Local/nvim/omnisharp-win-x64_1.39.8/OmniSharp.exe"
-else
-	omnisharp_bin = os.getenv("HOME") .. "/.config/nvim/omnisharp-linux-x64_1.39.8/run"
-end
+local omnisharp_bin = os.getenv("HOME") .. "/.config/nvim/omnisharp-linux-x64_1.39.8/run"
 
 require("lspconfig").omnisharp.setup({
 	on_attach = on_attach,

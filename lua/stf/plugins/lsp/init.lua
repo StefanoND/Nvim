@@ -14,6 +14,10 @@ return {
 	},
 	{
 		"williamboman/mason.nvim",
+		dependencies = {
+			"williamboman/mason-lspconfig.nvim",
+			"WhoIsSethDaniel/mason-tool-installer.nvim",
+		},
 		lazy = false,
 		cmd = { "Mason", "MasonInstall", "MasonInstallAll", "MasonUninstall", "MasonUninstallAll", "MasonLog" },
 		build = ":MasonUpdate",
@@ -49,6 +53,7 @@ return {
 		dependencies = {
 			{ "hrsh7th/cmp-nvim-lsp" },
 			{ "williamboman/mason-lspconfig.nvim" },
+			{ "antosha417/nvim-lsp-file-operations", config = true },
 		},
 		config = function()
 			require("stf.config.lsp.lspconfig")
@@ -91,6 +96,9 @@ return {
 	},
 	{
 		"nvimtools/none-ls.nvim",
+		dependencies = {
+			"jay-babu/mason-null-ls.nvim",
+		},
 		event = "VeryLazy",
 		config = function()
 			require("stf.config.lsp.none-ls")

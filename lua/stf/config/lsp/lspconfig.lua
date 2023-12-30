@@ -73,6 +73,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	end,
 })
 
+-- Change the Diagnostic symbols in the sign column (gutter)
+local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
+for type, icon in pairs(signs) do
+	local hl = "DiagnosticSign" .. type
+	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+end
+
 lspconfig.bashls.setup({
 	on_attach = function(client, bufnr)
 		print("hello bash")
@@ -122,6 +129,21 @@ lspconfig.lua_ls.setup({
 		print("hello lua")
 	end,
 	capabilities = lsp_defaults,
+	settings = { -- custom settings for lua
+		Lua = {
+			-- make the language server recognize "vim" global
+			diagnostics = {
+				globals = { "vim" },
+			},
+			workspace = {
+				-- make language server aware of runtime files
+				library = {
+					[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+					[vim.fn.stdpath("config") .. "/lua"] = true,
+				},
+			},
+		},
+	},
 })
 
 -- Use an on_attach function to only map the following keys

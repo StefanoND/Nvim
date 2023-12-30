@@ -32,6 +32,8 @@ vim.opt.signcolumn = "yes"
 
 vim.opt.backspace = "indent,eol,start" -- allow backspace on indent, end of line or insert mode start position
 
+vim.opt.clipboard:append("unnamedplus") -- use system clipboard as default register
+
 -- Split
 vim.opt.splitright = true -- split vertical window to the right
 vim.opt.splitbelow = true -- split horizontal window to the bottom

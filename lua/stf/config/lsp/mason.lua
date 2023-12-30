@@ -1,42 +1,69 @@
 local mason = require("mason")
+local mason_lspconfig = require("mason-lspconfig")
+local mason_tool_installer = require("mason-tool-installer")
 
 mason.setup({
 	ensure_installed = {
 		-- BASH
 		"bash-language-server", -- LSP
 		"bash-debug-adapter", -- DAP
-		"shellharden", -- formatter and linter
+		-- "shellharden", -- formatter and linter
 		-- C/C++
 		-- 'cpptools', -- DAP
 		"clangd", -- LSP
 		"codelldb", -- DAP
-		"clang-format", -- formatter
+		-- "clang-format", -- formatter
 		"cpplint", -- linter
 		-- CMAKE
 		"cmake-language-server", -- LSP
-		"cmakelang", -- formatter and linter
+		-- "cmakelang", -- formatter and linter
 		-- CSHARP
 		"csharp-language-server", -- LSP
 		"omnisharp", -- LSP
 		"omnisharp-mono", -- LSP
-		"csharpier", -- formatter
+		-- "csharpier", -- formatter
 		-- GODOT SCRIPT
 		"gdscript", -- LSP
-		"gdtoolkit", -- formatter and linter
+		-- "gdtoolkit", -- formatter and linter
 		-- JSON
-		"biome", -- formatter and linter
+		-- "biome", -- formatter and linter
 		-- LUA
 		"lua-language-server", -- LSP
-		"stylua", -- formatter and linter
+		-- "stylua", -- formatter and linter
 		-- RUST cpptools and ast-grep
 		"rust_analyzer", -- LSP
 		-- SQL
 		"sqlls", -- LSP
-		"sql-formatter", -- formatter
+		-- "sql-formatter", -- formatter
 		"sqlfluff", -- linter
 		-- YAML
 		"yaml-language-server", -- LSP
-		"prettier", -- formatter
+		-- "prettier", -- formatter
 		"yamllint", -- linter
+	},
+
+	-- auto-install configured servers (with lspconfig)
+	automatic_installation = true, -- not the same as ensure_installed
+
+	ui = {
+		icons = {
+			package_installed = "✓",
+			package_pending = "➜",
+			package_uninstalled = "✗",
+		},
+	},
+})
+
+mason_tool_installer.setup({
+	ensure_installed = {
+		"shellharden", -- bash formatter and linter
+		"clang-format", -- C/C++ formatter
+		"cmakelang", -- CMAKE formatter and linter
+		"csharpier", -- C# formatter
+		"gdtoolkit", -- Godot formatter and linter
+		"biome", -- formatter and linter
+		"stylua", -- Lua formatter and linter
+		"sql-formatter", -- SQL formatter
+		"prettier", -- Prettier formatter
 	},
 })

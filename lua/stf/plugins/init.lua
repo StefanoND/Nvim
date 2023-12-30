@@ -18,6 +18,12 @@ return {
 			require("stf.config.harpoon")
 		end,
 	},
+	{
+		"nvim-tree/nvim-web-devicons",
+		config = function()
+			require("stf.config.devicons")
+		end,
+	},
 	{ -- file explorer for neovim
 		"nvim-tree/nvim-tree.lua",
 		dependencies = {
@@ -29,9 +35,20 @@ return {
 	},
 	{ -- parser
 		"nvim-treesitter/nvim-treesitter",
+		event = { "BufReadPre", "BufNewFile" },
 		build = ":TSUpdate",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter-textobjects",
+			"windwp/nvim-ts-autotag",
+		},
 		config = function()
 			require("stf.config.treesitter")
+		end,
+	},
+	{
+		"nvim-treesitter/nvim-treesitter-textobjects",
+		config = function()
+			require("stf.config.textobjects")
 		end,
 	},
 	{
@@ -39,20 +56,18 @@ return {
 		branch = "0.1.x",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
+			{
+				"nvim-telescope/telescope-fzf-native.nvim",
+				build = "make",
+			},
+			"nvim-tree/nvim-web-devicons",
 		},
 		config = function()
 			require("stf.config.telescope")
 		end,
 	},
 	{
-		"nvim-telescope/telescope-fzf-native.nvim",
-		build = "make",
-	},
-	{
 		"mbbill/undotree",
-		config = function()
-			require("stf.config.undotree")
-		end,
 	},
 	{
 		"tpope/vim-fugitive",
@@ -146,6 +161,11 @@ return {
 		end,
 	},
 	{
+		"lewis6991/gitsigns.nvim",
+		event = { "BufReadPre", "BufNewFile" },
+		config = true,
+	},
+	{
 		"mg979/vim-visual-multi",
 		event = "VeryLazy",
 		config = function()
@@ -159,6 +179,9 @@ return {
 	{
 		"windwp/nvim-autopairs",
 		event = "InsertEnter",
+		dependencies = {
+			"hrsh7th/nvim-cmp",
+		},
 		config = function()
 			require("stf.config.autopairs")
 		end,

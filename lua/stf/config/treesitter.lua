@@ -1,6 +1,8 @@
 -- require("nvim-treesitter.install").compilers = { "gcc" }
 
-require("nvim-treesitter.configs").setup({
+local treesitter = require("nvim-treesitter.configs")
+
+treesitter.setup({
 	-- A list of parser names, or "all" (the five listed parsers should always be installed)
 	ensure_installed = {
 		"bash",
@@ -26,9 +28,12 @@ require("nvim-treesitter.configs").setup({
 	-- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
 	auto_install = true,
 
-	-- List of parsers to ignore installing (or "all")
-	--  ignore_install = { "javascript" },
+	-- autotagging from nvim-ts-autotag plugin
+	autotag = {
+		enable = true,
+	},
 
+	-- Syntax highlighting
 	highlight = {
 		enable = true,
 		-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
@@ -37,4 +42,16 @@ require("nvim-treesitter.configs").setup({
 		-- Instead of true it can also be a list of languages
 		additional_vim_regex_highlighting = false,
 	},
+
+	incremental_selection = {
+		enable = true,
+		keymaps = {
+			init_selection = "<C-space>",
+			node_incremental = "<C-space>",
+			scope_incremental = false,
+			node_decremental = "<bs>",
+		},
+	},
 })
+
+require("ts_context_commentstring").setup()

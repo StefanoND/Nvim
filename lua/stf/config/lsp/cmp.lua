@@ -12,6 +12,10 @@ local cmp_action = lsp.cmp_action()
 require("luasnip.loaders.from_vscode").lazy_load()
 
 cmp.setup({
+	window = {
+		documentation = cmp.config.window.bordered(),
+		completion = cmp.config.window.bordered(),
+	},
 	completion = {
 		completeopt = "menu,menuone,preview,noselect",
 	},

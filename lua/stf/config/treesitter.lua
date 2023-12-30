@@ -33,6 +33,10 @@ treesitter.setup({
 		enable = true,
 	},
 
+	indent = {
+		enable = true,
+	},
+
 	-- Syntax highlighting
 	highlight = {
 		enable = true,

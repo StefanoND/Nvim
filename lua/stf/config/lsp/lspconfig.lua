@@ -5,15 +5,14 @@ lsp_defaults.capabilities = {
 	vim.tbl_deep_extend("force", lsp_defaults.capabilities, require("cmp_nvim_lsp").default_capabilities()),
 }
 
-local clangcapabilities = lspconfig.util.default_config
+local clangcapabilities = lsp_defaults
 clangcapabilities.capabilities = {
 	offsetEncoding = "utf-8",
-	vim.tbl_deep_extend("force", lsp_defaults.capabilities, require("cmp_nvim_lsp").default_capabilities()),
+	lsp_defaults.capabilities,
 }
 
-local cmp_nvim_lsp = require("cmp_nvim_lsp")
-local omnicapabilities = cmp_nvim_lsp.default_capabilities()
-omnicapabilities = vim.tbl_deep_extend("force", omnicapabilities, {
+local omnicapabilities = lsp_defaults.capabilities
+omnicapabilities = vim.tbl_deep_extend("force", lsp_defaults.capabilities, {
 	workspace = {
 		didChangeWatchedFiles = {
 			dynamicRegistration = true,

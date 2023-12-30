@@ -51,13 +51,17 @@ return {
 		cmd = { "LspInfo", "LspInstall", "LspStart" },
 		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
-			{ "hrsh7th/cmp-nvim-lsp" },
 			{ "williamboman/mason-lspconfig.nvim" },
 			{ "antosha417/nvim-lsp-file-operations", config = true },
 		},
 		config = function()
 			require("stf.config.lsp.lspconfig")
 		end,
+	},
+	{
+		"hrsh7th/cmp-nvim-lsp",
+		lazy = false,
+		config = true,
 	},
 	{
 		"mfussenegger/nvim-dap",

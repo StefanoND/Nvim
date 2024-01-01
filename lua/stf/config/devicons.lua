@@ -8,3 +8,5 @@ devicons.set_icon({
 		name = "GraphQL",
 	},
 })
+
+devicons.setup()

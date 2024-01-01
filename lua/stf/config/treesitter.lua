@@ -10,7 +10,6 @@ treesitter.setup({
 		"cpp",
 		"cmake",
 		"sql",
-		"c_sharp",
 		"lua",
 		"llvm",
 		"json",

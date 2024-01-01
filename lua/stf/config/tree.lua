@@ -1,5 +1,10 @@
 local nvimtree = require("nvim-tree")
 
+vim.keymap.set("n", "<leader>pv", "<cmd>NvimTreeToggle<CR>")
+vim.keymap.set("n", "<leader>ef", "<cmd>NvimTreeFindFileToggle<CR>")
+vim.keymap.set("n", "<leader>ec", "<cmd>NvimTreeCollapse<CR>")
+vim.keymap.set("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>")
+
 -- recommended settings from nvim-tree documetation
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -9,13 +14,12 @@ vim.g.loaded_netrwPlugin = 1
 vim.cmd([[ highlight NvimTreeFolderArrowClosed guifg=#3FC5FF ]])
 vim.cmd([[ highlight NvimTreeFolderArrowOpen guifg=#3FC5FF ]])
 
--- configure nvim-tree
-nvimtree.setup({
+local setup = {
 	respect_buf_cwd = true,
-	update_cwd = true,
+	sync_root_with_cwd = true, -- Previously update_cwd
 	update_focused_file = {
 		enable = true,
-		update_cwd = true,
+		update_root = true, -- Previously update_cwd
 	},
 	view = {
 		width = 35,
@@ -48,43 +52,15 @@ nvimtree.setup({
 		},
 	},
 	filters = {
+		dotfiles = true,
 		custom = {
-			-- UNITY FILES
-			".asset", -- Unity's asset file
-			".meta", -- Unity asset file's settings tracker
-			-- UNITY FOLDERS
-			".utmp", -- Unity's temp folder
-			"[Ll]ibrary",
-			"[Tt]emp",
-			"[Oo]bj",
-			"[Ll]ogs",
-			"[Bb]uild",
-			"[Bb]uilds",
-			"[Pp]ackages",
-			"[Pp]roject[Ss]ettings",
-			"[Uu]ser[Ss]ettings",
-			"[Ee]xportedObj",
-			"[Aa]ssets\\[Ss]treaming[Aa]ssets\\aa\\*",
-			"[Mm]emory[Cc]aptures",
-			"[Rr]ecordings",
-			"[Aa]ssets\\[Aa]sset[Ss]tore[Tt]ools",
-			"[Aa]ssets\\[Pp]lugins\\[Ee]ditor\\[Jj]et[Bb]rains",
-			".consulo", -- Consulo folder
-			".vs", -- Visual Studio Folder
-			".gradle", -- Java folder
-			-- ".csproj",
-			-- ".sln",
+			-- ".asset", -- Unity's asset file
 		},
 	},
 	git = {
 		ignore = false,
 	},
-})
+}
 
--- set keymaps
-local keymap = vim.keymap
-
-keymap.set("n", "<leader>pv", "<cmd>NvimTreeToggle<CR>")
-keymap.set("n", "<leader>ef", "<cmd>NvimTreeFindFileToggle<CR>")
-keymap.set("n", "<leader>ec", "<cmd>NvimTreeCollapse<CR>")
-keymap.set("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>")
+-- configure nvim-tree
+nvimtree.setup(setup)

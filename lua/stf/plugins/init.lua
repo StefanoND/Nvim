@@ -8,6 +8,40 @@ return {
 			vim.cmd.colorscheme("catppuccin")
 		end,
 	},
+	{
+		"nvim-tree/nvim-web-devicons",
+		lazy = false,
+		config = function()
+			require("stf.config.devicons")
+		end,
+	},
+	{ -- file explorer for neovim
+		"nvim-tree/nvim-tree.lua",
+		version = "*",
+		event = "VeryLazy",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		config = function()
+			require("stf.config.tree")
+		end,
+	},
+	{ -- parser
+		"nvim-treesitter/nvim-treesitter",
+		lazy = false,
+		event = { "BufReadPre", "BufNewFile" },
+		build = ":TSUpdate",
+		dependencies = {
+			{
+				"nvim-treesitter/nvim-treesitter-textobjects",
+				config = function()
+					require("stf.config.textobjects")
+				end,
+			},
+			"windwp/nvim-ts-autotag",
+		},
+		config = function()
+			require("stf.config.treesitter")
+		end,
+	},
 	{ -- fast file access
 		"theprimeagen/harpoon",
 		branch = "harpoon2",
@@ -16,39 +50,6 @@ return {
 		},
 		config = function()
 			require("stf.config.harpoon")
-		end,
-	},
-	{
-		"nvim-tree/nvim-web-devicons",
-		config = function()
-			require("stf.config.devicons")
-		end,
-	},
-	{ -- file explorer for neovim
-		"nvim-tree/nvim-tree.lua",
-		dependencies = {
-			"nvim-tree/nvim-web-devicons",
-		},
-		config = function()
-			require("stf.config.tree")
-		end,
-	},
-	{ -- parser
-		"nvim-treesitter/nvim-treesitter",
-		event = { "BufReadPre", "BufNewFile" },
-		build = ":TSUpdate",
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter-textobjects",
-			"windwp/nvim-ts-autotag",
-		},
-		config = function()
-			require("stf.config.treesitter")
-		end,
-	},
-	{
-		"nvim-treesitter/nvim-treesitter-textobjects",
-		config = function()
-			require("stf.config.textobjects")
 		end,
 	},
 	{

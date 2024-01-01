@@ -17,11 +17,6 @@ mason.setup({
 		-- CMAKE
 		"cmake-language-server", -- LSP
 		-- "cmakelang", -- formatter and linter
-		-- CSHARP
-		"csharp-language-server", -- LSP
-		"omnisharp", -- LSP
-		"omnisharp-mono", -- LSP
-		-- "csharpier", -- formatter
 		-- GODOT SCRIPT
 		"gdscript", -- LSP
 		-- "gdtoolkit", -- formatter and linter
@@ -59,7 +54,6 @@ mason_tool_installer.setup({
 		"shellharden", -- bash formatter and linter
 		"clang-format", -- C/C++ formatter
 		"cmakelang", -- CMAKE formatter and linter
-		"csharpier", -- C# formatter
 		"gdtoolkit", -- Godot formatter and linter
 		"biome", -- formatter and linter
 		"stylua", -- Lua formatter and linter

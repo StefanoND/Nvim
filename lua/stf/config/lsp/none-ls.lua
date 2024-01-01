@@ -8,7 +8,6 @@ mason_null_ls.setup({
 		"shellharden", -- bash formatter and linter
 		"clang-format", -- C/C++ formatter
 		"cmakelang", -- CMAKE formatter and linter
-		"csharpier", -- C# formatter
 		"gdtoolkit", -- Godot formatter and linter
 		"biome", -- formatter and linter
 		"stylua", -- Lua formatter and linter
@@ -47,7 +46,6 @@ local sources = {
 	formatting.shellharden,
 	formatting.clang_format,
 	formatting.cmake_format,
-	formatting.csharpier,
 	formatting.gdformat,
 	formatting.biome,
 	formatting.stylua,
@@ -58,15 +56,8 @@ local sources = {
 	actions.refactoring,
 }
 
-local rootdir =  null_ls_utils.root_pattern(
-	".null-ls-root",
-	"Makefile",
-	"CMakefile",
-	".git",
-	".sln",
-	".git",
-	"package.json"
-    )
+local rootdir =
+	null_ls_utils.root_pattern(".null-ls-root", "Makefile", "CMakefile", ".git", ".sln", ".git", "package.json")
 
 null_ls.setup({
 	sources = sources,

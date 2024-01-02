@@ -1,16 +1,46 @@
 return {
+	-- LSP
 	{
 		"VonHeikemen/lsp-zero.nvim",
 		branch = "v3.x",
 		lazy = true,
-		config = function()
-			require("stf.config.lsp.lsp")
-		end,
+		-- config = function()
+		-- 	require("stf.config.lsp.lsp")
+		-- end,
 		init = function()
 			-- Disable automatic setup, we are doing it manually
 			vim.g.lsp_zero_extend_cmp = 0
 			vim.g.lsp_zero_extend_lspconfig = 0
 		end,
+	},
+	{
+		"nvimtools/none-ls.nvim",
+		dependencies = {
+			"jay-babu/mason-null-ls.nvim",
+		},
+		event = "VeryLazy",
+		config = function()
+			require("stf.config.lsp.none-ls")
+		end,
+	},
+	{
+		"neovim/nvim-lspconfig",
+		cmd = { "LspInfo", "LspInstall", "LspStart" },
+		event = { "BufReadPre", "BufNewFile" },
+		dependencies = {
+			{ "williamboman/mason-lspconfig.nvim" },
+			{ "antosha417/nvim-lsp-file-operations", config = true },
+			{ "Hoffs/omnisharp-extended-lsp.nvim" },
+		},
+		config = function()
+			require("stf.config.lsp.lspconfig")
+			require("stf.config.lsp.omnisharp.omnisharp")
+		end,
+	},
+	{
+		"hrsh7th/cmp-nvim-lsp",
+		lazy = false,
+		config = true,
 	},
 	{
 		"williamboman/mason.nvim",
@@ -39,29 +69,11 @@ return {
 			{ "rafamadriz/friendly-snippets" },
 			{ "neovim/nvim-lspconfig" },
 			{ "hrsh7th/cmp-nvim-lua" },
+			{ "petertriho/cmp-git", requires = "nvim-lua/plenary.nvim" },
 		},
 		config = function()
 			require("stf.config.lsp.cmp")
 		end,
-	},
-
-	-- LSP
-	{
-		"neovim/nvim-lspconfig",
-		cmd = { "LspInfo", "LspInstall", "LspStart" },
-		event = { "BufReadPre", "BufNewFile" },
-		dependencies = {
-			{ "williamboman/mason-lspconfig.nvim" },
-			{ "antosha417/nvim-lsp-file-operations", config = true },
-		},
-		config = function()
-			require("stf.config.lsp.lspconfig")
-		end,
-	},
-	{
-		"hrsh7th/cmp-nvim-lsp",
-		lazy = false,
-		config = true,
 	},
 	{
 		"mfussenegger/nvim-dap",
@@ -82,31 +94,10 @@ return {
 	{
 		"rcarriga/nvim-dap-ui",
 		dependencies = "mfussenegger/nvim-dap",
-		config = function()
-			local dap = require("dap")
-			local dapui = require("dapui")
-
-			dapui.setup()
-			dap.listeners.after.event_initialized["dapui_config"] = function()
-				dapui.open()
-			end
-			dap.listeners.before.event_terminated["dapui_config"] = function()
-				dapui.close()
-			end
-			dap.listeners.before.event_exited["dapui_config"] = function()
-				dapui.close()
-			end
-		end,
 	},
 	{
-		"nvimtools/none-ls.nvim",
-		dependencies = {
-			"jay-babu/mason-null-ls.nvim",
-		},
-		event = "VeryLazy",
-		config = function()
-			require("stf.config.lsp.none-ls")
-		end,
+		"rcarriga/cmp-dap",
+		dependencies = "mfussenegger/nvim-dap",
 	},
 	{
 		"j-hui/fidget.nvim",

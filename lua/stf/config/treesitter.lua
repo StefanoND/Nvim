@@ -8,6 +8,8 @@ treesitter.setup({
 		"bash",
 		"c",
 		"cpp",
+		"c_sharp",
+		"make",
 		"cmake",
 		"sql",
 		"lua",

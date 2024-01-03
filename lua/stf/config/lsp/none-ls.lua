@@ -1,4 +1,21 @@
 local mason_null_ls = require("mason-null-ls")
+
+mason_null_ls.setup({
+	ensure_installed = {
+		"shellharden", -- bash formatter and linter
+		"clang-format", -- C/C++ formatter
+		"cmakelang", -- CMAKE formatter and linter
+		"csharpier", -- C# formatter
+		"gdtoolkit", -- Godot formatter and linter
+		"biome", -- formatter and linter
+		"stylua", -- Lua formatter and linter
+		"sql-formatter", -- SQL formatter
+		"prettier", -- Prettier formatter
+	},
+	automatic_installation = true,
+	handlers = {},
+})
+
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 local null_ls = require("null-ls")
 local null_ls_utils = require("null-ls.utils")
@@ -46,22 +63,6 @@ local sources = {
 
 local rootdir =
 	null_ls_utils.root_pattern(".null-ls-root", "Makefile", "CMakefile", ".git", ".sln", ".git", "package.json")
-
-mason_null_ls.setup({
-	ensure_installed = {
-		"shellharden", -- bash formatter and linter
-		"clang-format", -- C/C++ formatter
-		"cmakelang", -- CMAKE formatter and linter
-		"csharpier", -- C# formatter
-		"gdtoolkit", -- Godot formatter and linter
-		"biome", -- formatter and linter
-		"stylua", -- Lua formatter and linter
-		"sql-formatter", -- SQL formatter
-		"prettier", -- Prettier formatter
-	},
-	automatic_installation = true,
-	handlers = {},
-})
 
 null_ls.setup({
 	sources = sources,

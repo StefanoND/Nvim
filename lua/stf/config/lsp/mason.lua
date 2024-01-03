@@ -59,6 +59,7 @@ masontools.setup({
 		"gdtoolkit", -- formatter and linter
 		-- JSON
 		"biome", -- formatter and linter
+		"json-lsp", -- LSP
 		-- LUA
 		"lua-language-server", -- LSP
 		"stylua", -- formatter and linter

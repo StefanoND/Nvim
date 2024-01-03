@@ -33,7 +33,7 @@ local sources = {
 	formatting.shellharden,
 	formatting.clang_format,
 	formatting.cmake_format,
-	-- formatting.csharpier,
+	formatting.csharpier,
 	formatting.gdformat,
 	formatting.biome,
 	formatting.stylua,

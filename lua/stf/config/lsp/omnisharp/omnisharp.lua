@@ -1,17 +1,12 @@
 local lspconfig = require("lspconfig")
 local cmp_lsp = require("cmp_nvim_lsp")
-local cmpcapabilities = cmp_lsp.default_capabilities()
-local lsp_defaults = lspconfig.util.default_config
+local capabilities = cmp_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-lsp_defaults.capabilities = cmpcapabilities
-
-local omnicapabilities = vim.tbl_deep_extend("force", cmpcapabilities, {
-	workspace = {
-		didChangeWatchedFiles = {
-			dynamicRegistration = true,
-		},
-	},
-})
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+capabilities.textDocument.foldingRange = {
+	dynamicRegistration = false,
+	lineFoldingOnly = true,
+}
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -48,6 +43,7 @@ local omni_on_attach = function(client, bufnr)
 		"<cmd>lua vim.lsp.buf.format({ async = false, timeout_ms = 10000 })<CR>",
 		opts
 	)
+	print("hello omnisharp")
 end
 
 -- Omnisharp/C#/Unity
@@ -56,13 +52,17 @@ local pid = vim.fn.getpid()
 -- Must be version 1.39.8, versions 1.39.9 - 1.39.11 (latest as of this writing) are causing issues:
 --     "Error executing luv callback... Attempt to Index Local 'decoded' (a nil value)..."
 -- Will update when this gets fixed (and if I remember)
-local omnisharp_bin = os.getenv("HOME") .. "/.config/nvim/omnisharp-linux-x64_1.39.8/run"
+-- local omnisharp_bin = os.getenv("HOME") .. "/.config/nvim/omnisharp-linux-x64_1.39.8/run"
+local omnisharp_bin = os.getenv("HOME") .. "/.config/nvim/omnisharp-linux-x64-net6.0_1.39.8/OmniSharp"
 local omnisharp_config = {
+	enable_editorconfig_support = true,
+	enable_roslyn_analyzers = true,
+	enable_import_completion = true,
+	sdk_include_prereleases = false,
 	handlers = {
 		["textDocument/definition"] = require("omnisharp_extended").handler,
 	},
 	cmd = { omnisharp_bin, "--languageserver", "--hostPID", tostring(pid) },
-	enable_import_completion = true,
 	on_attach = function(client, bufnr)
 		omni_on_attach(client, bufnr)
 		print("hello omnisharp")
@@ -70,7 +70,7 @@ local omnisharp_config = {
 	flags = {
 		debounce_text_changes = 150,
 	},
-	capabilities = omnicapabilities,
+	capabilities = capabilities,
 	on_init = function(client)
 		client.server_capabilities.semanticTokensProvider = nil
 	end,

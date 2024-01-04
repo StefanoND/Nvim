@@ -41,8 +41,6 @@ local handlers = {
 	["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" }),
 }
 
--- vim.api.nvim_create_autocmd("LspAttach", {
--- 	callback = function(client, bufnr)
 local on_attach = function(client, bufnr)
 	local set = vim.keymap.set
 	local opts = { buffer = bufnr, remap = false, silent = true }
@@ -54,12 +52,6 @@ local on_attach = function(client, bufnr)
 	if client.name == "omnisharp" then
 		set("n", "gd", "<cmd>lua require('omnisharp_extended').telescope_lsp_definitions()<CR>", opts)
 		vim.api.nvim_command("setlocal omnifunc=v:lua.vim.lsp.omnifunc")
-		-- local function option(...)
-		-- 	vim.api.nvim_buf_set_option(bufnr, ...)
-		-- end
-		--
-		-- -- Omnicompletion
-		-- option("omnifunc", "v:lua.vim.lsp.omnifunc")
 	else
 		set("n", "gd", "<cmd>lua vim.lsp.buf.definition()	<CR>", opts)
 	end
@@ -78,7 +70,6 @@ local on_attach = function(client, bufnr)
 	set("n", "<leader>vca", "<cmd>lua vim.lsp.buf.code_action()	<CR>", opts)
 	set({ "n", "x" }, "<leader>f", "<cmd>lua vim.lsp.buf.format({ async = true, timeout_ms = 10000 })	<CR>", opts)
 end
--- })
 
 -- Change the Diagnostic symbols in the sign column (gutter)
 local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
@@ -90,55 +81,36 @@ end
 lspconfig.bashls.setup({
 	handlers = handlers,
 	on_attach = on_attach,
-	-- on_attach = function(client, bufnr)
-	-- 	print("hello bash")
-	-- end,
 	capabilities = lsp_defaults,
 })
 
 lspconfig.clangd.setup({
 	handlers = handlers,
 	on_attach = on_attach,
-	-- on_attach = function(client, bufnr)
-	-- 	client.server_capabilities.signatureHelpProvider = false
-	-- 	print("hello clang")
-	-- end,
 	capabilities = clangcapabilities,
 })
 
 lspconfig.cmake.setup({
 	handlers = handlers,
 	on_attach = on_attach,
-	-- on_attach = function(client, bufnr)
-	-- 	print("hello cmake")
-	-- end,
 	capabilities = lsp_defaults,
 })
 
 lspconfig.gdscript.setup({
 	handlers = handlers,
 	on_attach = on_attach,
-	-- on_attach = function(client, bufnr)
-	-- 	print("hello godot")
-	-- end,
 	capabilities = lsp_defaults,
 })
 
 lspconfig.jsonls.setup({
 	handlers = handlers,
 	on_attach = on_attach,
-	-- on_attach = function(client, bufnr)
-	-- 	print("hello json")
-	-- end,
 	capabilities = lsp_defaults,
 })
 
 lspconfig.lua_ls.setup({
 	handlers = handlers,
 	on_attach = on_attach,
-	-- on_attach = function(client, bufnr)
-	-- 	print("hello lua")
-	-- end,
 	capabilities = lsp_defaults,
 	settings = { -- custom settings for lua
 		Lua = {
@@ -160,45 +132,34 @@ lspconfig.lua_ls.setup({
 lspconfig.rust_analyzer.setup({
 	handlers = handlers,
 	settings = {
-		["rust-analyzer"] = {
-			imports = {
-				granularity = {
-					group = "module",
-				},
-				prefix = "self",
+		imports = {
+			granularity = {
+				group = "module",
 			},
-			cargo = {
-				buildScripts = {
-					enable = true,
-				},
-			},
-			procMacro = {
+			prefix = "self",
+		},
+		cargo = {
+			buildScripts = {
 				enable = true,
 			},
 		},
+		procMacro = {
+			enable = true,
+		},
 	},
 	on_attach = on_attach,
-	-- on_attach = function(client, bufnr)
-	-- 	print("hello rust")
-	-- end,
 	capabilities = lsp_defaults,
 })
 
 lspconfig.sqlls.setup({
 	handlers = handlers,
 	on_attach = on_attach,
-	-- on_attach = function(client, bufnr)
-	-- 	print("hello sql")
-	-- end,
 	capabilities = lsp_defaults,
 })
 
 lspconfig.yamlls.setup({
 	handlers = handlers,
 	on_attach = on_attach,
-	-- on_attach = function(client, bufnr)
-	-- 	print("hello yaml")
-	-- end,
 	capabilities = lsp_defaults,
 })
 

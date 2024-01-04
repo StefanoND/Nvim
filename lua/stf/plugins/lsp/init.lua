@@ -34,7 +34,7 @@ return {
 		},
 		config = function()
 			require("stf.config.lsp.lspconfig")
-			require("stf.config.lsp.omnisharp.omnisharp")
+			-- require("stf.config.lsp.omnisharp.omnisharp")
 		end,
 	},
 	{

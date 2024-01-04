@@ -43,7 +43,7 @@ vim.opt.splitright = true -- split vertical window to the right
 vim.opt.splitbelow = true -- split horizontal window to the bottom
 
 vim.opt.mousemoveevent = true
-vim.opt.scrolloff = 8
+vim.opt.scrolloff = 16
 vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50

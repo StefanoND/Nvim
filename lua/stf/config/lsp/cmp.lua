@@ -24,108 +24,6 @@ luasnip.config.setup({
 -- load vs-code like snippets from plugins
 require("luasnip.loaders.from_vscode").lazy_load()
 
-cmp.setup({
-	enabled = function()
-		return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt" or require("cmp_dap").is_dap_buffer()
-	end,
-	completion = {
-		border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-		scrollbar = "║",
-		completeopt = "menu,menuone,preview,noselect",
-	},
-	formatting = {
-		fields = {
-			cmp.ItemField.Kind,
-			cmp.ItemField.Abbr,
-			cmp.ItemField.Menu,
-		},
-		format = lspkind.cmp_format({
-			with_text = true,
-			menu = {
-				buffer = "[buf]",
-				nvim_lsp = "[LSP]",
-				nvim_lua = "[api]",
-				path = "[path]",
-				luasnip = "[snip]",
-				gh_issues = "[issues]",
-				git = "[git]",
-				cmp_git = "[cmp_git]",
-			},
-			before = function(entry, vim_item)
-				-- Get the full snippet (and only keep first line)
-				local word = entry:get_insert_text()
-				if entry.completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet then
-					word = vim.lsp.util.parse_snippet(word)
-				end
-				word = str.oneline(word)
-
-				-- concatenates the string
-				-- local max = 50
-				-- if string.len(word) >= max then
-				-- 	local before = string.sub(word, 1, math.floor((max - 3) / 2))
-				-- 	word = before .. "..."
-				-- end
-
-				if
-					entry.completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet
-					and string.sub(vim_item.abbr, -1, -1) == "~"
-				then
-					word = word .. "~"
-				end
-				vim_item.abbr = word
-
-				return vim_item
-			end,
-		}),
-	},
-	window = {
-		documentation = {
-			border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-			scrollbar = "║",
-		},
-		-- documentation = cmp.config.window.bordered(),
-		-- completion = cmp.config.window.bordered(),
-	},
-	snippet = {
-		expand = function(args)
-			luasnip.lsp_expand(args.body)
-		end,
-	},
-	mapping = cmp.mapping.preset.insert({
-		["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
-		["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
-		["<C-u>"] = cmp.mapping.scroll_docs(-4),
-		["<C-d>"] = cmp.mapping.scroll_docs(4),
-		["<C-Space>"] = cmp.mapping.complete(),
-		["<C-e>"] = cmp.mapping.abort(), -- close completion window
-		["<CR>"] = cmp.mapping.confirm({ select = false }),
-		["<C-f>"] = cmp_action.luasnip_jump_forward(),
-		["<C-b>"] = cmp_action.luasnip_jump_backward(),
-	}),
-	-- sources for autocompletion
-	sources = cmp.config.sources({
-		{
-			name = function()
-				if vim.bo.buftype == "*.cs" then
-					return false
-				end
-				return "dap"
-			end,
-		},
-		{ name = "git" }, -- snippets
-		{ name = "cmp_git" }, -- snippets
-		{ name = "luasnip" }, -- snippets
-		{ name = "nvim_lua" },
-		{ name = "nvim_lsp" },
-		{ name = "path" }, -- file system paths
-		{ name = "buffer", keyword_length = 4, max_item_count = 10 }, -- text within current buffer
-	}),
-	experimental = {
-		ghost_text = false,
-		native_menu = false,
-	},
-})
-
 require("cmp").setup.cmdline(":", {
 	sources = {
 		{ name = "cmdline", keyword_length = 2 },
@@ -234,5 +132,107 @@ cmp_git.setup({
 				return sources.github:get_mentions(callback, git_info, trigger_char)
 			end,
 		},
+	},
+})
+
+cmp.setup({
+	enabled = function()
+		return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt" or require("cmp_dap").is_dap_buffer()
+	end,
+	completion = {
+		border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+		scrollbar = "║",
+		completeopt = "menu,menuone,preview,noselect",
+	},
+	formatting = {
+		fields = {
+			cmp.ItemField.Kind,
+			cmp.ItemField.Abbr,
+			cmp.ItemField.Menu,
+		},
+		format = lspkind.cmp_format({
+			with_text = true,
+			menu = {
+				buffer = "[buf]",
+				nvim_lsp = "[LSP]",
+				nvim_lua = "[api]",
+				path = "[path]",
+				luasnip = "[snip]",
+				gh_issues = "[issues]",
+				git = "[git]",
+				cmp_git = "[cmp_git]",
+			},
+			before = function(entry, vim_item)
+				-- Get the full snippet (and only keep first line)
+				local word = entry:get_insert_text()
+				if entry.completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet then
+					word = vim.lsp.util.parse_snippet(word)
+				end
+				word = str.oneline(word)
+
+				-- concatenates the string
+				-- local max = 50
+				-- if string.len(word) >= max then
+				-- 	local before = string.sub(word, 1, math.floor((max - 3) / 2))
+				-- 	word = before .. "..."
+				-- end
+
+				if
+					entry.completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet
+					and string.sub(vim_item.abbr, -1, -1) == "~"
+				then
+					word = word .. "~"
+				end
+				vim_item.abbr = word
+
+				return vim_item
+			end,
+		}),
+	},
+	window = {
+		documentation = {
+			border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+			scrollbar = "║",
+		},
+		-- documentation = cmp.config.window.bordered(),
+		completion = cmp.config.window.bordered(),
+	},
+	snippet = {
+		expand = function(args)
+			luasnip.lsp_expand(args.body)
+		end,
+	},
+	mapping = cmp.mapping.preset.insert({
+		["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
+		["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
+		["<C-u>"] = cmp.mapping.scroll_docs(-4),
+		["<C-d>"] = cmp.mapping.scroll_docs(4),
+		["<C-Space>"] = cmp.mapping.complete(),
+		["<C-e>"] = cmp.mapping.abort(), -- close completion window
+		["<CR>"] = cmp.mapping.confirm({ select = false }),
+		["<C-f>"] = cmp_action.luasnip_jump_forward(),
+		["<C-b>"] = cmp_action.luasnip_jump_backward(),
+	}),
+	-- sources for autocompletion
+	sources = cmp.config.sources({
+		{
+			name = function()
+				if vim.bo.buftype == "*.cs" then
+					return false
+				end
+				return "dap"
+			end,
+		},
+		-- { name = "git" }, -- snippets
+		{ name = "cmp_git" }, -- snippets
+		{ name = "luasnip" }, -- snippets
+		{ name = "nvim_lua" },
+		{ name = "nvim_lsp" },
+		{ name = "path" }, -- file system paths
+		{ name = "buffer", keyword_length = 3, max_item_count = 10 }, -- text within current buffer
+	}),
+	experimental = {
+		ghost_text = false,
+		native_menu = false,
 	},
 })

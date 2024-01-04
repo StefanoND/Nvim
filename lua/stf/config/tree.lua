@@ -52,7 +52,7 @@ local setup = {
 		},
 	},
 	filters = {
-		dotfiles = true,
+		dotfiles = false,
 		custom = {
 			-- ".asset", -- Unity's asset file
 		},

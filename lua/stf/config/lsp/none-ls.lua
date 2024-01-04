@@ -47,17 +47,45 @@ local diagnostics = null_ls.builtins.diagnostics -- to setup linters
 local actions = null_ls.builtins.code_actions -- to setup linters
 
 local sources = {
-	formatting.shellharden,
-	formatting.clang_format,
-	formatting.cmake_format,
-	formatting.csharpier,
-	formatting.gdformat,
-	formatting.biome,
-	formatting.stylua,
-	formatting.sql_formatter,
-	formatting.rustfmt,
-	formatting.prettier,
-	actions.gitsigns,
+	formatting.biome.with({
+		filetypes = { "json" },
+	}),
+	formatting.clang_format.with({
+		filetypes = { "c", "cpp" },
+	}),
+	formatting.cmake_format.with({
+		filetypes = { "cmake" },
+	}),
+	formatting.csharpier.with({
+		filetypes = { "cs" },
+	}),
+	formatting.gdformat.with({
+		filetypes = { "gd", "gdscript", "gdscript3", "gdscript4" },
+	}),
+	formatting.prettier.with({
+		filetypes = { "yaml" },
+	}),
+	formatting.rustfmt.with({
+		filetypes = { "rust" },
+	}),
+	formatting.shellharden.with({
+		filetypes = { "sh" },
+	}),
+	formatting.sqlfluff.with({
+		filetypes = { "sql" },
+	}),
+	formatting.stylua.with({
+		filetypes = { "lua" },
+	}),
+
+	actions.gitsigns.with({
+		-- Callback to filter out unwanted actions
+		-- config = {
+		--     filter_actions = function(title)
+		--         return title:lower():match("blame") == nil -- filter out blame actions
+		--     end,
+		-- },
+	}),
 	actions.refactoring,
 }
 

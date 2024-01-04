@@ -4,6 +4,10 @@ local keymap = vim.keymap
 
 keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
 
+-- Close buffers
+vim.keymap.set("i", "<C-d>", "<cmd>bd<CR>")
+vim.keymap.set("n", "D", "<cmd>bd<CR>")
+
 keymap.set("v", "K", ":m '<-2<CR>gv=gv") -- Move selection up
 keymap.set("v", "J", ":m '>+1<CR>gv=gv") -- Move selection down
 

@@ -1,9 +1,11 @@
 local nvimtree = require("nvim-tree")
 
-vim.keymap.set("n", "<leader>pv", "<cmd>NvimTreeToggle<CR>")
-vim.keymap.set("n", "<leader>ef", "<cmd>NvimTreeFindFileToggle<CR>")
-vim.keymap.set("n", "<leader>ec", "<cmd>NvimTreeCollapse<CR>")
-vim.keymap.set("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>")
+local opts = { remap = false, silent = true }
+
+vim.keymap.set("n", "<leader>pv", "<cmd>NvimTreeToggle<CR>", opts)
+vim.keymap.set("n", "<leader>ef", "<cmd>NvimTreeFindFileToggle<CR>", opts)
+vim.keymap.set("n", "<leader>ec", "<cmd>NvimTreeCollapse<CR>", opts)
+vim.keymap.set("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>", opts)
 
 -- recommended settings from nvim-tree documetation
 vim.g.loaded_netrw = 1

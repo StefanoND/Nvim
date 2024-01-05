@@ -1,12 +1,12 @@
 local trouble = require("trouble")
 
-trouble.setup {
-    icons = false,
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
-}
+local opts = { silent = true, remap = false }
 
-vim.keymap.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>",
-    { silent = true, noremap = true }
-)
+trouble.setup({
+	icons = false,
+	-- your configuration comes here
+	-- or leave it empty to use the default settings
+	-- refer to the configuration section below
+})
+
+vim.keymap.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>", opts)

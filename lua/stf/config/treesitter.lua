@@ -1,4 +1,8 @@
--- require("nvim-treesitter.install").compilers = { "gcc" }
+-- Must install LLVM https://github.com/llvm/llvm-project/releases
+-- GCC doesn't work (even scoop's one)
+if vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 or vim.fn.has("win16") == 1 then
+	require("nvim-treesitter.install").compilers = { "clang" }
+end
 
 local treesitter = require("nvim-treesitter.configs")
 

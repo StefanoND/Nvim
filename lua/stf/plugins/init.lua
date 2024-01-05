@@ -59,13 +59,13 @@ return {
 			"nvim-lua/plenary.nvim",
 			{
 				"nvim-telescope/telescope-fzf-native.nvim",
-        build = "make",
-        -- On Windows you'll have to go to ~\AppData\Local\nvim-data\lazy\telescope-fzf-native.nvim
-        -- Run these commands while inside "telescope-fzf-native.nvim" folder
-        -- make clean
-        -- cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release
-        -- cmake --build build --config Release
-        -- cmake --install build --prefix build
+				build = "make",
+				-- On Windows you'll have to go to ~\AppData\Local\nvim-data\lazy\telescope-fzf-native.nvim
+				-- Run these commands while inside "telescope-fzf-native.nvim" folder
+				-- make clean
+				-- cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release
+				-- cmake --build build --config Release
+				-- cmake --install build --prefix build
 			},
 			"nvim-tree/nvim-web-devicons",
 		},
@@ -196,5 +196,17 @@ return {
 	{
 		"dapt4/vim-autoSurround",
 		lazy = false,
+	},
+	{
+		"cdelledonne/vim-cmake",
+		config = function()
+			require("stf.config.cmake")
+		end,
+	},
+	{
+		"alepez/vim-gtest",
+		config = function()
+			require("stf.config.gtest")
+		end,
 	},
 }

@@ -49,8 +49,10 @@
   "trouble.nvim": { "branch": "main", "commit": "f1168feada93c0154ede4d1fe9183bf69bac54ea" },
   "undotree": { "branch": "master", "commit": "36ff7abb6b60980338344982ad4cdf03f7961ecd" },
   "vim-autoSurround": { "branch": "main", "commit": "36071029ee7a7b0406444c2cb919ff41bd1a007d" },
+  "vim-cmake": { "branch": "master", "commit": "506a3a5a472caceb8751f69821fd892562de11fc" },
   "vim-fugitive": { "branch": "master", "commit": "59659093581aad2afacedc81f009ed6a4bfad275" },
   "vim-gitgutter": { "branch": "main", "commit": "67ef116100b40f9ca128196504a2e0bc0a2753b0" },
+  "vim-gtest": { "branch": "master", "commit": "d950713b3d5aadea34ab1af338eeb13421e3cb2e" },
   "vim-visual-multi": { "branch": "master", "commit": "aec289a9fdabaa0ee6087d044d75b32e12084344" },
   "which-key.nvim": { "branch": "main", "commit": "4433e5ec9a507e5097571ed55c02ea9658fb268a" }
 }

@@ -216,12 +216,13 @@ cmp.setup({
 	-- sources for autocompletion
 	sources = cmp.config.sources({
 		{
-			name = function()
-				if vim.bo.buftype == "*.cs" then
-					return false
-				end
-				return "dap"
-			end,
+			name = "dap",
+			-- name = function()
+			-- 	if vim.bo.buftype == "*.cs" then
+			-- 		return false
+			-- 	end
+			-- 	return "dap"
+			-- end,
 		},
 		-- { name = "git" }, -- snippets
 		{ name = "cmp_git" }, -- snippets

@@ -16,10 +16,10 @@ vim.cmd([[ highlight NvimTreeFolderArrowOpen guifg=#3FC5FF ]])
 
 local setup = {
 	respect_buf_cwd = true,
-	sync_root_with_cwd = true, -- Previously update_cwd
+	-- sync_root_with_cwd = true, -- Previously update_cwd
 	update_focused_file = {
 		enable = true,
-		update_root = true, -- Previously update_cwd
+		-- update_root = true, -- Previously update_cwd
 	},
 	view = {
 		width = 35,

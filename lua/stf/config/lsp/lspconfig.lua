@@ -56,18 +56,21 @@ local on_attach = function(client, bufnr)
 		set("n", "gd", "<cmd>lua vim.lsp.buf.definition()	<CR>", opts)
 	end
 
-	set("n", "K", "<cmd>lua vim.lsp.buf.hover()	<CR>", opts)
 	set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()	<CR>", opts)
 	set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()	<CR>", opts)
+	set("n", "gw", "<cmd>lua vim.lsp.buf.document_symbol()	<CR>", opts)
+	set("n", "gw", "<cmd>lua vim.lsp.buf.workspace_symbol()	<CR>", opts)
+	set("n", "gr", "<cmd>lua vim.lsp.buf.references()	<CR>", opts)
+	set("n", "gt", "<cmd>lua vim.lsp.buf.type_definition()	<CR>", opts)
+	set("n", "K", "<cmd>lua vim.lsp.buf.hover()	<CR>", opts)
+	set("i", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()	<CR>", opts)
+	set("n", "<leader>af", "<cmd>lua vim.lsp.buf.code_action()	<CR>", opts)
+	set("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()	<CR>", opts)
+
 	set("n", "[d", "<cmd>lua vim.diagnostic.goto_next()	<CR>", opts)
 	set("n", "]d", "<cmd>lua vim.diagnostic.goto_prev()	<CR>", opts)
-	set("n", "go", "<cmd>lua vim.lsp.buf.type_definition()	<CR>", opts)
-	set("i", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()	<CR>", opts)
-	set("n", "<leader>gR", "<cmd>lua vim.lsp.buf.references()	<CR>", opts)
 	set("n", "<leader>vd", "<cmd>lua vim.diagnostic.open_float()	<CR>", opts)
-	set("n", "<leader>vws", "<cmd>lua vim.lsp.buf.workspace_symbol()	<CR>", opts)
-	set("n", "<leader>vrn", "<cmd>lua vim.lsp.buf.rename()	<CR>", opts)
-	set("n", "<leader>vca", "<cmd>lua vim.lsp.buf.code_action()	<CR>", opts)
+
 	set({ "n", "x" }, "<leader>f", "<cmd>lua vim.lsp.buf.format({ async = true, timeout_ms = 10000 })	<CR>", opts)
 end
 

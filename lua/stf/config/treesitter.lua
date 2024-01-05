@@ -5,6 +5,7 @@ local treesitter = require("nvim-treesitter.configs")
 treesitter.setup({
 	-- A list of parser names, or "all" (the five listed parsers should always be installed)
 	ensure_installed = {
+		-- "maintained",
 		"bash",
 		"c",
 		"cpp",
@@ -58,5 +59,8 @@ treesitter.setup({
 		},
 	},
 })
+
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 
 require("ts_context_commentstring").setup()

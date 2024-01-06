@@ -1,4 +1,5 @@
 vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
 local opts = { remap = false, silent = true }
 
@@ -45,5 +46,11 @@ vim.keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>", opt
 vim.keymap.set("n", "<leader>it", "<cmd>InspectTree<CR>", opts)
 
 vim.keymap.set("n", "<leader><leader>", function()
-	vim.cmd("so")
+  vim.cmd("so")
 end, opts)
+
+-- Git
+vim.keymap.set("n", "<leader>ga", "<cmd>Git add .<CR>", opts)
+vim.keymap.set("n", "<leader>gc", '<cmd>Git commit -m "', opts)
+vim.keymap.set("n", "<leader>gp", "<cmd>Git push -u origin HEAD<CR>", opts)
+vim.keymap.set("n", "<leader>gPR", "<cmd>Git pull --rebase<CR>", opts)

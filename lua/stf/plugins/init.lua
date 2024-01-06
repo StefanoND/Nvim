@@ -8,18 +8,18 @@ return {
       vim.cmd.colorscheme("catppuccin")
     end,
   },
-  {
-    "nvim-tree/nvim-web-devicons",
-    lazy = false,
-    config = function()
-      require("stf.config.devicons")
-    end,
-  },
   { -- file explorer for neovim
     "nvim-tree/nvim-tree.lua",
     version = "*",
     event = "VeryLazy",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    dependencies = {
+      {
+        "nvim-tree/nvim-web-devicons",
+        config = function()
+          require("stf.config.devicons")
+        end,
+      },
+    },
     config = function()
       require("stf.config.tree")
     end,
@@ -120,13 +120,6 @@ return {
     },
   },
   {
-    "theHamsta/nvim-dap-virtual-text",
-    lazy = false,
-    config = function(_, opts)
-      require("nvim-dap-virtual-text").setup()
-    end,
-  },
-  {
     "ThePrimeagen/refactoring.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -155,16 +148,11 @@ return {
     end,
   },
   {
-    "airblade/vim-gitgutter",
-    event = "VeryLazy",
-    config = function()
-      require("stf.config.gitgutter")
-    end,
-  },
-  {
     "lewis6991/gitsigns.nvim",
     event = { "BufReadPre", "BufNewFile" },
-    config = true,
+    config = function()
+      require("stf.config.gitsigns")
+    end,
   },
   {
     "mg979/vim-visual-multi",
@@ -203,4 +191,85 @@ return {
       require("stf.config.gtest")
     end,
   },
+  {
+    "epwalsh/obsidian.nvim",
+    version = "*",
+    lazy = true,
+    ft = "markdown",
+    -- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
+    -- event = {
+    --   -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
+    --   -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/**.md"
+    --   "BufReadPre path/to/my-vault/**.md",
+    --   "BufNewFile path/to/my-vault/**.md",
+    -- },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "hrsh7th/nvim-cmp",
+      "nvim-telescope/telescope.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "preservim/vim-markdown",
+      "epwalsh/pomo.nvim",
+    },
+    config = function()
+      require("stf.config.obsidan")
+    end,
+  },
+  {
+    "nvim-neorg/neorg",
+    build = ":Neorg sync-parsers",
+    lazy = false,
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require("stf.config.neorg")
+    end,
+  },
+  {
+    "epwalsh/pomo.nvim",
+    version = "*",
+    lazy = true,
+    cmd = { "TimerStart", "TimerRepeat" },
+    dependencies = {
+      "rcarriga/nvim-notify",
+    },
+    config = function()
+      require("stf.config.pomodoro")
+    end,
+  },
+  {
+    "tpope/vim-dadbod",
+    opt = true,
+    requires = {
+      "kristijanhusak/vim-dadbod-ui",
+      "kristijanhusak/vim-dadbod-completion",
+    },
+    config = function()
+      require("stf.config.dadbod").setup()
+    end,
+  },
+  "ThePrimeagen/git-worktree.nvim",
+  {
+    "rmagatti/goto-preview",
+    config = function()
+      require("stf.config.gotopreview")
+    end,
+  },
+  {
+    "folke/todo-comments.nvim",
+    dependencies = "nvim-lua/plenary.nvim",
+    lazy = false,
+    config = function()
+      require("stf.config.todocomments")
+    end,
+  },
+  {
+    "rcarriga/nvim-notify",
+    config = function()
+      require("notify").setup({
+        background_colour = "#000000",
+        enabled = false,
+      })
+    end,
+  },
+  "nvim-telescope/telescope-symbols.nvim",
 }

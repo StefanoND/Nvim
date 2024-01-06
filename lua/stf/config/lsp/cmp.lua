@@ -136,6 +136,9 @@ cmp_git.setup({
 })
 
 cmp.setup({
+  view = {
+    entries = "navite",
+  },
   enabled = function()
     return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt" or require("cmp_dap").is_dap_buffer()
   end,
@@ -229,6 +232,7 @@ cmp.setup({
     { name = "luasnip" }, -- snippets
     { name = "nvim_lsp" },
     { name = "nvim_lua" },
+    { name = "neorg" },
     { name = "buffer", keyword_length = 2, max_item_count = 10 }, -- text within current buffer
     { name = "path" }, -- file system paths
   }),

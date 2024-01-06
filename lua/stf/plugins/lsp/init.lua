@@ -78,6 +78,9 @@ return {
   },
   {
     "mfussenegger/nvim-dap",
+    dependencies = {
+      "theHamsta/nvim-dap-virtual-text",
+    },
     config = function()
       require("stf.config.lsp.dap")
     end,

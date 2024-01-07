@@ -154,8 +154,40 @@ cmp.setup({
       cmp.ItemField.Menu,
     },
     format = lspkind.cmp_format({
-      with_text = true,
+      mode = "symbol_text",
+      maxwidth = 50,
+      ellipsis_char = "...",
+      symbol_map = {
+        Codeium = " ",
+        Text = "󰉿 ",
+        Method = "󰆧 ",
+        Function = "󰊕",
+        Constructor = " ",
+        Field = "󰜢 ",
+        Variable = "󰀫",
+        Class = "󰠱 ",
+        Interface = " ",
+        Module = " ",
+        Property = "󰜢 ",
+        Unit = "󰑭 ",
+        Value = "󰎠 ",
+        Enum = " ",
+        Keyword = "󰌋 ",
+        Snippet = " ",
+        Color = "󰏘 ",
+        File = "󰈙 ",
+        Reference = "󰈇 ",
+        Folder = "󰉋 ",
+        EnumMember = " ",
+        Constant = "󰏿 ",
+        Struct = "󰙅 ",
+        Event = "",
+        Operator = "󰆕 ",
+        TypeParameter = "",
+      },
+      -- with_text = true,
       menu = {
+        codeium = "[cod]",
         buffer = "[buf]",
         nvim_lsp = "[LSP]",
         nvim_lua = "[api]",
@@ -218,6 +250,7 @@ cmp.setup({
   }),
   -- sources for autocompletion
   sources = cmp.config.sources({
+    { name = "codeium" },
     {
       name = "dap",
       -- name = function()
@@ -237,7 +270,7 @@ cmp.setup({
     { name = "path" }, -- file system paths
   }),
   experimental = {
-    ghost_text = false,
+    ghost_text = true,
     native_menu = false,
   },
 })

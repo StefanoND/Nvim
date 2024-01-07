@@ -55,3 +55,9 @@ vim.opt.colorcolumn = "110"
 
 -- Concealer for Neorg
 vim.o.conceallevel = 2
+
+-- vim.api.nvim_create_autocmd("VimEnter", {
+--   callback = function()
+--     vim.cmd("TwilightEnable")
+--   end,
+-- })

@@ -51,6 +51,6 @@ end, opts)
 
 -- Git
 vim.keymap.set("n", "<leader>ga", "<cmd>Git add .<CR>", opts)
-vim.keymap.set("n", "<leader>gc", '<cmd>Git commit -m "', opts)
+vim.keymap.set("n", "<leader>gc", ':Git commit -m "', opts)
 vim.keymap.set("n", "<leader>gp", "<cmd>Git push -u origin HEAD<CR>", opts)
 vim.keymap.set("n", "<leader>gPR", "<cmd>Git pull --rebase<CR>", opts)

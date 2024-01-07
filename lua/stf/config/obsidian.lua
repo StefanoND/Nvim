@@ -11,7 +11,11 @@ obisidan.setup({
   workspaces = {
     {
       name = "notes",
-      path = "~/vault/notes",
+      path = "/mnt/SSD_1TB_WORK/vault/notes",
+    },
+    {
+      name = "nwnee",
+      path = "/mnt/SSD_1TB_WORK/vault/nwnee",
     },
   },
 

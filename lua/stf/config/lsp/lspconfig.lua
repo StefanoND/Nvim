@@ -41,38 +41,42 @@ local handlers = {
   ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" }),
 }
 
-local on_attach = function(client, bufnr)
-  local set = vim.keymap.set
-  local opts = { buffer = bufnr, remap = false, silent = true }
+-- local on_attach = function(client, bufnr)
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(client, bufnr)
+    vim.cmd("TwilightEnable")
+    local set = vim.keymap.set
+    local opts = { buffer = bufnr, remap = false, silent = true }
 
-  if client.name == "clangd" then
-    client.server_capabilities.signatureHelpProvider = false
-  end
+    if client.name == "clangd" then
+      client.server_capabilities.signatureHelpProvider = false
+    end
 
-  if client.name == "omnisharp" then
-    set("n", "gd", "<cmd>lua require('omnisharp_extended').telescope_lsp_definitions()<CR>", opts)
-    vim.api.nvim_command("setlocal omnifunc=v:lua.vim.lsp.omnifunc")
-  else
-    set("n", "gd", "<cmd>lua vim.lsp.buf.definition()	<CR>", opts)
-  end
+    if client.name == "omnisharp" then
+      set("n", "gd", "<cmd>lua require('omnisharp_extended').telescope_lsp_definitions()<CR>", opts)
+      vim.api.nvim_command("setlocal omnifunc=v:lua.vim.lsp.omnifunc")
+    else
+      set("n", "gd", "<cmd>lua vim.lsp.buf.definition()	<CR>", opts)
+    end
 
-  set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()	<CR>", opts)
-  set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()	<CR>", opts)
-  set("n", "gw", "<cmd>lua vim.lsp.buf.document_symbol()	<CR>", opts)
-  set("n", "gw", "<cmd>lua vim.lsp.buf.workspace_symbol()	<CR>", opts)
-  set("n", "gr", "<cmd>lua vim.lsp.buf.references()	<CR>", opts)
-  set("n", "gt", "<cmd>lua vim.lsp.buf.type_definition()	<CR>", opts)
-  set("n", "K", "<cmd>lua vim.lsp.buf.hover()	<CR>", opts)
-  set("i", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()	<CR>", opts)
-  set("n", "<leader>af", "<cmd>lua vim.lsp.buf.code_action()	<CR>", opts)
-  set("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()	<CR>", opts)
+    set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()	<CR>", opts)
+    set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()	<CR>", opts)
+    set("n", "gw", "<cmd>lua vim.lsp.buf.document_symbol()	<CR>", opts)
+    set("n", "gw", "<cmd>lua vim.lsp.buf.workspace_symbol()	<CR>", opts)
+    set("n", "gr", "<cmd>lua vim.lsp.buf.references()	<CR>", opts)
+    set("n", "gt", "<cmd>lua vim.lsp.buf.type_definition()	<CR>", opts)
+    set("n", "K", "<cmd>lua vim.lsp.buf.hover()	<CR>", opts)
+    set("i", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()	<CR>", opts)
+    set("n", "<leader>af", "<cmd>lua vim.lsp.buf.code_action()	<CR>", opts)
+    set("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()	<CR>", opts)
 
-  set("n", "[d", "<cmd>lua vim.diagnostic.goto_next()	<CR>", opts)
-  set("n", "]d", "<cmd>lua vim.diagnostic.goto_prev()	<CR>", opts)
-  set("n", "<leader>vd", "<cmd>lua vim.diagnostic.open_float()	<CR>", opts)
+    set("n", "[d", "<cmd>lua vim.diagnostic.goto_next()	<CR>", opts)
+    set("n", "]d", "<cmd>lua vim.diagnostic.goto_prev()	<CR>", opts)
+    set("n", "<leader>vd", "<cmd>lua vim.diagnostic.open_float()	<CR>", opts)
 
-  set({ "n", "x" }, "<leader>f", "<cmd>lua vim.lsp.buf.format({ async = true, timeout_ms = 10000 })	<CR>", opts)
-end
+    set({ "n", "x" }, "<leader>f", "<cmd>lua vim.lsp.buf.format({ async = true, timeout_ms = 10000 })	<CR>", opts)
+  end,
+})
 
 -- Change the Diagnostic symbols in the sign column (gutter)
 local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
@@ -93,37 +97,49 @@ vim.api.nvim_create_autocmd("FileType", {
 
 lspconfig.bashls.setup({
   handlers = handlers,
-  on_attach = on_attach,
+  on_attach = function(client, bufnr)
+    print("Hello bash")
+  end,
   capabilities = lsp_defaults,
 })
 
 lspconfig.clangd.setup({
   handlers = handlers,
-  on_attach = on_attach,
+  on_attach = function(client, bufnr)
+    print("Hello C/C++")
+  end,
   capabilities = clangcapabilities,
 })
 
 lspconfig.cmake.setup({
   handlers = handlers,
-  on_attach = on_attach,
+  on_attach = function(client, bufnr)
+    print("Hello CMake")
+  end,
   capabilities = lsp_defaults,
 })
 
 lspconfig.gdscript.setup({
   handlers = handlers,
-  on_attach = on_attach,
+  on_attach = function(client, bufnr)
+    print("Hello Godot")
+  end,
   capabilities = lsp_defaults,
 })
 
 lspconfig.jsonls.setup({
   handlers = handlers,
-  on_attach = on_attach,
+  on_attach = function(client, bufnr)
+    print("Hello Json")
+  end,
   capabilities = lsp_defaults,
 })
 
 lspconfig.lua_ls.setup({
   handlers = handlers,
-  on_attach = on_attach,
+  on_attach = function(client, bufnr)
+    print("Hello Lua")
+  end,
   capabilities = lsp_defaults,
   settings = { -- custom settings for lua
     Lua = {
@@ -160,19 +176,25 @@ lspconfig.rust_analyzer.setup({
       enable = true,
     },
   },
-  on_attach = on_attach,
+  on_attach = function(client, bufnr)
+    print("Hello Rust")
+  end,
   capabilities = lsp_defaults,
 })
 
 lspconfig.sqlls.setup({
   handlers = handlers,
-  on_attach = on_attach,
+  on_attach = function(client, bufnr)
+    print("Hello SQL")
+  end,
   capabilities = lsp_defaults,
 })
 
 lspconfig.yamlls.setup({
   handlers = handlers,
-  on_attach = on_attach,
+  on_attach = function(client, bufnr)
+    print("Hello Yaml")
+  end,
   capabilities = lsp_defaults,
 })
 
@@ -230,7 +252,9 @@ lspconfig.omnisharp.setup({
   flags = {
     debounce_text_changes = 150,
   },
-  on_attach = on_attach,
+  on_attach = function(client, bufnr)
+    print("Hello Omnisharp")
+  end,
   capabilities = cmpcapabilities,
   cmd = { omnisharp_bin, "--languageserver", "--hostPID", tostring(pid) },
 })

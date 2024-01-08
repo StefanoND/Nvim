@@ -29,7 +29,8 @@ pomodoro.setup({
     -- The "System" notifier sends a system notification when the timer is finished.
     -- Currently this is only available on MacOS.
     -- Tracking: https://github.com/epwalsh/pomo.nvim/issues/3
-    { name = "System" },
+    -- { name = "System" },
+    -- { name = "Default" },
 
     -- You can also define custom notifiers by providing an "init" function instead of a name.
     -- See "Defining custom notifiers" below for an example 👇
@@ -41,7 +42,8 @@ pomodoro.setup({
     -- For example, use only the "System" notifier when you create a timer called "Break",
     -- e.g. ':TimerStart 2m Break'.
     Break = {
-      { name = "System" },
+      -- { name = "System" },
+      { name = "Default" },
     },
   },
 })

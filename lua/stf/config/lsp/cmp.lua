@@ -24,12 +24,6 @@ luasnip.config.setup({
 -- load vs-code like snippets from plugins
 require("luasnip.loaders.from_vscode").lazy_load()
 
-require("cmp").setup.cmdline(":", {
-  sources = {
-    { name = "cmdline", keyword_length = 2 },
-  },
-})
-
 local cmp_git = require("cmp_git")
 local format = require("cmp_git.format")
 local sort = require("cmp_git.sort")
@@ -273,4 +267,22 @@ cmp.setup({
     ghost_text = true,
     native_menu = false,
   },
+})
+
+-- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline({ "/", "?" }, {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = "buffer" },
+  },
+})
+
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline(":", {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = "path" },
+  }, {
+    { name = "cmdline", keyword_length = 2 },
+  }),
 })

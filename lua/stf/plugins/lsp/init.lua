@@ -64,6 +64,7 @@ return {
     dependencies = {
       { "hrsh7th/cmp-buffer" },
       { "hrsh7th/cmp-path" },
+      { "hrsh7th/cmp-cmdline" },
       { "onsails/lspkind.nvim" },
       { "L3MON4D3/LuaSnip" },
       { "saadparwaiz1/cmp_luasnip" },
@@ -105,9 +106,9 @@ return {
   },
   {
     "j-hui/fidget.nvim",
-    opts = {
-      -- options
-    },
+    config = function()
+      require("stf.config.lsp.fidget")
+    end,
   },
   {
     "OmniSharp/omnisharp-vim",

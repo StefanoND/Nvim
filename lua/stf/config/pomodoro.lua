@@ -1,5 +1,17 @@
 local pomodoro = require("pomo")
 
+-- Pomodoro 25/5 minutes work/break
+vim.keymap.set("n", "<leader>pow", "<cmd>TimerStart 25m work")
+vim.keymap.set("n", "<leader>pob", "<cmd>TimerStart 5m break")
+
+-- DeskTime's 52/17 minutes work/break
+vim.keymap.set("n", "<leader>pdw", "<cmd>TimerStart 52m work")
+vim.keymap.set("n", "<leader>pdb", "<cmd>TimerStart 17m break")
+
+-- DeskTime's updated 112/26 minutes work/break
+vim.keymap.set("n", "<leader>puw", "<cmd>TimerStart 112m work")
+vim.keymap.set("n", "<leader>pub", "<cmd>TimerStart 26m break")
+
 pomodoro.setup({
   -- How often the notifiers are updated.
   update_interval = 1000,
@@ -30,7 +42,6 @@ pomodoro.setup({
     -- Currently this is only available on MacOS.
     -- Tracking: https://github.com/epwalsh/pomo.nvim/issues/3
     -- { name = "System" },
-    -- { name = "Default" },
 
     -- You can also define custom notifiers by providing an "init" function instead of a name.
     -- See "Defining custom notifiers" below for an example 👇

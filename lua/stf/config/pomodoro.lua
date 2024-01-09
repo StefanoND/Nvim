@@ -1,16 +1,16 @@
 local pomodoro = require("pomo")
 
 -- Pomodoro 25/5 minutes work/break
-vim.keymap.set("n", "<leader>pow", "<cmd>TimerStart 25m work")
-vim.keymap.set("n", "<leader>pob", "<cmd>TimerStart 5m break")
+vim.keymap.set("n", "<leader>pow", "<cmd>TimerStart 25m work<CR>")
+vim.keymap.set("n", "<leader>pob", "<cmd>TimerStart 5m break<CR>")
 
 -- DeskTime's 52/17 minutes work/break
-vim.keymap.set("n", "<leader>pdw", "<cmd>TimerStart 52m work")
-vim.keymap.set("n", "<leader>pdb", "<cmd>TimerStart 17m break")
+vim.keymap.set("n", "<leader>pdw", "<cmd>TimerStart 52m work<CR>")
+vim.keymap.set("n", "<leader>pdb", "<cmd>TimerStart 17m break<CR>")
 
 -- DeskTime's updated 112/26 minutes work/break
-vim.keymap.set("n", "<leader>puw", "<cmd>TimerStart 112m work")
-vim.keymap.set("n", "<leader>pub", "<cmd>TimerStart 26m break")
+vim.keymap.set("n", "<leader>puw", "<cmd>TimerStart 112m work<CR>")
+vim.keymap.set("n", "<leader>pub", "<cmd>TimerStart 26m break<CR>")
 
 pomodoro.setup({
   -- How often the notifiers are updated.

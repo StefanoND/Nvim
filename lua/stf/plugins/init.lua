@@ -227,7 +227,7 @@ return {
   {
     "epwalsh/pomo.nvim",
     version = "*",
-    lazy = true,
+    lazy = false,
     cmd = { "TimerStart", "TimerRepeat" },
     dependencies = {
       "rcarriga/nvim-notify",

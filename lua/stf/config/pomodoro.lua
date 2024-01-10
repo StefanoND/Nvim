@@ -2,6 +2,10 @@ local pomodoro = require("pomo")
 
 local opts = { silent = true, remap = false }
 
+-- Pomodoro Hide/Show
+vim.keymap.set("n", "<leader>ph", "<cmd>TimerHide<CR>", opts)
+vim.keymap.set("n", "<leader>ps", "<cmd>TimerShow<CR>", opts)
+
 -- Pomodoro 25/5 minutes work/break
 vim.keymap.set("n", "<leader>pow", "<cmd>TimerStart 25m work<CR>", opts)
 vim.keymap.set("n", "<leader>pob", "<cmd>TimerStart 5m break<CR>", opts)

@@ -1,5 +1,3 @@
-local shouldUseMono = true
-
 local lsp = require("lsp-zero")
 lsp.extend_lspconfig()
 
@@ -206,6 +204,8 @@ local pid = vim.fn.getpid()
 -- Will update when this gets fixed (and if I remember)
 local omnisharp_bin
 
+-- local shouldUseMono =
+
 if vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 or vim.fn.has("win16") == 1 then
   lspconfig.powershell_es.setup({
     bundle_path = "path/to/your/bundle_path",
@@ -213,22 +213,18 @@ if vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 or vim.fn.has("win16") =
       enableProfileLoading = false,
     },
   })
-  if shouldUseMono == true then
-    omnisharp_bin = os.getenv("UserProfile") .. "/AppData/Local/nvim/omnisharp-mono_1.39.8/OmniSharp.exe"
-    -- omnisharp_bin = os.getenv("UserProfile") .. "/AppData/Local/nvim/omnisharp-mono_1.39.11/OmniSharp.exe"
-  else
-    omnisharp_bin = os.getenv("UserProfile") .. "/AppData/Local/nvim/omnisharp-win-x64_1.39.8/OmniSharp.exe"
-  end
+  omnisharp_bin = os.getenv("UserProfile") .. "/AppData/Local/nvim/omnisharp-mono_1.39.8/OmniSharp.exe"
 else -- I don't own/use a Mac, will update when/if I do
   omnisharp_bin = os.getenv("HOME") .. "/.config/nvim/omnisharp-linux-x64_1.39.8/run"
 end
 
-vim.g.OmniSharp_server_use_mono = 1
+vim.g.OmniSharp_server_use_mono = true
+vim.g.OmniSharp_server_stdio = 1
 
 lspconfig.omnisharp.enableImportCompletion = true
 
 lspconfig.omnisharp.setup({
-  use_mono = shouldUseMono,
+  use_mono = true,
   default_config = {
     filetypes = { "cs", "vb" },
     root_dir = function(fname)

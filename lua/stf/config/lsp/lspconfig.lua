@@ -138,7 +138,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     set("n", "gw", "<cmd>lua vim.lsp.buf.document_symbol()	<CR>", opts)
     set("n", "gw", "<cmd>lua vim.lsp.buf.workspace_symbol()	<CR>", opts)
     set("n", "gr", "<cmd>lua vim.lsp.buf.references()	<CR>", opts)
-    set("n", "gt", "<cmd>lua vim.lsp.buf.type_definition()	<CR>", opts)
+    set("n", "gtd", "<cmd>lua vim.lsp.buf.type_definition()	<CR>", opts)
     set("n", "K", "<cmd>lua vim.lsp.buf.hover()	<CR>", opts)
     set("i", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()	<CR>", opts)
     set("n", "<leader>af", "<cmd>lua vim.lsp.buf.code_action()	<CR>", opts)

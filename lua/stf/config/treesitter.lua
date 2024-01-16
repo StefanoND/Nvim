@@ -1,8 +1,7 @@
--- Must install LLVM https://github.com/llvm/llvm-project/releases
--- GCC doesn't work (even scoop's one)
-if vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 or vim.fn.has("win16") == 1 then
-  require("nvim-treesitter.install").compilers = { "clang" }
-end
+-- Windows: https://code.visualstudio.com/docs/cpp/config-mingw
+-- Follow the steps 1-7 of "Installing the MingGW-w64 toolchain"
+-- Before running "pacman -S --needed ...." run "pacman -Syu" first
+-- Choose the "mingw-w64-ucrt-x86_64-gcc" as of this writting, it is number 3 (Three)
 
 local treesitter = require("nvim-treesitter.configs")
 

@@ -2,6 +2,8 @@
 vim.opt.nu = true
 vim.opt.relativenumber = true
 
+vim.opt.encoding = "utf-8"
+
 -- Tab and indentation
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
@@ -30,7 +32,12 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true -- If mixed case in search, assumes case-sensitive
 
 vim.opt.cursorline = true
-vim.opt.termguicolors = true
+
+-- Use truecolor in the terminal, when it's supported
+if vim.fn.has("termguicolors") == 1 then
+  vim.opt.termguicolors = true
+end
+
 vim.opt.background = "dark"
 vim.opt.signcolumn = "yes"
 

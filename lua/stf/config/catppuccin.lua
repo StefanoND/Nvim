@@ -1,9 +1,7 @@
 local catppuccin = require("catppuccin")
 
--- Load the colorscheme here
-vim.cmd.colorscheme("catppuccin")
-
 catppuccin.setup({
+  flavour = "mocha",
   integrations = {
     cmp = true,
     fidget = true,
@@ -46,3 +44,6 @@ catppuccin.setup({
     },
   },
 })
+
+-- Setup must be called before loading
+vim.cmd.colorscheme("catppuccin")

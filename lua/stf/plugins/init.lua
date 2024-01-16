@@ -323,4 +323,18 @@ return {
       require("rainbow-delimiters.setup").setup()
     end,
   },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    config = function()
+      require("ibl").setup({
+        scope = { enabled = false },
+      })
+    end,
+  },
+  {
+    "norcalli/nvim-colorizer.lua",
+    config = function()
+      require("colorizer").setup()
+    end,
+  },
 }

@@ -1,4 +1,4 @@
-local opts = { remap = false, silent = false }
+local opts = { noremap = true, silent = false }
 
 vim.keymap.set("", "<leader>cg", "<cmd>CMakeGenerate<CR>", opts)
 vim.keymap.set("", "<leader>cb", "<cmd>CMakeBuild<CR>", opts)

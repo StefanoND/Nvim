@@ -1,7 +1,7 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-local opts = { remap = false, silent = true }
+local opts = { noremap = true, silent = true }
 
 vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle, opts)
 

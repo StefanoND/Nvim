@@ -1,6 +1,6 @@
 local trouble = require("trouble")
 
-local opts = { silent = true, remap = false }
+local opts = { silent = true, noremap = true }
 
 trouble.setup()
 -- trouble.setup({

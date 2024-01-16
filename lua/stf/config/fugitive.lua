@@ -12,7 +12,7 @@ autocmd("BufWinEnter", {
     end
 
     local bufnr = vim.api.nvim_get_current_buf()
-    local opts = { buffer = bufnr, remap = false }
+    local opts = { buffer = bufnr, noremap = true }
 
     vim.keymap.set("n", "<leader>gfa", function()
       vim.cmd.Git("add")

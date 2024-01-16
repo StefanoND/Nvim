@@ -1,6 +1,6 @@
 local nvimtree = require("nvim-tree")
 
-local opts = { remap = false, silent = true }
+local opts = { noremap = true, silent = true }
 
 vim.keymap.set("n", "<leader>op", "<cmd>NvimTreeToggle<CR>", opts)
 vim.keymap.set("n", "<leader>ef", "<cmd>NvimTreeFindFileToggle<CR>", opts)

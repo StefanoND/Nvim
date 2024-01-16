@@ -59,7 +59,7 @@ local on_attach = function(client, bufnr)
 
   vim.cmd("TwilightEnable")
   local set = vim.keymap.set
-  local opts = { buffer = bufnr, remap = false, silent = true }
+  local opts = { buffer = bufnr, noremap = true, silent = true }
 
   if client.name == "clangd" then
     client.server_capabilities.signatureHelpProvider = false

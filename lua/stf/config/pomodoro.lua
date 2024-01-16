@@ -1,6 +1,6 @@
 local pomodoro = require("pomo")
 
-local opts = { silent = true, remap = false }
+local opts = { silent = true, noremap = true }
 
 -- Pomodoro Hide/Show
 vim.keymap.set("n", "<leader>ph", "<cmd>TimerHide<CR>", opts)

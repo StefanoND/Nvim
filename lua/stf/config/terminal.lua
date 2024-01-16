@@ -1,10 +1,10 @@
 local terminal = require("toggleterm")
 
 terminal.setup({
-	persist_size = true,
+  persist_size = true,
 })
 
-local opts = { remap = false, silent = true }
+local opts = { noremap = true, silent = true }
 
 -- vim.keymap.set("n", "<C-t>", "<cmd>ToggleTerm fff<CR>")
 vim.keymap.set("n", "<C-t>", "<cmd>lua require'toggleterm'.exec('fff')<CR>", opts)

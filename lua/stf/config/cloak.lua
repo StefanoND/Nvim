@@ -20,4 +20,6 @@ require("cloak").setup({
   },
 })
 
-vim.keymap.set("n", "<leader>ct", "<cmd>CloakToggle<CR>", { remap = false, silent = true })
+local opts = { noremap = true, silent = true }
+
+vim.keymap.set("n", "<leader>ct", "<cmd>CloakToggle<CR>", opts)

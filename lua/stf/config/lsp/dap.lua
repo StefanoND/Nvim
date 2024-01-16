@@ -27,7 +27,9 @@ dap.listeners.before.event_exited["dapui_config"] = function()
   dapui.close()
 end
 
-vim.keymap.set("n", "<leader>dt", "<cmd>DapUiToggle<CR>", { remap = false })
-vim.keymap.set("n", "<leader>db", "<cmd>DapToggleBreakpoint<CR>", { remap = false })
-vim.keymap.set("n", "<leader>dc", "<cmd>DapContinue<CR>", { remap = false })
-vim.keymap.set("n", "<leader>dr", "<cmd>require('dapui').open({reset = true})<CR>", { remap = false })
+local opts = { noremap = true }
+
+vim.keymap.set("n", "<leader>dt", "<cmd>DapUiToggle<CR>", opts)
+vim.keymap.set("n", "<leader>db", "<cmd>DapToggleBreakpoint<CR>", opts)
+vim.keymap.set("n", "<leader>dc", "<cmd>DapContinue<CR>", opts)
+vim.keymap.set("n", "<leader>dr", "<cmd>require('dapui').open({reset = true})<CR>", opts)

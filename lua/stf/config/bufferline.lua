@@ -65,7 +65,7 @@ bufferline.setup({
   highlights = require("catppuccin.groups.integrations.bufferline").get(),
 })
 
-local opts = { remap = false, silent = true }
+local opts = { noremap = true, silent = true }
 
 vim.keymap.set("n", "gt", "<cmd>BufferLineCycleNext<CR>", opts)
 vim.keymap.set("n", "gT", "<cmd>BufferLineCyclePrev<CR>", opts)

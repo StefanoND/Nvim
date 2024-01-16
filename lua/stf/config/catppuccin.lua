@@ -17,7 +17,7 @@ catppuccin.setup({
     rainbow_delimiters = true,
     telescope = true,
     lsp_trouble = true,
-    gitgutter = true,
+    gitgutter = false,
     which_key = true,
     notify = true,
     mini = {

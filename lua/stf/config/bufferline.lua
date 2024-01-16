@@ -1,5 +1,7 @@
 local bufferline = require("bufferline")
 
+local mocha = require("catppuccin.palettes").get_palette("mocha")
+
 bufferline.setup({
   options = {
     mode = "buffers", -- set to "tabs" to only show tabpages instead
@@ -60,6 +62,7 @@ bufferline.setup({
       },
     },
   },
+  highlights = require("catppuccin.groups.integrations.bufferline").get(),
 })
 
 local opts = { remap = false, silent = true }

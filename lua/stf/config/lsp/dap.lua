@@ -4,10 +4,18 @@ local dapui = require("dapui")
 dapui.setup()
 require("nvim-dap-virtual-text").setup()
 
-vim.fn.sign_define(
-  "DapBreakpoint",
-  { text = "🔴", texthl = "DapBreakpoint", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }
-)
+-- CATPPUCCIN COMPATIBILITY START
+local sign = vim.fn.sign_define
+
+sign("DapBreakpoint", { text = "●", texthl = "DapBreakpoint", linehl = "", numhl = "" })
+sign("DapBreakpointCondition", { text = "●", texthl = "DapBreakpointCondition", linehl = "", numhl = "" })
+sign("DapLogPoint", { text = "◆", texthl = "DapLogPoint", linehl = "", numhl = "" })
+-- CATPPUCCIN COMPATIBILITY END
+
+-- vim.fn.sign_define(
+--   "DapBreakpoint",
+--   { text = "🔴", texthl = "DapBreakpoint", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }
+-- )
 
 dap.listeners.after.event_initialized["dapui_config"] = function()
   dapui.open()

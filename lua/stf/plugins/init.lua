@@ -4,8 +4,7 @@ return {
     name = "catppuccin",
     priority = 1000,
     config = function()
-      -- Load the colorscheme here
-      vim.cmd.colorscheme("catppuccin")
+      require("stf.config.catppuccin")
     end,
   },
   { -- file explorer for neovim
@@ -34,6 +33,14 @@ return {
     },
     config = function()
       require("stf.config.treesitter")
+    end,
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-context",
+    config = function()
+      require("treesitter-context").setup({
+        enable = true,
+      })
     end,
   },
   { -- fast file access
@@ -88,6 +95,7 @@ return {
   },
   {
     "akinsho/bufferline.nvim",
+    after = "catppuccin",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     version = "*",
     config = function()
@@ -307,6 +315,12 @@ return {
     dependencies = { "kevinhwang91/promise-async" },
     config = function()
       require("stf.config.ufo")
+    end,
+  },
+  {
+    "HiPhish/rainbow-delimiters.nvim",
+    config = function()
+      require("rainbow-delimiters.setup").setup()
     end,
   },
 }

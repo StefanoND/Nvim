@@ -56,9 +56,10 @@ local sources = {
   formatting.cmake_format.with({
     filetypes = { "cmake" },
   }),
-  formatting.csharpier.with({
-    filetypes = { "cs" },
-  }),
+  -- Have to disable csharpier since it conflitcts with omnisharp
+  -- formatting.csharpier.with({
+  --   filetypes = { "cs" },
+  -- }),
   formatting.gdformat.with({
     filetypes = { "gd", "gdscript", "gdscript3", "gdscript4" },
   }),
@@ -80,18 +81,17 @@ local sources = {
 
   actions.gitsigns,
   -- actions.gitsigns.with({
-  -- 	-- Callback to filter out unwanted actions
-  -- 	-- config = {
-  -- 	--     filter_actions = function(title)
-  -- 	--         return title:lower():match("blame") == nil -- filter out blame actions
-  -- 	--     end,
-  -- 	-- },
+  -- 	Callback to filter out unwanted actions
+  -- 	config = {
+  -- 	    filter_actions = function(title)
+  -- 	        return title:lower():match("blame") == nil -- filter out blame actions
+  -- 	    end,
+  -- 	},
   -- }),
   actions.refactoring,
 }
 
-local rootdir =
-  null_ls_utils.root_pattern(".null-ls-root", "Makefile", "CMakefile", ".git", ".sln", ".git", "package.json")
+local rootdir = null_ls_utils.root_pattern(".null-ls-root", "Makefile", "CMakefile", ".git", ".sln", "package.json")
 
 null_ls.setup({
   sources = sources,

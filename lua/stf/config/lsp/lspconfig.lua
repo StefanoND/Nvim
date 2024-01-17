@@ -65,9 +65,23 @@ local on_attach = function(client, bufnr)
     client.server_capabilities.signatureHelpProvider = false
   end
 
+  -- C# Adventures
   if client.name == "omnisharp" then
+    -- Let's use omnisharp's own implementation of definition
     set("n", "gd", "<cmd>lua require('omnisharp_extended').telescope_lsp_definitions()<CR>", opts)
     vim.api.nvim_command("setlocal omnifunc=v:lua.vim.lsp.omnifunc")
+
+    -- Only request omnisharp for formatting or other installed formatters
+    -- that supports C# will also format it.
+    set({ "n", "x" }, "<leader>f", function()
+      vim.lsp.buf.format({
+        filter = function(client)
+          return client.name == "omnisharp"
+        end,
+        async = true,
+        timeout_ms = 10000,
+      })
+    end, opts)
 
     -- "Hacky, non-future-proof fix" - Arocci, Nicolai
     client.server_capabilities.semanticTokensProvider = {
@@ -146,6 +160,7 @@ local on_attach = function(client, bufnr)
     }
   else
     set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+    set({ "n", "x" }, "<leader>f", "<cmd>lua vim.lsp.buf.format({ async = true, timeout_ms = 10000 })<CR>", opts)
   end
 
   set("n", "gpd", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", opts)
@@ -168,8 +183,6 @@ local on_attach = function(client, bufnr)
   set("n", "[d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
   set("n", "]d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
   set("n", "<leader>vd", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
-
-  set({ "n", "x" }, "<leader>f", "<cmd>lua vim.lsp.buf.format({ async = true, timeout_ms = 10000 })<CR>", opts)
 end
 -- })
 

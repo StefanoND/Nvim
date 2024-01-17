@@ -13,8 +13,8 @@ org.setup({
     ["core.dirman"] = { -- Manages Neorg workspaces
       config = {
         workspaces = {
-          notes = "/mnt/SSD_1TB_WORK/org",
-          misc = "/mnt/SSD_1TB_WORK/org/misc",
+          notes = "~/org",
+          misc = "~/org/misc",
         },
       },
     },

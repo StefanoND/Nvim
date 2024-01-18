@@ -43,43 +43,24 @@ local on_attach = function(client, bufnr)
 end
 
 local formatting = null_ls.builtins.formatting -- to setup formatters
-local diagnostics = null_ls.builtins.diagnostics -- to setup linters
-local actions = null_ls.builtins.code_actions -- to setup linters
+-- local diagnostics = null_ls.builtins.diagnostics -- to setup linters
+-- local actions = null_ls.builtins.code_actions -- to setup linters
 
 local sources = {
-  formatting.biome.with({
-    filetypes = { "json" },
-  }),
+  formatting.biome,
   formatting.clang_format.with({
-    filetypes = { "c", "cpp" },
+    disabled_filetypes = "cs", -- Don't want it messing with C#
   }),
-  formatting.cmake_format.with({
-    filetypes = { "cmake" },
-  }),
-  -- Have to disable csharpier since it conflitcts with omnisharp
-  -- formatting.csharpier.with({
-  --   filetypes = { "cs" },
-  -- }),
-  formatting.gdformat.with({
-    filetypes = { "gd", "gdscript", "gdscript3", "gdscript4" },
-  }),
-  formatting.prettier.with({
-    filetypes = { "yaml" },
-  }),
-  formatting.rustfmt.with({
-    filetypes = { "rust" },
-  }),
-  formatting.shellharden.with({
-    filetypes = { "sh" },
-  }),
-  formatting.sqlfluff.with({
-    filetypes = { "sql" },
-  }),
-  formatting.stylua.with({
-    filetypes = { "lua" },
-  }),
+  formatting.cmake_format,
+  formatting.csharpier,
+  formatting.gdformat,
+  formatting.prettier,
+  formatting.rustfmt,
+  formatting.shellharden,
+  formatting.sqlfluff,
+  formatting.stylua,
 
-  actions.gitsigns,
+  -- actions.gitsigns,
   -- actions.gitsigns.with({
   -- 	Callback to filter out unwanted actions
   -- 	config = {
@@ -88,7 +69,7 @@ local sources = {
   -- 	    end,
   -- 	},
   -- }),
-  actions.refactoring,
+  -- actions.refactoring,
 }
 
 local rootdir = null_ls_utils.root_pattern(".null-ls-root", "Makefile", "CMakefile", ".git", ".sln", "package.json")

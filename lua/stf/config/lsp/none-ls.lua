@@ -2,15 +2,15 @@ local mason_null_ls = require("mason-null-ls")
 
 mason_null_ls.setup({
   ensure_installed = {
-    "shellharden", -- bash formatter and linter
-    "clang-format", -- C/C++ formatter
-    "cmakelang", -- CMAKE formatter and linter
-    "csharpier", -- C# formatter
-    "gdtoolkit", -- Godot formatter and linter
-    "biome", -- formatter and linter
-    "stylua", -- Lua formatter and linter
+    "shellharden",   -- bash formatter and linter
+    "clang-format",  -- C/C++ formatter
+    "cmakelang",     -- CMAKE formatter and linter
+    "csharpier",     -- C# formatter
+    "gdtoolkit",     -- Godot formatter and linter
+    "biome",         -- formatter and linter
+    "stylua",        -- Lua formatter and linter
     "sql-formatter", -- SQL formatter
-    "prettier", -- Prettier formatter
+    "prettier",      -- Prettier formatter
   },
   automatic_installation = true,
   handlers = {},
@@ -49,7 +49,7 @@ local formatting = null_ls.builtins.formatting -- to setup formatters
 local sources = {
   formatting.biome,
   formatting.clang_format.with({
-    disabled_filetypes = "cs", -- Don't want it messing with C#
+    disabled_filetypes = { "cs" }, -- Don't want it messing with C#
   }),
   formatting.cmake_format,
   formatting.csharpier,

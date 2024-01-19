@@ -116,4 +116,7 @@ return {
       "ctrlpvim/ctrlp.vim",
     },
   },
+  {
+    "habamax/vim-godot",
+  },
 }

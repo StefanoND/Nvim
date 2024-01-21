@@ -1,6 +1,7 @@
 local dap = require("dap")
 local dapui = require("dapui")
 
+-- GODOT DEBUGGING
 -- Need "netcat" installed
 dap.adapters.godot = {
   type = "server",
@@ -37,6 +38,8 @@ dap.configurations.gdscript = {
   },
 }
 
+-- UNITY DEBUGGING
+-- https://docs.unity3d.com/Manual/ManagedCodeDebugging.html
 local omnisharp_bin
 if vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 or vim.fn.has("win16") == 1 then
   omnisharp_bin = os.getenv("UserProfile") .. "/AppData/Local/nvim/omnisharp-mono_1.39.8/OmniSharp.exe"
@@ -48,7 +51,7 @@ end
 dap.adapters.unity = {
   type = "executable",
   command = omnisharp_bin,
-  args = { "<path-to-unity-debug-directory>/unity.unity-debug-x.x.x/bin/UnityDebug.exe" },
+  args = { "/mnt/SSD_1TB_WORK/Unity/Editors/2023.2.5f1/Editor/Unity_s.debug" },
 }
 
 dap.configurations.cs = {

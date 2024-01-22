@@ -1,10 +1,12 @@
 # nvim
 
-## My own vanilla neovim config from scratch
+### My own vanilla neovim config from scratch
+
+
 
 ## FOR WINDOWS USERS
 
-### You'll have issues with treesitter and telescope.
+### You'll have issues with treesitter and telescope-fzf, follow the steps below to remedy that.
 
 ## Treesitter
 

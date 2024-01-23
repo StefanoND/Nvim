@@ -58,7 +58,7 @@ vim.opt.updatetime = 50
 -- Better completion experience
 vim.opt.completeopt = "menu,menuone,preview,noselect"
 
-vim.opt.colorcolumn = "110"
+vim.opt.colorcolumn = "120"
 
 -- Concealer for Neorg
 vim.o.conceallevel = 2

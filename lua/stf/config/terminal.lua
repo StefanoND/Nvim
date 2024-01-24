@@ -6,8 +6,7 @@ terminal.setup({
 
 local opts = { noremap = true, silent = true }
 
--- vim.keymap.set("n", "<C-t>", "<cmd>ToggleTerm fff<CR>")
-vim.keymap.set("n", "<C-t>", "<cmd>lua require'toggleterm'.exec('fff')<CR>", opts)
+vim.keymap.set("n", "<C-t>", "<cmd>lua require'toggleterm'.exec('ranger')<CR>", opts)
 
 vim.keymap.set("n", "<leader>h", "<cmd>ToggleTerm<CR>", opts)
 vim.keymap.set("t", "<esc>", [[<C-\><C-n>]])

@@ -177,7 +177,7 @@ local on_attach = function(client, bufnr)
   set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
   set("i", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
   set("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-  set("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
+  set("n", "<leader>cr", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
 
   set("n", "[d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
   set("n", "]d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)

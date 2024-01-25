@@ -165,14 +165,11 @@ return {
   {
     "mg979/vim-visual-multi",
     event = "VeryLazy",
-    config = function()
-      require("stf.config.visual-multi")
-    end,
   },
-  {
-    "stevearc/dressing.nvim",
-    event = "VeryLazy",
-  },
+  -- {
+  --   "stevearc/dressing.nvim",
+  --   event = "VeryLazy",
+  -- },
   {
     "windwp/nvim-autopairs",
     event = { "InsertEnter", "CmdLineEnter" },

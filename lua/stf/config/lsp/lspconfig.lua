@@ -73,7 +73,7 @@ local on_attach = function(client, bufnr)
 
     -- Only request omnisharp for formatting or other installed formatters
     -- that supports C# will also format it.
-    -- set({ "n", "x" }, "<leader>f", function()
+    -- set({ "n", "x" }, "<leader>cf", function()
     --   vim.lsp.buf.format({
     --     filter = function(client)
     --       return client.name == "omnisharp"
@@ -182,7 +182,7 @@ local on_attach = function(client, bufnr)
   set("n", "[d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
   set("n", "]d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
   set("n", "<leader>vd", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
-  set({ "n", "x" }, "<leader>f", "<cmd>lua vim.lsp.buf.format({ async = true, timeout_ms = 10000 })<CR>", opts)
+  set({ "n", "x" }, "<leader>cf", "<cmd>lua vim.lsp.buf.format({ async = true, timeout_ms = 10000 })<CR>", opts)
 end
 -- })
 

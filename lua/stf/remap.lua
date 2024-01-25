@@ -3,11 +3,10 @@ vim.g.maplocalleader = " "
 
 local opts = { noremap = true, silent = true }
 
-vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle, opts)
+vim.keymap.set("n", "<leader>su", vim.cmd.UndotreeToggle, opts)
 
 -- Close buffers
-vim.keymap.set("i", "<C-d>", "<cmd>bd<CR>", opts)
-vim.keymap.set("n", "D", "<cmd>bd<CR>", opts)
+vim.keymap.set("n", "<C-x>k", "<cmd>bd<CR>", opts)
 
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", opts) -- Move selection up
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", opts) -- Move selection down

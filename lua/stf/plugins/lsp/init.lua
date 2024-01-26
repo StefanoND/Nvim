@@ -78,6 +78,25 @@ return {
     end,
   },
   {
+    "L3MON4D3/LuaSnip",
+    version = "2.*",
+    build = function()
+      if vim.fn.has("win64") ~= 1 and vim.fn.has("win32") ~= 1 and vim.fn.has("win16") ~= 1 then
+        return "make install_jsregexp"
+      end
+    end,
+    config = function()
+      require("stf.config.lsp.luasnip")
+    end,
+  },
+  {
+    "danymat/neogen",
+    dependencies = { "nvim-treesitter/nvim-treesitter", "L3MON4D3/LuaSnip" },
+    config = function()
+      require("stf.config.lsp.neogen")
+    end,
+  },
+  {
     "mfussenegger/nvim-dap",
     dependencies = {
       "theHamsta/nvim-dap-virtual-text",

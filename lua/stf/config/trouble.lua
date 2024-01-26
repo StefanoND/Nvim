@@ -10,12 +10,25 @@ trouble.setup()
 --   -- refer to the configuration section below
 -- })
 
-vim.keymap.set("n", "<leader>xx", "<cmd>TroubleToggle<cr>", opts)
-vim.keymap.set("n", "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>", opts)
-vim.keymap.set("n", "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>", opts)
-vim.keymap.set("n", "<leader>xl", "<cmd>TroubleToggle loclist<cr>", opts)
-vim.keymap.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>", opts)
-vim.keymap.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>", opts)
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(client, bufnr)
+    vim.keymap.set("n", "<leader>tt", function()
+      trouble.toggle()
+    end, opts)
+    vim.keymap.set("n", "<leader>tn", function()
+      trouble.next({ skip_groups = true, jump = true })
+    end, opts)
+    vim.keymap.set("n", "<leader>tp", function()
+      trouble.previous({ skip_groups = true, jump = true })
+    end, opts)
+
+    vim.keymap.set("n", "<leader>tw", "<cmd>TroubleToggle workspace_diagnostics<cr>", opts)
+    vim.keymap.set("n", "<leader>td", "<cmd>TroubleToggle document_diagnostics<cr>", opts)
+    vim.keymap.set("n", "<leader>tl", "<cmd>TroubleToggle loclist<cr>", opts)
+    vim.keymap.set("n", "<leader>tq", "<cmd>TroubleToggle quickfix<cr>", opts)
+    vim.keymap.set("n", "tgR", "<cmd>TroubleToggle lsp_references<cr>", opts)
+  end,
+})
 
 -- Diagnostic signs
 -- https://github.com/folke/trouble.nvim/issues/52

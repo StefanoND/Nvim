@@ -1,9 +1,12 @@
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
-
-local opts = { noremap = true, silent = true }
+local opts = { noremap = true, remap = false, silent = true }
 
 vim.keymap.set("n", "<leader>su", vim.cmd.UndotreeToggle, opts)
+
+-- navigation
+vim.keymap.set("i", "<C-h>", "<left>", opts)
+vim.keymap.set("i", "<C-j>", "<down>", opts)
+vim.keymap.set("i", "<C-k>", "<up>", opts)
+vim.keymap.set("i", "<C-l>", "<right>", opts)
 
 -- Close buffers
 vim.keymap.set("n", "D", "<cmd>bd<CR>", opts)

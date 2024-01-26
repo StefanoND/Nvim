@@ -50,7 +50,8 @@ local on_attach = function(client, bufnr)
   --   callback = function(client, bufnr)
 
   -- Refresh codelens on TextChanged, BufEnter, CursorHold and InsertLeave
-  vim.api.nvim_create_autocmd({ "TextChanged", "BufEnter", "CursorHold", "InsertLeave" }, {
+  -- vim.api.nvim_create_autocmd({ "TextChanged", "BufEnter", "CursorHold", "InsertLeave" }, {
+  vim.api.nvim_create_autocmd({ "TextChanged", "BufEnter", "InsertLeave" }, {
     buffer = bufnr,
     callback = vim.lsp.codelens.refresh,
   })
@@ -175,12 +176,10 @@ local on_attach = function(client, bufnr)
   set("n", "gpt", "<cmd>lua require('goto-preview').goto_preview_type_definition()<CR>", opts)
   set("n", "gP", "<cmd>lua require('goto-preview').close_all_win()<CR>", opts)
   set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-  set("i", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+  set("i", "<C-s>h", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
   set("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
   set("n", "<leader>cr", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
 
-  set("n", "[d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
-  set("n", "]d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
   set("n", "<leader>vd", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
   set({ "n", "x" }, "<leader>cf", "<cmd>lua vim.lsp.buf.format({ async = true, timeout_ms = 10000 })<CR>", opts)
 end
@@ -193,67 +192,67 @@ for type, icon in pairs(signs) do
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 end
 
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "sh",
-  callback = function()
-    vim.lsp.start({
-      name = "bash-language-server",
-      cmd = { "bash-language-server", "start" },
-    })
-  end,
-})
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = "sh",
+--   callback = function()
+--     vim.lsp.start({
+--       name = "bash-language-server",
+--       cmd = { "bash-language-server", "start" },
+--     })
+--   end,
+-- })
 
 lspconfig.bashls.setup({
   handlers = handlers,
-  on_attach = on_attach,
-  -- on_attach = function(client, bufnr)
-  --   print("Hello bash")
-  -- end,
+  on_attach = function(client, bufnr)
+    on_attach(client, bufnr)
+    print("Hello bash")
+  end,
   capabilities = lsp_defaults,
 })
 
 lspconfig.clangd.setup({
   handlers = handlers,
-  on_attach = on_attach,
-  -- on_attach = function(client, bufnr)
-  --   print("Hello C/C++")
-  -- end,
+  on_attach = function(client, bufnr)
+    on_attach(client, bufnr)
+    print("Hello C/C++")
+  end,
   capabilities = clangcapabilities,
 })
 
 lspconfig.cmake.setup({
   handlers = handlers,
-  on_attach = on_attach,
-  -- on_attach = function(client, bufnr)
-  --   print("Hello CMake")
-  -- end,
+  on_attach = function(client, bufnr)
+    on_attach(client, bufnr)
+    print("Hello CMake")
+  end,
   capabilities = lsp_defaults,
 })
 
 lspconfig.gdscript.setup({
   handlers = handlers,
-  on_attach = on_attach,
-  -- on_attach = function(client, bufnr)
-  --   print("Hello Godot")
-  -- end,
+  on_attach = function(client, bufnr)
+    on_attach(client, bufnr)
+    print("Hello Godot")
+  end,
   capabilities = lsp_defaults,
 })
 
 lspconfig.jsonls.setup({
   handlers = handlers,
-  on_attach = on_attach,
-  -- on_attach = function(client, bufnr)
-  --   print("Hello Json")
-  -- end,
+  on_attach = function(client, bufnr)
+    on_attach(client, bufnr)
+    print("Hello Json")
+  end,
   capabilities = lsp_defaults,
 })
 
 lspconfig.lua_ls.setup({
   handlers = handlers,
-  on_attach = on_attach,
-  -- on_attach = function(client, bufnr)
-  --   print("Hello Lua")
-  -- end,
+  on_attach = function(client, bufnr)
+    on_attach(client, bufnr)
+    print("Hello Lua")
+  end,
   capabilities = lsp_defaults,
   settings = { -- custom settings for lua
     Lua = {
@@ -290,28 +289,28 @@ lspconfig.rust_analyzer.setup({
       enable = true,
     },
   },
-  on_attach = on_attach,
-  -- on_attach = function(client, bufnr)
-  --   print("Hello Rust")
-  -- end,
+  on_attach = function(client, bufnr)
+    on_attach(client, bufnr)
+    print("Hello Rust")
+  end,
   capabilities = lsp_defaults,
 })
 
 lspconfig.sqlls.setup({
   handlers = handlers,
-  on_attach = on_attach,
-  -- on_attach = function(client, bufnr)
-  --   print("Hello SQL")
-  -- end,
+  on_attach = function(client, bufnr)
+    on_attach(client, bufnr)
+    print("Hello SQL")
+  end,
   capabilities = lsp_defaults,
 })
 
 lspconfig.yamlls.setup({
   handlers = handlers,
-  on_attach = on_attach,
-  -- on_attach = function(client, bufnr)
-  --   print("Hello Yaml")
-  -- end,
+  on_attach = function(client, bufnr)
+    on_attach(client, bufnr)
+    print("Hello Yaml")
+  end,
   capabilities = lsp_defaults,
 })
 
@@ -367,14 +366,16 @@ lspconfig.omnisharp.setup({
   flags = {
     debounce_text_changes = 150,
   },
-  on_attach = on_attach,
-  -- on_attach = function(client, bufnr)
-  --   print("Hello Omnisharp")
-  -- end,
+  on_attach = function(client, bufnr)
+    on_attach(client, bufnr)
+    print("Hello Omnisharp")
+  end,
   capabilities = cmpcapabilities,
   cmd = { omnisharp_bin, "--languageserver", "--hostPID", tostring(pid) },
 })
 
 vim.diagnostic.config({
+  update_in_insert = true,
+  float = { focusable = false, style = "minimal", border = "rounded", source = "always", header = "", prefix = "" },
   virtual_text = true,
 })

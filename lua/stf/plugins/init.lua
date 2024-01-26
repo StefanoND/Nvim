@@ -23,6 +23,12 @@ return {
       require("stf.config.tree")
     end,
   },
+  {
+    "nvim-tree/nvim-web-devicons",
+    config = function()
+      require("stf.config.devicons")
+    end,
+  },
   { -- parser
     "nvim-treesitter/nvim-treesitter",
     lazy = false,
@@ -337,5 +343,11 @@ return {
   {
     "christoomey/vim-tmux-navigator",
     lazy = false,
+  },
+  {
+    "ThePrimeagen/vim-be-good",
+    config = function()
+      vim.keymap.set("n", "<leader>vb", ":VimBeGood<CR>", { noremap = true, silent = true })
+    end,
   },
 }

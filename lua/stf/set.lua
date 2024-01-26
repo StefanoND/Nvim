@@ -4,6 +4,21 @@ vim.opt.relativenumber = true
 
 vim.opt.encoding = "utf-8"
 
+vim.g.editorconfig = true
+
+-- " Disable function highlighting (affects both C and C++ files)
+vim.g.cpp_function_highlight = 1
+
+-- " Enable highlighting of C++11 attributes
+vim.g.cpp_attributes_highlight = 1
+
+-- " Highlight struct/class member variables (affects both C and C++ files)
+vim.g.cpp_member_highlight = 1
+
+-- " Put all standard C and C++ keywords under Vim's highlight group 'Statement'
+-- " (affects both C and C++ files)
+vim.g.cpp_simple_highlight = 1
+
 -- Tab and indentation
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2

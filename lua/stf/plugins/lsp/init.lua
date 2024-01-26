@@ -138,4 +138,7 @@ return {
   {
     "habamax/vim-godot",
   },
+  {
+    "bfrg/vim-cpp-modern",
+  },
 }

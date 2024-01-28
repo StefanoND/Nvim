@@ -64,6 +64,9 @@ local on_attach = function(client, bufnr)
 
   if client.name == "clangd" then
     client.server_capabilities.signatureHelpProvider = false
+    vim.opt.tabstop = 4
+    vim.opt.softtabstop = 4
+    vim.opt.shiftwidth = 4
   end
 
   -- C# Adventures

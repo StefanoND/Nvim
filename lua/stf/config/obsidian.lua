@@ -10,6 +10,10 @@ obisidan.setup({
   -- You can also provide configuration overrides for each workspace through the `overrides` field.
   workspaces = {
     {
+      name = "main",
+      path = "~/vault",
+    },
+    {
       name = "notes",
       path = "~/vault/notes",
     },
@@ -52,7 +56,7 @@ obisidan.setup({
   templates = {
     subdir = "templates",
     date_format = "%a - %d/%m/%Y",
-    time_format = "%H:%M",
+    time_format = "%H:%M:%S",
     -- A map for custom variables, the key should be the variable and the value a function
   },
 })

@@ -25,6 +25,8 @@ treesitter.setup({
     "json",
     "lua",
     "llvm",
+    "norg",
+    "norg_meta",
     "make",
     "markdown",
     "markdown_inline",

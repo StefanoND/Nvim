@@ -64,6 +64,7 @@ return {
     branch = "0.1.x",
     dependencies = {
       "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope-symbols.nvim",
       {
         "nvim-telescope/telescope-fzf-native.nvim",
         build = "make",
@@ -133,16 +134,16 @@ return {
       -- Config here
     },
   },
-  {
-    "ThePrimeagen/refactoring.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
-    },
-    config = function()
-      require("stf.config.refactoring")
-    end,
-  },
+  -- {
+  --   "ThePrimeagen/refactoring.nvim",
+  --   dependencies = {
+  --     "nvim-lua/plenary.nvim",
+  --     "nvim-treesitter/nvim-treesitter",
+  --   },
+  --   config = function()
+  --     require("stf.config.refactoring")
+  --   end,
+  -- },
   {
     "folke/trouble.nvim",
     event = "VeryLazy",
@@ -172,10 +173,6 @@ return {
     "mg979/vim-visual-multi",
     event = "VeryLazy",
   },
-  -- {
-  --   "stevearc/dressing.nvim",
-  --   event = "VeryLazy",
-  -- },
   {
     "windwp/nvim-autopairs",
     event = { "InsertEnter", "CmdLineEnter" },
@@ -194,12 +191,6 @@ return {
     "cdelledonne/vim-cmake",
     config = function()
       require("stf.config.cmake")
-    end,
-  },
-  {
-    "alepez/vim-gtest",
-    config = function()
-      require("stf.config.gtest")
     end,
   },
   {
@@ -228,12 +219,11 @@ return {
   },
   {
     "nvim-neorg/neorg",
-    build = ":Neorg sync-parsers",
-    lazy = false,
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
       require("stf.config.neorg")
     end,
+    build = ":Neorg sync-parsers",
   },
   {
     "epwalsh/pomo.nvim",
@@ -282,14 +272,13 @@ return {
       })
     end,
   },
-  "nvim-telescope/telescope-symbols.nvim",
-  {
-    "folke/twilight.nvim",
-    cmd = { "TwilightEnable" },
-    config = function()
-      require("stf.config.twilight")
-    end,
-  },
+  -- {
+  --   "folke/twilight.nvim",
+  --   cmd = { "TwilightEnable" },
+  --   config = function()
+  --     require("stf.config.twilight")
+  --   end,
+  -- },
   {
     "Exafunction/codeium.nvim",
     event = "BufEnter",
@@ -334,16 +323,12 @@ return {
       require("stf.config.indent")
     end,
   },
-  {
-    "norcalli/nvim-colorizer.lua",
-    config = function()
-      require("colorizer").setup()
-    end,
-  },
-  {
-    "christoomey/vim-tmux-navigator",
-    lazy = false,
-  },
+  -- {
+  --   "norcalli/nvim-colorizer.lua",
+  --   config = function()
+  --     require("colorizer").setup()
+  --   end,
+  -- },
   {
     "ThePrimeagen/vim-be-good",
     config = function()

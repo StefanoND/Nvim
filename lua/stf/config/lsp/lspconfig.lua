@@ -87,6 +87,8 @@ local on_attach = function(client, bufnr)
     --   })
     -- end, opts)
 
+    vim.opt.wrap = false
+
     -- "Hacky, non-future-proof fix" - Arocci, Nicolai
     client.server_capabilities.semanticTokensProvider = {
       full = vim.empty_dict(),

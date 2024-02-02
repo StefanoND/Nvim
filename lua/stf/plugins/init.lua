@@ -186,6 +186,9 @@ return {
   {
     "dapt4/vim-autoSurround",
     lazy = false,
+    config = function()
+      require("stf.config.surround")
+    end,
   },
   {
     "cdelledonne/vim-cmake",

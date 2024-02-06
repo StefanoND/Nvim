@@ -35,23 +35,23 @@ autopairs.add_rules(require("nvim-autopairs.rules.endwise-lua"))
 local aprule = require("nvim-autopairs.rule")
 local apcond = require("nvim-autopairs.conds")
 
-autopairs.add_rules({
-  aprule("*", "*", { "org", "norg" }):with_pair(apcond.not_after_regex("[^.,;>)%]}]")),
-  aprule("/", "/", { "org", "norg" }):with_pair(apcond.not_after_regex("[^.,;>)%]}]")),
-  aprule("_", "_", { "org", "norg" }):with_pair(apcond.not_after_regex("[^.,;>)%]}]")),
-  aprule("-", "-", { "org", "norg" }):with_pair(apcond.not_after_regex("[^.,;>)%]}]")),
-  aprule("!", "!", { "org", "norg" }):with_pair(apcond.not_after_regex("[^.,;>)%]}]")),
-  aprule("`", "`", { "org", "norg" }):with_pair(apcond.not_after_regex("[^.,;>)%]}]")),
-  aprule("^", "^", { "org", "norg" }):with_pair(apcond.not_after_regex("[^.,;>)%]}]")),
-  aprule(",", ",", { "org", "norg" }):with_pair(apcond.not_after_regex("[^.,;>)%]}]")),
-  aprule("$", "$", { "org", "norg" }):with_pair(apcond.not_after_regex("[^.,;>)%]}]")),
-  aprule("&", "&", { "org", "norg" }):with_pair(apcond.not_after_regex("[^.,;>)%]}]")),
-  aprule("%", "%", { "org", "norg" }):with_pair(apcond.not_after_regex("[^.,;>)%]}]")),
-  -- aprule("", "", { "org", "norg" }):with_pair(apcond.not_after_regex("[^.,;>)%]}]")),
-
-  aprule("**", "**", "markdown"):with_pair(apcond.not_after_regex("[^.,;>)%]}]")),
-  aprule("_", "_", "markdown"):with_pair(apcond.not_after_regex("[^.,;>)%]}]")),
-})
+-- autopairs.add_rules({
+--   aprule("*", "*", { "org", "norg" }):with_pair(apcond.not_after_regex("[^.,;>)%]}]")),
+--   aprule("/", "/", { "org", "norg" }):with_pair(apcond.not_after_regex("[^.,;>)%]}]")),
+--   aprule("_", "_", { "org", "norg" }):with_pair(apcond.not_after_regex("[^.,;>)%]}]")),
+--   aprule("-", "-", { "org", "norg" }):with_pair(apcond.not_after_regex("[^.,;>)%]}]")),
+--   aprule("!", "!", { "org", "norg" }):with_pair(apcond.not_after_regex("[^.,;>)%]}]")),
+--   aprule("`", "`", { "org", "norg" }):with_pair(apcond.not_after_regex("[^.,;>)%]}]")),
+--   aprule("^", "^", { "org", "norg" }):with_pair(apcond.not_after_regex("[^.,;>)%]}]")),
+--   aprule(",", ",", { "org", "norg" }):with_pair(apcond.not_after_regex("[^.,;>)%]}]")),
+--   aprule("$", "$", { "org", "norg" }):with_pair(apcond.not_after_regex("[^.,;>)%]}]")),
+--   aprule("&", "&", { "org", "norg" }):with_pair(apcond.not_after_regex("[^.,;>)%]}]")),
+--   aprule("%", "%", { "org", "norg" }):with_pair(apcond.not_after_regex("[^.,;>)%]}]")),
+--   -- aprule("", "", { "org", "norg" }):with_pair(apcond.not_after_regex("[^.,;>)%]}]")),
+--
+--   aprule("**", "**", "markdown"):with_pair(apcond.not_after_regex("[^.,;>)%]}]")),
+--   aprule("_", "_", "markdown"):with_pair(apcond.not_after_regex("[^.,;>)%]}]")),
+-- })
 
 local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 local cmp = require("cmp")

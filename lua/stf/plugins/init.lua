@@ -240,17 +240,17 @@ return {
       require("stf.config.pomodoro")
     end,
   },
-  {
-    "tpope/vim-dadbod",
-    opt = true,
-    requires = {
-      "kristijanhusak/vim-dadbod-ui",
-      "kristijanhusak/vim-dadbod-completion",
-    },
-    config = function()
-      require("stf.config.dadbod").setup()
-    end,
-  },
+  -- {
+  --   "tpope/vim-dadbod",
+  --   opt = true,
+  --   requires = {
+  --     "kristijanhusak/vim-dadbod-ui",
+  --     "kristijanhusak/vim-dadbod-completion",
+  --   },
+  --   config = function()
+  --     require("stf.config.dadbod").setup()
+  --   end,
+  -- },
   "ThePrimeagen/git-worktree.nvim",
   {
     "rmagatti/goto-preview",

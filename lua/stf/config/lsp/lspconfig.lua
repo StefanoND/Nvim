@@ -243,14 +243,14 @@ lspconfig.gdscript.setup({
   capabilities = lsp_defaults,
 })
 
-lspconfig.jsonls.setup({
-  handlers = handlers,
-  on_attach = function(client, bufnr)
-    on_attach(client, bufnr)
-    print("Hello Json")
-  end,
-  capabilities = lsp_defaults,
-})
+-- lspconfig.jsonls.setup({
+--   handlers = handlers,
+--   on_attach = function(client, bufnr)
+--     on_attach(client, bufnr)
+--     print("Hello Json")
+--   end,
+--   capabilities = lsp_defaults,
+-- })
 
 lspconfig.lua_ls.setup({
   handlers = handlers,
@@ -276,48 +276,48 @@ lspconfig.lua_ls.setup({
   },
 })
 
-lspconfig.rust_analyzer.setup({
-  handlers = handlers,
-  settings = {
-    imports = {
-      granularity = {
-        group = "module",
-      },
-      prefix = "self",
-    },
-    cargo = {
-      buildScripts = {
-        enable = true,
-      },
-    },
-    procMacro = {
-      enable = true,
-    },
-  },
-  on_attach = function(client, bufnr)
-    on_attach(client, bufnr)
-    print("Hello Rust")
-  end,
-  capabilities = lsp_defaults,
-})
-
-lspconfig.sqlls.setup({
-  handlers = handlers,
-  on_attach = function(client, bufnr)
-    on_attach(client, bufnr)
-    print("Hello SQL")
-  end,
-  capabilities = lsp_defaults,
-})
-
-lspconfig.yamlls.setup({
-  handlers = handlers,
-  on_attach = function(client, bufnr)
-    on_attach(client, bufnr)
-    print("Hello Yaml")
-  end,
-  capabilities = lsp_defaults,
-})
+-- lspconfig.rust_analyzer.setup({
+--   handlers = handlers,
+--   settings = {
+--     imports = {
+--       granularity = {
+--         group = "module",
+--       },
+--       prefix = "self",
+--     },
+--     cargo = {
+--       buildScripts = {
+--         enable = true,
+--       },
+--     },
+--     procMacro = {
+--       enable = true,
+--     },
+--   },
+--   on_attach = function(client, bufnr)
+--     on_attach(client, bufnr)
+--     print("Hello Rust")
+--   end,
+--   capabilities = lsp_defaults,
+-- })
+--
+-- lspconfig.sqlls.setup({
+--   handlers = handlers,
+--   on_attach = function(client, bufnr)
+--     on_attach(client, bufnr)
+--     print("Hello SQL")
+--   end,
+--   capabilities = lsp_defaults,
+-- })
+--
+-- lspconfig.yamlls.setup({
+--   handlers = handlers,
+--   on_attach = function(client, bufnr)
+--     on_attach(client, bufnr)
+--     print("Hello Yaml")
+--   end,
+--   capabilities = lsp_defaults,
+-- })
 
 -- Omnisharp/C#/Unity
 local pid = vim.fn.getpid()

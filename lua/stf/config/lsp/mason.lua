@@ -46,7 +46,7 @@ masontools.setup({
     "clangd", -- LSP
     "codelldb", -- DAP
     "clang-format", -- formatter
-    "cpplint", -- linter
+    -- "cpplint", -- linter - DEPRECATED, use clangd
     -- CSHARP
     "csharp-language-server", -- LSP
     "omnisharp", -- LSP

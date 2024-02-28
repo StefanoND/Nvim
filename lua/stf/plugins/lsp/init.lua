@@ -17,6 +17,7 @@ return {
     "nvimtools/none-ls.nvim",
     dependencies = {
       { "jay-babu/mason-null-ls.nvim", event = { "BufReadPre", "BufNewFile" } },
+      "nvimtools/none-ls-extras.nvim",
     },
     event = "VeryLazy",
     config = function()

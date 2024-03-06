@@ -15,7 +15,15 @@ lsp.set_preferences({
 
 lsp.setup()
 
+vim.api.nvim_exec(
+  [[
+autocmd FileType nwscript setlocal lsp
+]],
+  false
+)
+
 local lspconfig = require("lspconfig")
+local configs = require("lspconfig.configs")
 local lsp_defaults = lspconfig.util.default_config
 local cmpcapabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 local util = require("lspconfig/util")
@@ -45,150 +53,170 @@ vim.api.nvim_create_autocmd("User", {
   callback = vim.lsp.codelens.refresh,
 })
 
-local on_attach = function(client, bufnr)
-  -- vim.api.nvim_create_autocmd("LspAttach", {
-  --   callback = function(client, bufnr)
-
-  -- Refresh codelens on TextChanged, BufEnter, CursorHold and InsertLeave
-  -- vim.api.nvim_create_autocmd({ "TextChanged", "BufEnter", "CursorHold", "InsertLeave" }, {
+local codelens = function(bufnr)
   vim.api.nvim_create_autocmd({ "TextChanged", "BufEnter", "InsertLeave" }, {
     buffer = bufnr,
     callback = vim.lsp.codelens.refresh,
   })
   -- Trigger codelens refresh
   vim.api.nvim_exec_autocmds("User", { pattern = "LspAttach" })
-
-  vim.cmd("TwilightEnable")
-  local set = vim.keymap.set
-  local opts = { buffer = bufnr, noremap = true, silent = true }
-
-  if client.name == "clangd" then
-    client.server_capabilities.signatureHelpProvider = false
-    vim.opt.tabstop = 4
-    vim.opt.softtabstop = 4
-    vim.opt.shiftwidth = 4
-  end
-
-  -- C# Adventures
-  if client.name == "omnisharp" then
-    -- Let's use omnisharp's own implementation of definition
-    set("n", "gd", "<cmd>lua require('omnisharp_extended').telescope_lsp_definitions()<CR>", opts)
-    vim.api.nvim_command("setlocal omnifunc=v:lua.vim.lsp.omnifunc")
-
-    -- Only request omnisharp for formatting or other installed formatters
-    -- that supports C# will also format it.
-    -- set({ "n", "x" }, "<leader>cf", function()
-    --   vim.lsp.buf.format({
-    --     filter = function(client)
-    --       return client.name == "omnisharp"
-    --     end,
-    --     async = true,
-    --     timeout_ms = 10000,
-    --   })
-    -- end, opts)
-
-    vim.opt.wrap = false
-
-    -- "Hacky, non-future-proof fix" - Arocci, Nicolai
-    client.server_capabilities.semanticTokensProvider = {
-      full = vim.empty_dict(),
-      legend = {
-        tokenModifiers = { "static_symbol" },
-        tokenTypes = {
-          "comment",
-          "excluded_code",
-          "identifier",
-          "keyword",
-          "keyword_control",
-          "number",
-          "operator",
-          "operator_overloaded",
-          "preprocessor_keyword",
-          "string",
-          "whitespace",
-          "text",
-          "static_symbol",
-          "preprocessor_text",
-          "punctuation",
-          "string_verbatim",
-          "string_escape_character",
-          "class_name",
-          "delegate_name",
-          "enum_name",
-          "interface_name",
-          "module_name",
-          "struct_name",
-          "type_parameter_name",
-          "field_name",
-          "enum_member_name",
-          "constant_name",
-          "local_name",
-          "parameter_name",
-          "method_name",
-          "extension_method_name",
-          "property_name",
-          "event_name",
-          "namespace_name",
-          "label_name",
-          "xml_doc_comment_attribute_name",
-          "xml_doc_comment_attribute_quotes",
-          "xml_doc_comment_attribute_value",
-          "xml_doc_comment_cdata_section",
-          "xml_doc_comment_comment",
-          "xml_doc_comment_delimiter",
-          "xml_doc_comment_entity_reference",
-          "xml_doc_comment_name",
-          "xml_doc_comment_processing_instruction",
-          "xml_doc_comment_text",
-          "xml_literal_attribute_name",
-          "xml_literal_attribute_quotes",
-          "xml_literal_attribute_value",
-          "xml_literal_cdata_section",
-          "xml_literal_comment",
-          "xml_literal_delimiter",
-          "xml_literal_embedded_expression",
-          "xml_literal_entity_reference",
-          "xml_literal_name",
-          "xml_literal_processing_instruction",
-          "xml_literal_text",
-          "regex_comment",
-          "regex_character_class",
-          "regex_anchor",
-          "regex_quantifier",
-          "regex_grouping",
-          "regex_alternation",
-          "regex_text",
-          "regex_self_escaped_character",
-          "regex_other_escape",
-        },
-      },
-      range = true,
-    }
-  else
-    set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-  end
-
-  set("n", "gpd", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", opts)
-  set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-  set("n", "gpD", "<cmd>lua require('goto-preview').goto_preview_declaration()<CR>", opts)
-  set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-  set("n", "gpi", "<cmd>lua require('goto-preview').goto_preview_implementation()<CR>", opts)
-  set("n", "gw", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", opts)
-  set("n", "gw", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", opts)
-  set("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-  set("n", "gpr", "<cmd>lua require('goto-preview').goto_preview_references()<CR>", opts)
-  set("n", "gtd", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
-  set("n", "gpt", "<cmd>lua require('goto-preview').goto_preview_type_definition()<CR>", opts)
-  set("n", "gP", "<cmd>lua require('goto-preview').close_all_win()<CR>", opts)
-  set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-  set("i", "<C-s>h", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-  set("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-  set("n", "<leader>cr", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-
-  set("n", "<leader>vd", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
-  set({ "n", "x" }, "<leader>cf", "<cmd>lua vim.lsp.buf.format({ async = true, timeout_ms = 10000 })<CR>", opts)
 end
--- })
+
+-- local on_attach = function(client, bufnr)
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(client, bufnr)
+    vim.api.nvim_create_augroup("UserLspConfig", {})
+    -- -- Can't be clangd and nwscript_language_server
+    -- if
+    --   client.name == "omnisharp"
+    --   or client.name == "bashls"
+    --   or client.name == "cmake"
+    --   or client.name == "gdscript"
+    --   or client.name == "lua_ls"
+    -- then
+    --   codelens(bufnr)
+    --   -- -- if client.name ~= "clangd" then
+    --   -- -- Refresh codelens on TextChanged, BufEnter, CursorHold and InsertLeave
+    --   -- -- vim.api.nvim_create_autocmd({ "TextChanged", "BufEnter", "CursorHold", "InsertLeave" }, {
+    --   -- vim.api.nvim_create_autocmd({ "TextChanged", "BufEnter", "InsertLeave" }, {
+    --   --   buffer = bufnr,
+    --   --   callback = vim.lsp.codelens.refresh,
+    --   -- })
+    --   -- -- Trigger codelens refresh
+    --   -- vim.api.nvim_exec_autocmds("User", { pattern = "LspAttach" })
+    -- end
+
+    -- vim.cmd("TwilightEnable")
+    local set = vim.keymap.set
+    local opts = { buffer = bufnr, noremap = true, remap = false }
+
+    if client.name == "clangd" then
+      client.server_capabilities.signatureHelpProvider = false
+      vim.opt.tabstop = 4
+      vim.opt.softtabstop = 4
+      vim.opt.shiftwidth = 4
+    end
+
+    set("n", "gpd", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", opts)
+    set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
+    set("n", "gpD", "<cmd>lua require('goto-preview').goto_preview_declaration()<CR>", opts)
+    set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
+    set("n", "gpi", "<cmd>lua require('goto-preview').goto_preview_implementation()<CR>", opts)
+    set("n", "gw", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", opts)
+    set("n", "gw", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", opts)
+    set("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
+    set("n", "gpr", "<cmd>lua require('goto-preview').goto_preview_references()<CR>", opts)
+    set("n", "gtd", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
+    set("n", "gpt", "<cmd>lua require('goto-preview').goto_preview_type_definition()<CR>", opts)
+    set("n", "gP", "<cmd>lua require('goto-preview').close_all_win()<CR>", opts)
+    set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+    set("i", "<C-s>h", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+    set("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+    set("n", "<leader>cr", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
+
+    set("n", "<leader>vd", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
+    set({ "n", "x" }, "<leader>cf", "<cmd>lua vim.lsp.buf.format({ async = true, timeout_ms = 10000 })<CR>", opts)
+
+    -- C# Adventures
+    if client.name == "omnisharp" then
+      -- Let's use omnisharp's own implementation of definition
+      set("n", "gd", "<cmd>lua require('omnisharp_extended').telescope_lsp_definitions()<CR>", opts)
+      vim.api.nvim_command("setlocal omnifunc=v:lua.vim.lsp.omnifunc")
+
+      -- Only request omnisharp for formatting or other installed formatters
+      -- that supports C# will also format it.
+      -- set({ "n", "x" }, "<leader>cf", function()
+      --   vim.lsp.buf.format({
+      --     filter = function(client)
+      --       return client.name == "omnisharp"
+      --     end,
+      --     async = true,
+      --     timeout_ms = 10000,
+      --   })
+      -- end, opts)
+
+      vim.opt.wrap = false
+
+      -- "Hacky, non-future-proof fix" - Arocci, Nicolai
+      client.server_capabilities.semanticTokensProvider = {
+        full = vim.empty_dict(),
+        legend = {
+          tokenModifiers = { "static_symbol" },
+          tokenTypes = {
+            "comment",
+            "excluded_code",
+            "identifier",
+            "keyword",
+            "keyword_control",
+            "number",
+            "operator",
+            "operator_overloaded",
+            "preprocessor_keyword",
+            "string",
+            "whitespace",
+            "text",
+            "static_symbol",
+            "preprocessor_text",
+            "punctuation",
+            "string_verbatim",
+            "string_escape_character",
+            "class_name",
+            "delegate_name",
+            "enum_name",
+            "interface_name",
+            "module_name",
+            "struct_name",
+            "type_parameter_name",
+            "field_name",
+            "enum_member_name",
+            "constant_name",
+            "local_name",
+            "parameter_name",
+            "method_name",
+            "extension_method_name",
+            "property_name",
+            "event_name",
+            "namespace_name",
+            "label_name",
+            "xml_doc_comment_attribute_name",
+            "xml_doc_comment_attribute_quotes",
+            "xml_doc_comment_attribute_value",
+            "xml_doc_comment_cdata_section",
+            "xml_doc_comment_comment",
+            "xml_doc_comment_delimiter",
+            "xml_doc_comment_entity_reference",
+            "xml_doc_comment_name",
+            "xml_doc_comment_processing_instruction",
+            "xml_doc_comment_text",
+            "xml_literal_attribute_name",
+            "xml_literal_attribute_quotes",
+            "xml_literal_attribute_value",
+            "xml_literal_cdata_section",
+            "xml_literal_comment",
+            "xml_literal_delimiter",
+            "xml_literal_embedded_expression",
+            "xml_literal_entity_reference",
+            "xml_literal_name",
+            "xml_literal_processing_instruction",
+            "xml_literal_text",
+            "regex_comment",
+            "regex_character_class",
+            "regex_anchor",
+            "regex_quantifier",
+            "regex_grouping",
+            "regex_alternation",
+            "regex_text",
+            "regex_self_escaped_character",
+            "regex_other_escape",
+          },
+        },
+        range = true,
+      }
+    else
+      set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+    end
+  end,
+})
 
 -- Change the Diagnostic symbols in the sign column (gutter)
 local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
@@ -210,7 +238,8 @@ end
 lspconfig.bashls.setup({
   handlers = handlers,
   on_attach = function(client, bufnr)
-    on_attach(client, bufnr)
+    -- on_attach(client, bufnr)
+    codelens(bufnr)
     print("Hello bash")
   end,
   capabilities = lsp_defaults,
@@ -219,7 +248,7 @@ lspconfig.bashls.setup({
 lspconfig.clangd.setup({
   handlers = handlers,
   on_attach = function(client, bufnr)
-    on_attach(client, bufnr)
+    -- on_attach(client, bufnr)
     print("Hello C/C++")
   end,
   capabilities = clangcapabilities,
@@ -228,7 +257,8 @@ lspconfig.clangd.setup({
 lspconfig.cmake.setup({
   handlers = handlers,
   on_attach = function(client, bufnr)
-    on_attach(client, bufnr)
+    -- on_attach(client, bufnr)
+    codelens(bufnr)
     print("Hello CMake")
   end,
   capabilities = lsp_defaults,
@@ -237,7 +267,8 @@ lspconfig.cmake.setup({
 lspconfig.gdscript.setup({
   handlers = handlers,
   on_attach = function(client, bufnr)
-    on_attach(client, bufnr)
+    -- on_attach(client, bufnr)
+    codelens(bufnr)
     print("Hello Godot")
   end,
   capabilities = lsp_defaults,
@@ -255,7 +286,8 @@ lspconfig.gdscript.setup({
 lspconfig.lua_ls.setup({
   handlers = handlers,
   on_attach = function(client, bufnr)
-    on_attach(client, bufnr)
+    -- on_attach(client, bufnr)
+    codelens(bufnr)
     print("Hello Lua")
   end,
   capabilities = lsp_defaults,
@@ -274,6 +306,40 @@ lspconfig.lua_ls.setup({
       },
     },
   },
+})
+
+if not configs.nwscript_language_server then
+  configs.nwscript_language_server = {
+    default_config = {
+      cmd = { "nwscript-language-server" },
+      filetypes = { "nwscript" },
+      root_dir = lspconfig.util.root_pattern(".git", "nasher.cfg"),
+    },
+  }
+end
+
+lspconfig.nwscript_language_server.setup({
+  handlers = handlers,
+  on_attach = function(client, bufnr)
+    -- on_attach(client, bufnr)
+    print("Hello NWScript")
+    require("lsp_signature").on_attach({
+      bind = true, -- This is mandatory, otherwise border config won't get registered.
+      handler_opts = {
+        border = "rounded",
+      },
+    }, bufnr)
+
+    -- Enable snippet support (if your completion plugin supports snippets)
+    vim.bo[bufnr].expandtab = false
+    vim.bo[bufnr].shiftwidth = 4
+  end,
+  settings = {
+    ["nwscript-language-server"] = {
+      disableSnippets = "off",
+    },
+  },
+  capabilities = lsp_defaults,
 })
 
 -- lspconfig.rust_analyzer.setup({
@@ -337,7 +403,9 @@ if vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 or vim.fn.has("win16") =
   omnisharp_bin = os.getenv("UserProfile") .. "/AppData/Local/nvim/omnisharp-mono_1.39.8/OmniSharp.exe"
   vim.g.OmniSharp_server_use_mono = true
 else -- I don't own/use a Mac, will update when/if I do
-  omnisharp_bin = os.getenv("HOME") .. "/.config/stvim/omnisharp-linux-x64_1.39.8/run"
+  -- omnisharp_bin = os.getenv("HOME") .. "/.config/stvim/omnisharp-linux-x64_1.39.8/run"
+  omnisharp_bin = os.getenv("HOME") .. "/.config/stvim/omnisharp-linux-x64-net6.0_1.39.8/OmniSharp"
+  -- omnisharp_bin = os.getenv("HOME") .. "/.config/stvim/omnisharp-linux-x64-net6.0_1.39.11/OmniSharp"
 end
 
 vim.g.OmniSharp_server_stdio = 1
@@ -371,12 +439,13 @@ lspconfig.omnisharp.setup({
   flags = {
     debounce_text_changes = 150,
   },
-  on_attach = function(client, bufnr)
-    on_attach(client, bufnr)
-    print("Hello Omnisharp")
-  end,
   capabilities = cmpcapabilities,
   cmd = { omnisharp_bin, "--languageserver", "--hostPID", tostring(pid) },
+  on_attach = function(client, bufnr)
+    -- on_attach(client, bufnr)
+    codelens(bufnr)
+    print("Hello Omnisharp")
+  end,
 })
 
 vim.diagnostic.config({

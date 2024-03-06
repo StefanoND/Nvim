@@ -142,4 +142,19 @@ return {
   {
     "bfrg/vim-cpp-modern",
   },
+  {
+    "squattingmonk/vim-nwscript",
+    -- dependencies = {
+    --   "SirVer/ultisnips",
+    -- },
+    config = function()
+      require("stf.config.lsp.nwscript")
+    end,
+  },
+  {
+    "jd28/nwscript-lsp",
+  },
+  -- {
+  --   "PhilippeChab/nwscript-ee-language-server",
+  -- },
 }

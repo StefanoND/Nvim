@@ -148,4 +148,7 @@ return {
   {
     "jd28/nwscript-lsp",
   },
+  -- {
+  --   "PhilippeChab/nwscript-ee-language-server",
+  -- },
 }

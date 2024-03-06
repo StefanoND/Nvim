@@ -144,9 +144,6 @@ return {
   },
   {
     "squattingmonk/vim-nwscript",
-    config = function()
-      require("stf.config.lsp.nwscript")
-    end,
   },
   {
     "jd28/nwscript-lsp",

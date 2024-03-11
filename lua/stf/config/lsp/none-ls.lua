@@ -49,7 +49,8 @@ local formatting = null_ls.builtins.formatting -- to setup formatters
 local sources = {
   -- formatting.biome,
   formatting.clang_format.with({
-    disabled_filetypes = { "cs" }, -- Don't want it messing with C#
+    -- filetypes = { "nwscript", "nss" },
+    disabled_filetypes = { "cs", "csharp" }, -- Don't want it messing with C#
   }),
   formatting.cmake_format,
   formatting.csharpier,

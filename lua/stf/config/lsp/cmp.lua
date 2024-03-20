@@ -240,7 +240,7 @@ cmp.setup({
     ["<C-e>"] = cmp.mapping.abort(), -- close completion window
     ["<CR>"] = cmp.mapping.confirm({ select = false }),
     ["<C-f>"] = cmp_action.luasnip_jump_forward(),
-    ["<C-b>"] = cmp_action.luasnip_jump_backward(),
+    ["<C-p>"] = cmp_action.luasnip_jump_backward(),
   }),
   -- sources for autocompletion
   sources = cmp.config.sources({

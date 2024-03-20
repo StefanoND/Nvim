@@ -1,3 +1,7 @@
+-- Change these to the correct path
+local nwdocs = "/mnt/SSD_1TB_WORK/WoSEE/Documents"
+local nwroot = "/mnt/SSD_1TB_GAMES/SteamLibrary/steamapps/common/Neverwinter Nights"
+
 local lsp = require("lsp-zero")
 lsp.extend_lspconfig()
 
@@ -308,8 +312,6 @@ lspconfig.lua_ls.setup({
   },
 })
 
-local pid = vim.fn.getpid()
-
 if not configs.nwscript_language_server then
   configs.nwscript_language_server = {
     default_config = {
@@ -320,10 +322,38 @@ if not configs.nwscript_language_server then
   }
 end
 
+local pid = vim.fn.getpid()
+
+local nwscriptfuncs = function(client, bufnr)
+  local set = vim.keymap.set
+  local opts = { buffer = bufnr, noremap = true, remap = false }
+  set(
+    "n",
+    "<leader>b",
+    ":! nwn_script_comp -O2 --verbose -y --userdirectory '"
+      .. nwdocs
+      .. "' --root '"
+      .. nwroot
+      .. "' -o '%:p:h:h'/ncs/'%:t:r'.ncs '%:p:h:h'/nss/'%:t:r'.nss<CR>",
+    opts
+  )
+  set(
+    "n",
+    "<leader>B",
+    ":! nwn_script_comp -O2 --verbose -y --userdirectory '"
+      .. nwdocs
+      .. "' --root '"
+      .. nwroot
+      .. "' -d '%:p:h:h'/ncs/ -R -c '%:p:h:h'/nss/<CR>",
+    opts
+  )
+end
+
 lspconfig.nwscript_language_server.setup({
   handlers = handlers,
   on_attach = function(client, bufnr)
     -- on_attach(client, bufnr)
+    nwscriptfuncs(client, bufnr)
     print("Hello NWScript")
     require("lsp_signature").on_attach({
       bind = true, -- This is mandatory, otherwise border config won't get registered.

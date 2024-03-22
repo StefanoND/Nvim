@@ -28,6 +28,17 @@ autocmd FileType nwscript setlocal lsp
 
 local lspconfig = require("lspconfig")
 local configs = require("lspconfig.configs")
+
+if not configs.nwscript_language_server then
+  configs.nwscript_language_server = {
+    default_config = {
+      cmd = { "nwscript-language-server" },
+      filetypes = { "nwscript" },
+      root_dir = lspconfig.util.root_pattern(".git", "nasher.cfg"),
+    },
+  }
+end
+
 local lsp_defaults = lspconfig.util.default_config
 local cmpcapabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 local util = require("lspconfig/util")
@@ -66,10 +77,72 @@ local codelens = function(bufnr)
   vim.api.nvim_exec_autocmds("User", { pattern = "LspAttach" })
 end
 
+-- Change the Diagnostic symbols in the sign column (gutter)
+local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+end
+
+local nwscriptfuncs = function(client, bufnr)
+  local set = vim.keymap.set
+  local opts = { buffer = bufnr, noremap = true, remap = false }
+  set(
+    "n",
+    "<leader>b",
+    ":! nwn_script_comp -O2 --verbose -y --userdirectory '"
+      .. nwdocs
+      .. "' --root '"
+      .. nwroot
+      .. "' -o '%:p:h:h'/ncs/'%:t:r'.ncs '%:p:h:h'/nss/'%:t:r'.nss<CR>",
+    opts
+  )
+  set(
+    "n",
+    "<leader>B",
+    ":! nwn_script_comp -O2 --verbose -y --userdirectory '"
+      .. nwdocs
+      .. "' --root '"
+      .. nwroot
+      .. "' -d '%:p:h:h'/ncs/ -R -c '%:p:h:h'/nss/<CR>",
+    opts
+  )
+  set("n", "<leader>ni", ":! nasher install -y<CR>", opts)
+  set("n", "<leader>nu", ":! nasher unpack -y<CR>", opts)
+end
+
+lspconfig.nwscript_language_server.setup({
+  handlers = handlers,
+  on_attach = function(client, bufnr)
+    -- on_attach(client, bufnr)
+    nwscriptfuncs(client, bufnr)
+    print("Hello NWScript")
+    require("lsp_signature").on_attach({
+      bind = true, -- This is mandatory, otherwise border config won't get registered.
+      handler_opts = {
+        border = "rounded",
+      },
+    }, bufnr)
+
+    -- Enable snippet support (if your completion plugin supports snippets)
+    vim.bo[bufnr].expandtab = false
+    vim.bo[bufnr].shiftwidth = 4
+  end,
+  settings = {
+    ["nwscript-language-server"] = {
+      disableSnippets = "off",
+    },
+  },
+  capabilities = lsp_defaults,
+})
+
 -- local on_attach = function(client, bufnr)
 vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("UserLspConfig", {}),
   callback = function(client, bufnr)
-    vim.api.nvim_create_augroup("UserLspConfig", {})
+    -- Enable completion triggered by <c-x><c-o>
+    -- vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
+    vim.api.nvim_command("setlocal omnifunc=v:lua.vim.lsp.omnifunc")
     -- -- Can't be clangd and nwscript_language_server
     -- if
     --   client.name == "omnisharp"
@@ -92,6 +165,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
     -- vim.cmd("TwilightEnable")
     local set = vim.keymap.set
+    -- local opts = { buffer = bufnr, noremap = true, remap = false }
     local opts = { buffer = bufnr, noremap = true, remap = false }
 
     if client.name == "clangd" then
@@ -125,7 +199,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     if client.name == "omnisharp" then
       -- Let's use omnisharp's own implementation of definition
       set("n", "gd", "<cmd>lua require('omnisharp_extended').telescope_lsp_definitions()<CR>", opts)
-      vim.api.nvim_command("setlocal omnifunc=v:lua.vim.lsp.omnifunc")
 
       -- Only request omnisharp for formatting or other installed formatters
       -- that supports C# will also format it.
@@ -222,13 +295,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
--- Change the Diagnostic symbols in the sign column (gutter)
-local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
-for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-end
-
 -- vim.api.nvim_create_autocmd("FileType", {
 --   pattern = "sh",
 --   callback = function()
@@ -312,67 +378,7 @@ lspconfig.lua_ls.setup({
   },
 })
 
-if not configs.nwscript_language_server then
-  configs.nwscript_language_server = {
-    default_config = {
-      cmd = { "nwscript-language-server" },
-      filetypes = { "nwscript" },
-      root_dir = lspconfig.util.root_pattern(".git", "nasher.cfg"),
-    },
-  }
-end
-
 local pid = vim.fn.getpid()
-
-local nwscriptfuncs = function(client, bufnr)
-  local set = vim.keymap.set
-  local opts = { buffer = bufnr, noremap = true, remap = false }
-  set(
-    "n",
-    "<leader>b",
-    ":! nwn_script_comp -O2 --verbose -y --userdirectory '"
-      .. nwdocs
-      .. "' --root '"
-      .. nwroot
-      .. "' -o '%:p:h:h'/ncs/'%:t:r'.ncs '%:p:h:h'/nss/'%:t:r'.nss<CR>",
-    opts
-  )
-  set(
-    "n",
-    "<leader>B",
-    ":! nwn_script_comp -O2 --verbose -y --userdirectory '"
-      .. nwdocs
-      .. "' --root '"
-      .. nwroot
-      .. "' -d '%:p:h:h'/ncs/ -R -c '%:p:h:h'/nss/<CR>",
-    opts
-  )
-end
-
-lspconfig.nwscript_language_server.setup({
-  handlers = handlers,
-  on_attach = function(client, bufnr)
-    -- on_attach(client, bufnr)
-    nwscriptfuncs(client, bufnr)
-    print("Hello NWScript")
-    require("lsp_signature").on_attach({
-      bind = true, -- This is mandatory, otherwise border config won't get registered.
-      handler_opts = {
-        border = "rounded",
-      },
-    }, bufnr)
-
-    -- Enable snippet support (if your completion plugin supports snippets)
-    vim.bo[bufnr].expandtab = false
-    vim.bo[bufnr].shiftwidth = 4
-  end,
-  settings = {
-    ["nwscript-language-server"] = {
-      disableSnippets = "off",
-    },
-  },
-  capabilities = lsp_defaults,
-})
 
 -- lspconfig.rust_analyzer.setup({
 --   handlers = handlers,

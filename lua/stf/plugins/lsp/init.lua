@@ -118,7 +118,10 @@ return {
   },
   {
     "rcarriga/nvim-dap-ui",
-    dependencies = "mfussenegger/nvim-dap",
+    dependencies = {
+      "mfussenegger/nvim-dap",
+      "nvim-neotest/nvim-nio",
+    },
   },
   {
     "rcarriga/cmp-dap",
@@ -147,6 +150,9 @@ return {
   },
   {
     "jd28/nwscript-lsp",
+    dependencies = {
+      "ray-x/lsp_signature.nvim",
+    },
   },
   -- {
   --   "PhilippeChab/nwscript-ee-language-server",

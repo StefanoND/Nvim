@@ -74,7 +74,8 @@ masontools.setup({
     -- "yamllint", -- linter
     -- "prettier", -- formatter
   },
+  automatic_installation = true,
   auto_update = true,
   run_on_start = true,
-  start_delay = 5000, -- Millisseconds
+  start_delay = 2500, -- Millisseconds
 })

@@ -109,6 +109,11 @@ local nwscriptfuncs = function(client, bufnr)
   )
   set("n", "<leader>ni", ":! nasher install -y<CR>", opts)
   set("n", "<leader>nu", ":! nasher unpack -y<CR>", opts)
+  -- Generate ctags for current project
+  set("n", "<leader>tg", ":NWScriptTagGen<CR>", opts)
+  -- Generate ctags for current project including external directories
+  -- Check plugins/lsp/init.lua for more information
+  set("n", "<leader>tG", ":NWScriptTagGenAll<CR>", opts)
 end
 
 lspconfig.nwscript_language_server.setup({

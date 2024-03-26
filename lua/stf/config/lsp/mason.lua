@@ -54,25 +54,27 @@ masontools.setup({
     -- CMAKE
     "cmake-language-server", -- LSP
     "cmakelang", -- formatter and linter
+    -- GOLANG
+    "gopls", -- LSP
     -- GODOT SCRIPT
     -- "gdscript", -- LSP
     "gdtoolkit", -- formatter and linter
     -- -- JSON
-    -- "biome", -- formatter and linter
-    -- "json-lsp", -- LSP
+    "biome", -- formatter and linter
+    "jsonls", -- LSP
     -- LUA
     "lua-language-server", -- LSP
     "stylua", -- formatter and linter
     -- -- RUST cpptools and ast-grep
     -- "rust_analyzer", -- LSP
     -- -- SQL
-    -- "sqlls", -- LSP
-    -- "sql-formatter", -- formatter
-    -- "sqlfluff", -- linter
+    "sqlls", -- LSP
+    "sql-formatter", -- formatter
+    "sqlfluff", -- linter
     -- -- YAML
-    -- "yaml-language-server", -- LSP
-    -- "yamllint", -- linter
-    -- "prettier", -- formatter
+    "yaml-language-server", -- LSP
+    "yamllint", -- linter
+    "prettier", -- formatter
   },
   automatic_installation = true,
   auto_update = true,

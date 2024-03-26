@@ -7,9 +7,9 @@ mason_null_ls.setup({
     "cmakelang", -- CMAKE formatter and linter
     "csharpier", -- C# formatter
     "gdtoolkit", -- Godot formatter and linter
-    -- "biome", -- formatter and linter
+    "biome", -- formatter and linter
     "stylua", -- Lua formatter and linter
-    -- "sql-formatter", -- SQL formatter
+    "sql-formatter", -- SQL formatter
     "prettier", -- Prettier formatter
   },
   automatic_installation = true,
@@ -52,13 +52,16 @@ local sources = {
     -- filetypes = { "nwscript", "nss" },
     disabled_filetypes = { "cs", "csharp" }, -- Don't want it messing with C#
   }),
+
+  formatting.biome,
+  formatting.clang_format,
   formatting.cmake_format,
   formatting.csharpier,
   formatting.gdformat,
-  -- formatting.prettier,
+  formatting.prettier,
   -- formatting.rustfmt,
   formatting.shellharden,
-  -- formatting.sqlfluff,
+  formatting.sqlfluff,
   formatting.stylua,
 
   -- actions.gitsigns,

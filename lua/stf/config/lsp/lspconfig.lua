@@ -300,21 +300,21 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
--- vim.api.nvim_create_autocmd("FileType", {
---   pattern = "sh",
---   callback = function()
---     vim.lsp.start({
---       name = "bash-language-server",
---       cmd = { "bash-language-server", "start" },
---     })
---   end,
--- })
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "sh",
+  callback = function()
+    vim.lsp.start({
+      name = "bash-language-server",
+      cmd = { "bash-language-server", "start" },
+    })
+  end,
+})
 
 lspconfig.bashls.setup({
   handlers = handlers,
   on_attach = function(client, bufnr)
     -- on_attach(client, bufnr)
-    codelens(bufnr)
+    -- codelens(bufnr)
     print("Hello bash")
   end,
   capabilities = lsp_defaults,
@@ -339,6 +339,16 @@ lspconfig.cmake.setup({
   capabilities = lsp_defaults,
 })
 
+lspconfig.gopls.setup({
+  handlers = handlers,
+  on_attach = function(client, bufnr)
+    -- on_attach(client, bufnr)
+    codelens(bufnr)
+    print("Hello Golang")
+  end,
+  capabilities = lsp_defaults,
+})
+
 lspconfig.gdscript.setup({
   handlers = handlers,
   on_attach = function(client, bufnr)
@@ -349,14 +359,14 @@ lspconfig.gdscript.setup({
   capabilities = lsp_defaults,
 })
 
--- lspconfig.jsonls.setup({
---   handlers = handlers,
---   on_attach = function(client, bufnr)
---     on_attach(client, bufnr)
---     print("Hello Json")
---   end,
---   capabilities = lsp_defaults,
--- })
+lspconfig.jsonls.setup({
+  handlers = handlers,
+  on_attach = function(client, bufnr)
+    -- on_attach(client, bufnr)
+    print("Hello Json")
+  end,
+  capabilities = lsp_defaults,
+})
 
 lspconfig.lua_ls.setup({
   handlers = handlers,
@@ -409,24 +419,24 @@ local pid = vim.fn.getpid()
 --   end,
 --   capabilities = lsp_defaults,
 -- })
---
--- lspconfig.sqlls.setup({
---   handlers = handlers,
---   on_attach = function(client, bufnr)
---     on_attach(client, bufnr)
---     print("Hello SQL")
---   end,
---   capabilities = lsp_defaults,
--- })
---
--- lspconfig.yamlls.setup({
---   handlers = handlers,
---   on_attach = function(client, bufnr)
---     on_attach(client, bufnr)
---     print("Hello Yaml")
---   end,
---   capabilities = lsp_defaults,
--- })
+
+lspconfig.sqlls.setup({
+  handlers = handlers,
+  on_attach = function(client, bufnr)
+    -- on_attach(client, bufnr)
+    print("Hello SQL")
+  end,
+  capabilities = lsp_defaults,
+})
+
+lspconfig.yamlls.setup({
+  handlers = handlers,
+  on_attach = function(client, bufnr)
+    -- on_attach(client, bufnr)
+    print("Hello Yaml")
+  end,
+  capabilities = lsp_defaults,
+})
 
 -- Omnisharp/C#/Unity
 

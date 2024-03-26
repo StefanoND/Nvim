@@ -16,6 +16,7 @@ treesitter.setup({
     "cpp",
     "c_sharp",
     "gdscript",
+    "go",
     "godot_resource",
     "git_config",
     "git_rebase",

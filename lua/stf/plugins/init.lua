@@ -191,12 +191,6 @@ return {
     end,
   },
   {
-    "cdelledonne/vim-cmake",
-    config = function()
-      require("stf.config.cmake")
-    end,
-  },
-  {
     "epwalsh/obsidian.nvim",
     version = "*",
     lazy = true,

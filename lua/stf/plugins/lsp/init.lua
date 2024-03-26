@@ -134,6 +134,12 @@ return {
     end,
   },
   {
+    "cdelledonne/vim-cmake",
+    config = function()
+      require("stf.config.lsp.cmake")
+    end,
+  },
+  {
     "OmniSharp/omnisharp-vim",
     dependencies = {
       "ctrlpvim/ctrlp.vim",

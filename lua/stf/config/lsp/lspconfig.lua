@@ -33,7 +33,7 @@ if not configs.nwscript_language_server then
   configs.nwscript_language_server = {
     default_config = {
       cmd = { "nwscript-language-server" },
-      filetypes = { "nwscript" },
+      filetypes = { "nwscript", "nss" },
       root_dir = lspconfig.util.root_pattern(".git", "nasher.cfg"),
     },
   }
@@ -393,8 +393,6 @@ lspconfig.lua_ls.setup({
   },
 })
 
-local pid = vim.fn.getpid()
-
 -- lspconfig.rust_analyzer.setup({
 --   handlers = handlers,
 --   settings = {
@@ -439,6 +437,8 @@ lspconfig.yamlls.setup({
 })
 
 -- Omnisharp/C#/Unity
+
+local pid = vim.fn.getpid()
 
 -- Must be version 1.39.8, versions 1.39.9 - 1.39.11 (latest as of this writing) are causing issues:
 --     "Error executing luv callback... Attempt to Index Local 'decoded' (a nil value)..."

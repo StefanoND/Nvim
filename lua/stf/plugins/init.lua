@@ -310,7 +310,27 @@ return {
   {
     "HiPhish/rainbow-delimiters.nvim",
     config = function()
-      require("rainbow-delimiters.setup").setup()
+      require("rainbow-delimiters.setup").setup(
+        --   {
+        --   strategy = {
+        --     [""] = require("rainbow-delimiters").strategy["global"],
+        --     commonlisp = require("rainbow-delimiters").strategy["local"],
+        --   },
+        --   query = {
+        --     [""] = "rainbow-delimiters",
+        --     latex = "rainbow-blocks",
+        --   },
+        --   highlight = {
+        --     "RainbowDelimiterRed",
+        --     "RainbowDelimiterYellow",
+        --     "RainbowDelimiterBlue",
+        --     "RainbowDelimiterOrange",
+        --     "RainbowDelimiterGreen",
+        --     "RainbowDelimiterViolet",
+        --     "RainbowDelimiterCyan",
+        --   },
+        -- }
+      )
     end,
   },
   {

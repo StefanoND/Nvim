@@ -87,26 +87,43 @@ end
 local nwscriptfuncs = function(client, bufnr)
   local set = vim.keymap.set
   local opts = { buffer = bufnr, noremap = true, remap = false }
+  -- Will keep using nwnsc since nwn_script_comp doesn't support external pragma directives
   set(
     "n",
     "<leader>b",
-    ":! nwn_script_comp -O2 --verbose -y --userdirectory '"
-      .. nwdocs
-      .. "' --root '"
-      .. nwroot
-      .. "' -o '%:p:h:h'/ncs/'%:t:r'.ncs '%:p:h:h'/nss/'%:t:r'.nss<CR>",
+    ":! nwnsc -coy -h '" .. nwdocs .. "' -n '" .. nwroot .. "' -i '%:p:h' '%:p' -r '%:p:h:h'/ncs/'%:t:r'.ncs<CR>",
     opts
   )
   set(
     "n",
     "<leader>B",
-    ":! nwn_script_comp -O2 --verbose -y --userdirectory '"
+    ":! nwnsc -coy -h '"
       .. nwdocs
-      .. "' --root '"
+      .. "' -n '"
       .. nwroot
-      .. "' -d '%:p:h:h'/ncs/ -R -c '%:p:h:h'/nss/<CR>",
+      .. "' -i '%:p:h' '%:p:h'/*.nss<CR>:! mv -f $PWD/src/nss/*ncs $PWD/src/ncs/<CR>",
     opts
   )
+  -- set(
+  --   "n",
+  --   "<leader>b",
+  --   ":! nwn_script_comp -O2 --verbose -y --userdirectory '"
+  --     .. nwdocs
+  --     .. "' --root '"
+  --     .. nwroot
+  --     .. "' -o '%:p:h:h'/ncs/'%:t:r'.ncs '%:p:h:h'/nss/'%:t:r'.nss<CR>",
+  --   opts
+  -- )
+  -- set(
+  --   "n",
+  --   "<leader>B",
+  --   ":! nwn_script_comp -O2 --verbose -y --userdirectory '"
+  --     .. nwdocs
+  --     .. "' --root '"
+  --     .. nwroot
+  --     .. "' -d '%:p:h:h'/ncs/ -R -c '%:p:h:h'/nss/<CR>",
+  --   opts
+  -- )
   set("n", "<leader>ni", ":! nasher install -y<CR>", opts)
   set("n", "<leader>nu", ":! nasher unpack -y<CR>", opts)
   -- Generate ctags for current project

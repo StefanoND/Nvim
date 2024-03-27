@@ -1,6 +1,6 @@
-local org = require("neorg")
+local neorg = require("neorg")
 
-org.setup({
+neorg.setup({
   load = {
     ["core.defaults"] = {}, -- Loads default behaviour
     ["core.concealer"] = {}, -- Adds pretty icons to your documents

@@ -215,12 +215,20 @@ return {
     end,
   },
   {
+    "vhyrro/luarocks.nvim",
+    priority = 1000,
+    config = true,
+  },
+  {
     "nvim-neorg/neorg",
-    dependencies = { "nvim-lua/plenary.nvim" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "vhyrro/luarocks.nvim",
+    },
     config = function()
       require("stf.config.neorg")
     end,
-    build = ":Neorg sync-parsers",
+    -- build = ":Neorg sync-parsers",
   },
   {
     "epwalsh/pomo.nvim",

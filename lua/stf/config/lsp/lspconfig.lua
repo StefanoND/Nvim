@@ -101,7 +101,7 @@ local nwscriptfuncs = function(client, bufnr)
       .. nwdocs
       .. "' -n '"
       .. nwroot
-      .. "' -i '%:p:h' '%:p:h'/*.nss<CR>:! mv -f $PWD/src/nss/*ncs $PWD/src/ncs/<CR>",
+      .. "' -i '%:p:h' '%:p:h'/*.nss<CR>:! mv -f $PWD/src/nss/*.ncs $PWD/src/ncs/<CR>",
     opts
   )
   -- set(

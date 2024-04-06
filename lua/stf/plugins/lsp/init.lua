@@ -29,8 +29,10 @@ return {
     cmd = { "LspInfo", "LspInstall", "LspStart" },
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
+      { "hrsh7th/cmp-nvim-lsp" },
       { "williamboman/mason-lspconfig.nvim" },
       { "antosha417/nvim-lsp-file-operations", config = true },
+      { "folke/neodev.nvim", opts = {} },
       { "OmniSharp/omnisharp-vim" },
       { "Hoffs/omnisharp-extended-lsp.nvim" },
     },
@@ -174,7 +176,7 @@ return {
 
         " Auto-wrap (actually auto-newline) comments at column 120
         " Pressing o/O in normal mode will continua a comment block.
-        let g:nwscript#format#textwidth = 120
+        let g:nwscript#format#textwidth = 110
         let g:nwscript#format#options = 'croqwa2lj'
 
         " Remove trailing whitespace when saving

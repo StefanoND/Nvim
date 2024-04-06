@@ -1,6 +1,13 @@
 local opts = { noremap = true, silent = true }
 
-vim.keymap.set("n", "<leader>su", vim.cmd.UndotreeToggle, opts)
+vim.keymap.set(
+  "n",
+  "<leader>su",
+  vim.cmd.UndotreeToggle,
+  vim.tbl_deep_extend("force", opts, {
+    desc = "Open undotree",
+  })
+)
 
 vim.keymap.set(
   "n",
@@ -120,7 +127,7 @@ vim.keymap.set(
 -- Window management
 vim.keymap.set(
   "n",
-  "<leader>%",
+  "<leader>sv",
   "<C-w>v",
   vim.tbl_deep_extend("force", opts, {
     desc = "Split window vertically",
@@ -128,7 +135,7 @@ vim.keymap.set(
 )
 vim.keymap.set(
   "n",
-  '<leader>"',
+  "<leader>sh",
   "<C-w>s",
   vim.tbl_deep_extend("force", opts, {
     desc = "Split window horizontally",
@@ -136,7 +143,7 @@ vim.keymap.set(
 )
 vim.keymap.set(
   "n",
-  "<leader>0",
+  "<leader>se",
   "<C-w>=",
   vim.tbl_deep_extend("force", opts, {
     desc = "Make splits equal size",
@@ -144,10 +151,52 @@ vim.keymap.set(
 )
 vim.keymap.set(
   "n",
-  "<leader>sc",
+  "<leader>sx",
   "<cmd>close<CR>",
   vim.tbl_deep_extend("force", opts, {
     desc = "Close current split",
+  })
+)
+
+-- Tab management
+vim.keymap.set(
+  "n",
+  "<leader>to",
+  "<cmd>tabnew<CR>",
+  vim.tbl_deep_extend("force", opts, {
+    desc = "Open new tab",
+  })
+)
+vim.keymap.set(
+  "n",
+  "<leader>tf",
+  "<cmd>tabnew %<CR>",
+  vim.tbl_deep_extend("force", opts, {
+    desc = "Open current buffer in new tab",
+  })
+)
+vim.keymap.set(
+  "n",
+  "<leader>tt",
+  "<cmd>tabn<CR>",
+  vim.tbl_deep_extend("force", opts, {
+    desc = "Go to previous tab",
+  })
+)
+vim.keymap.set(
+  "n",
+  "<leader>tT",
+  "<cmd>tabp<CR>",
+  vim.tbl_deep_extend("force", opts, {
+    desc = "Go to previous tab",
+  })
+)
+vim.keymap.set(
+  "n",
+  "<leader>tx",
+  "<cmd>tabclose<CR>",
+  vim.tbl_deep_extend("force", opts, {
+    desc = "Close current tab",
   })
 )
 

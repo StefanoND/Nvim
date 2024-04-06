@@ -146,6 +146,7 @@ return {
   -- },
   {
     "folke/trouble.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons", "folke/todo-comments.nvim" },
     event = "VeryLazy",
     config = function()
       require("stf.config.trouble")
@@ -357,7 +358,28 @@ return {
   {
     "ThePrimeagen/vim-be-good",
     config = function()
-      vim.keymap.set("n", "<leader>vb", ":VimBeGood<CR>", { noremap = true, silent = true })
+      vim.keymap.set(
+        "n",
+        "<leader>vb",
+        ":VimBeGood<CR>",
+        { noremap = true, silent = true }
+      )
     end,
+  },
+  {
+    "rmagatti/auto-session",
+    config = function()
+      require("stf.config.session")
+    end,
+  },
+  {
+    "szw/vim-maximizer",
+    keys = {
+      {
+        "<leader>sm",
+        "<cmd>MaximizerToggle<cr>",
+        { desc = "Maximize/Minimize a split", noremap = true, silent = true },
+      },
+    },
   },
 }

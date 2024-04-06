@@ -98,34 +98,41 @@ local nwscriptfuncs = function(client, bufnr)
   local opts = { buffer = bufnr, noremap = true, remap = false }
   -- Will keep using nwnsc since nwn_script_comp doesn't compile includes and doesn't support external pragma directives
   set("n", "<leader>b", ":terminal nasher compile --clean -f '%:p'<CR>", opts)
+  vim.tbl_deep_extend("force", opts, {
+    desc = "Compile current script",
+  })
   set("n", "<leader>B", ":terminal nasher compile --clean all<CR>", opts)
-  -- set(
-  --   "n",
-  --   "<leader>b",
-  --   ":! nwn_script_comp --verbose -y --userdirectory '"
-  --     .. nwdocs
-  --     .. "' --root '"
-  --     .. nwroot
-  --     .. "' -o '%:p:h:h'/ncs/'%:t:r'.ncs '%:p:h:h'/nss/'%:t:r'.nss<CR>",
-  --   opts
-  -- )
-  -- set(
-  --   "n",
-  --   "<leader>B",
-  --   ":! nwn_script_comp --verbose -y --userdirectory '"
-  --     .. nwdocs
-  --     .. "' --root '"
-  --     .. nwroot
-  --     .. "' -d '%:p:h:h'/ncs/ -R -c '%:p:h:h'/nss/<CR>",
-  --   opts
-  -- )
+  vim.tbl_deep_extend("force", opts, {
+    desc = "Compile all scripts",
+  })
   set("n", "<leader>ni", ":terminal nasher install --clean -y main<CR>", opts)
+  vim.tbl_deep_extend("force", opts, {
+    desc = "Pack project into module",
+  })
   set("n", "<leader>nu", ":terminal nasher unpack --clean -y main<CR>", opts)
-  -- Generate ctags for current project
+  vim.tbl_deep_extend("force", opts, {
+    desc = "Unpack module to project folder",
+  })
   set("n", "<leader>tg", ":NWScriptTagGen<CR>", opts)
-  -- Generate ctags for current project including external directories
-  -- Check plugins/lsp/init.lua for more information
+  vim.tbl_deep_extend("force", opts, {
+    desc = "Generate ctags for current project",
+  })
   set("n", "<leader>tG", ":NWScriptTagGenAll<CR>", opts)
+  vim.tbl_deep_extend("force", opts, {
+    desc = "Generate ctags for current project including external directories. Check plugins/lsp/init.lua for more information.",
+  })
+end
+
+local augroup = vim.api.nvim_create_augroup("NWScript", {})
+local nwscriptrefresh = function(bufnr)
+  vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+  vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+    group = augroup,
+    buffer = bufnr,
+    callback = function()
+      vim.cmd("LspRestart")
+    end,
+  })
 end
 
 lspconfig.nwscript_language_server.setup({
@@ -133,6 +140,7 @@ lspconfig.nwscript_language_server.setup({
   on_attach = function(client, bufnr)
     -- on_attach(client, bufnr)
     nwscriptfuncs(client, bufnr)
+    nwscriptrefresh(bufnr)
     print("Hello NWScript")
     require("lsp_signature").on_attach({
       bind = true, -- This is mandatory, otherwise border config won't get registered.

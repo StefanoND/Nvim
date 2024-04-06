@@ -1,6 +1,7 @@
 -- Change these to the correct path
 local nwdocs = "/mnt/SSD_1TB_WORK/WoSEE/Documents"
-local nwroot = "/mnt/SSD_1TB_GAMES/SteamLibrary/steamapps/common/Neverwinter Nights"
+local nwroot =
+  "/mnt/SSD_1TB_GAMES/SteamLibrary/steamapps/common/Neverwinter Nights"
 
 local lsp = require("lsp-zero")
 lsp.extend_lspconfig()
@@ -40,8 +41,10 @@ if not configs.nwscript_language_server then
 end
 
 local lsp_defaults = lspconfig.util.default_config
-local cmpcapabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
-local util = require("lspconfig/util")
+local cmpcapabilities = require("cmp_nvim_lsp").default_capabilities(
+  vim.lsp.protocol.make_client_capabilities()
+)
+local util = require("lspconfig.util")
 
 cmpcapabilities.textDocument.completion.completionItem.snippetSupport = true
 cmpcapabilities.textDocument.foldingRange = {
@@ -58,8 +61,14 @@ clangcapabilities.capabilities = {
 }
 
 local handlers = {
-  ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
-  ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" }),
+  ["textDocument/hover"] = vim.lsp.with(
+    vim.lsp.handlers.hover,
+    { border = "rounded" }
+  ),
+  ["textDocument/signatureHelp"] = vim.lsp.with(
+    vim.lsp.handlers.signature_help,
+    { border = "rounded" }
+  ),
 }
 
 vim.api.nvim_create_autocmd("User", {
@@ -88,26 +97,12 @@ local nwscriptfuncs = function(client, bufnr)
   local set = vim.keymap.set
   local opts = { buffer = bufnr, noremap = true, remap = false }
   -- Will keep using nwnsc since nwn_script_comp doesn't compile includes and doesn't support external pragma directives
-  set(
-    "n",
-    "<leader>b",
-    ":! nwnsc -ceoy -h '" .. nwdocs .. "' -n '" .. nwroot .. "' -i '%:p:h' '%:p' -r '%:p:h:h'/ncs/'%:t:r'.ncs<CR>",
-    opts
-  )
-  set(
-    "n",
-    "<leader>B",
-    ":! nwnsc -ceoy -h '"
-      .. nwdocs
-      .. "' -n '"
-      .. nwroot
-      .. "' -i '%:p:h' '%:p:h'/*.nss<CR>:! mv -f $PWD/src/nss/*.ncs $PWD/src/ncs/<CR>",
-    opts
-  )
+  set("n", "<leader>b", ":terminal nasher compile --clean -f '%:p'<CR>", opts)
+  set("n", "<leader>B", ":terminal nasher compile --clean all<CR>", opts)
   -- set(
   --   "n",
   --   "<leader>b",
-  --   ":! nwn_script_comp -O2 --verbose -y --userdirectory '"
+  --   ":! nwn_script_comp --verbose -y --userdirectory '"
   --     .. nwdocs
   --     .. "' --root '"
   --     .. nwroot
@@ -117,15 +112,15 @@ local nwscriptfuncs = function(client, bufnr)
   -- set(
   --   "n",
   --   "<leader>B",
-  --   ":! nwn_script_comp -O2 --verbose -y --userdirectory '"
+  --   ":! nwn_script_comp --verbose -y --userdirectory '"
   --     .. nwdocs
   --     .. "' --root '"
   --     .. nwroot
   --     .. "' -d '%:p:h:h'/ncs/ -R -c '%:p:h:h'/nss/<CR>",
   --   opts
   -- )
-  set("n", "<leader>ni", ":! nasher install -y<CR>", opts)
-  set("n", "<leader>nu", ":! nasher unpack -y<CR>", opts)
+  set("n", "<leader>ni", ":terminal nasher install --clean -y main<CR>", opts)
+  set("n", "<leader>nu", ":terminal nasher unpack --clean -y main<CR>", opts)
   -- Generate ctags for current project
   set("n", "<leader>tg", ":NWScriptTagGen<CR>", opts)
   -- Generate ctags for current project including external directories
@@ -147,12 +142,37 @@ lspconfig.nwscript_language_server.setup({
     }, bufnr)
 
     -- Enable snippet support (if your completion plugin supports snippets)
-    vim.bo[bufnr].expandtab = false
-    vim.bo[bufnr].shiftwidth = 4
+    -- vim.bo[bufnr].expandtab = false
+    -- vim.bo[bufnr].shiftwidth = 4
+    vim.cmd([[
+    set syntax=nwscript.doxygen
+    hi! link doxygenStartL Comment
+    hi! link doxygenParam Special
+    hi! link doxygenParamName Special
+    hi! link doxygenSpecialOneLineDesc Comment
+    hi! link doxygenSpecialTypeOneLineDesc Special
+    hi! link doxygenBOther Special
+    hi! link doxygenBriefWord Special
+    hi! link doxygenBrief Comment
+    hi! TSComment gui=NONE
+    ]])
   end,
   settings = {
     ["nwscript-language-server"] = {
       disableSnippets = "off",
+    },
+    ["nwscript-ee-lsp"] = {
+      autoCompleteFunctionsWithParams = true,
+      includeCommentsInFunctionsHover = true,
+      formatter = {
+        enabled = true,
+      },
+      compiler = {
+        enabled = true,
+        verbose = true,
+        nwnHome = nwdocs,
+        nwnInstallation = nwroot,
+      },
     },
   },
   capabilities = lsp_defaults,
@@ -197,17 +217,42 @@ vim.api.nvim_create_autocmd("LspAttach", {
       vim.opt.shiftwidth = 4
     end
 
-    set("n", "gpd", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", opts)
+    set(
+      "n",
+      "gpd",
+      "<cmd>lua require('goto-preview').goto_preview_definition()<CR>",
+      opts
+    )
     set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-    set("n", "gpD", "<cmd>lua require('goto-preview').goto_preview_declaration()<CR>", opts)
+    set(
+      "n",
+      "gpD",
+      "<cmd>lua require('goto-preview').goto_preview_declaration()<CR>",
+      opts
+    )
     set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-    set("n", "gpi", "<cmd>lua require('goto-preview').goto_preview_implementation()<CR>", opts)
+    set(
+      "n",
+      "gpi",
+      "<cmd>lua require('goto-preview').goto_preview_implementation()<CR>",
+      opts
+    )
     set("n", "gw", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", opts)
     set("n", "gw", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", opts)
     set("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-    set("n", "gpr", "<cmd>lua require('goto-preview').goto_preview_references()<CR>", opts)
+    set(
+      "n",
+      "gpr",
+      "<cmd>lua require('goto-preview').goto_preview_references()<CR>",
+      opts
+    )
     set("n", "gtd", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
-    set("n", "gpt", "<cmd>lua require('goto-preview').goto_preview_type_definition()<CR>", opts)
+    set(
+      "n",
+      "gpt",
+      "<cmd>lua require('goto-preview').goto_preview_type_definition()<CR>",
+      opts
+    )
     set("n", "gP", "<cmd>lua require('goto-preview').close_all_win()<CR>", opts)
     set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
     set("i", "<C-s>h", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
@@ -215,12 +260,22 @@ vim.api.nvim_create_autocmd("LspAttach", {
     set("n", "<leader>cr", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
 
     set("n", "<leader>vd", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
-    set({ "n", "x" }, "<leader>cf", "<cmd>lua vim.lsp.buf.format({ async = true, timeout_ms = 10000 })<CR>", opts)
+    set(
+      { "n", "x" },
+      "<leader>cf",
+      "<cmd>lua vim.lsp.buf.format({ async = true, timeout_ms = 10000 })<CR>",
+      opts
+    )
 
     -- C# Adventures
     if client.name == "omnisharp" then
       -- Let's use omnisharp's own implementation of definition
-      set("n", "gd", "<cmd>lua require('omnisharp_extended').telescope_lsp_definitions()<CR>", opts)
+      set(
+        "n",
+        "gd",
+        "<cmd>lua require('omnisharp_extended').telescope_lsp_definitions()<CR>",
+        opts
+      )
 
       -- Only request omnisharp for formatting or other installed formatters
       -- that supports C# will also format it.
@@ -462,18 +517,24 @@ local pid = vim.fn.getpid()
 -- Will update when this gets fixed (and if I remember)
 local omnisharp_bin
 
-if vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 or vim.fn.has("win16") == 1 then
+if
+  vim.fn.has("win64") == 1
+  or vim.fn.has("win32") == 1
+  or vim.fn.has("win16") == 1
+then
   lspconfig.powershell_es.setup({
     bundle_path = "path/to/your/bundle_path",
     init_options = {
       enableProfileLoading = false,
     },
   })
-  omnisharp_bin = os.getenv("UserProfile") .. "/AppData/Local/nvim/omnisharp-mono_1.39.8/OmniSharp.exe"
+  omnisharp_bin = os.getenv("UserProfile")
+    .. "/AppData/Local/nvim/omnisharp-mono_1.39.8/OmniSharp.exe"
   vim.g.OmniSharp_server_use_mono = true
 else -- I don't own/use a Mac, will update when/if I do
   -- omnisharp_bin = os.getenv("HOME") .. "/.config/stvim/omnisharp-linux-x64_1.39.8/run"
-  omnisharp_bin = os.getenv("HOME") .. "/.config/stvim/omnisharp-linux-x64-net6.0_1.39.8/OmniSharp"
+  omnisharp_bin = os.getenv("HOME")
+    .. "/.config/stvim/omnisharp-linux-x64-net6.0_1.39.8/OmniSharp"
   -- omnisharp_bin = os.getenv("HOME") .. "/.config/stvim/omnisharp-linux-x64-net6.0_1.39.11/OmniSharp"
 end
 
@@ -486,7 +547,8 @@ lspconfig.omnisharp.setup({
   default_config = {
     filetypes = { "cs", "vb" },
     root_dir = function(fname)
-      return util.root_pattern("*.sln")(fname) or util.root_pattern("*.csproj")(fname)
+      return util.root_pattern("*.sln")(fname)
+        or util.root_pattern("*.csproj")(fname)
     end,
     on_new_config = function(new_config, new_root_dir)
       if new_root_dir then
@@ -503,7 +565,10 @@ lspconfig.omnisharp.setup({
   organize_imports_on_format = true,
   sdk_include_prereleases = false,
   handlers = vim.tbl_deep_extend("force", handlers, {
-    ["textDocument/definition"] = vim.lsp.with(require("omnisharp_extended").handler, { border = "rounded" }),
+    ["textDocument/definition"] = vim.lsp.with(
+      require("omnisharp_extended").handler,
+      { border = "rounded" }
+    ),
   }),
   flags = {
     debounce_text_changes = 150,
@@ -519,6 +584,13 @@ lspconfig.omnisharp.setup({
 
 vim.diagnostic.config({
   update_in_insert = true,
-  float = { focusable = false, style = "minimal", border = "rounded", source = "always", header = "", prefix = "" },
+  float = {
+    focusable = false,
+    style = "minimal",
+    border = "rounded",
+    source = "always",
+    header = "",
+    prefix = "",
+  },
   virtual_text = true,
 })

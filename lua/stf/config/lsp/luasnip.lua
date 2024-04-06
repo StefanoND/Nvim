@@ -2,9 +2,13 @@ local luasnip = require("luasnip")
 
 local opts = { noremap = true, silent = true }
 
-require("luasnip.loaders.from_vscode").lazy_load()
+local path = os.getenv("XDG_CONFIG_HOME") .. "/stvim/snippets"
+
+-- require("luasnip.loaders.from_lua").lazy_load()
+require("luasnip.loaders.from_lua").lazy_load({ paths = path })
 require("luasnip.loaders.from_snipmate").lazy_load()
-require("luasnip.loaders.from_lua").lazy_load()
+-- require("luasnip.loaders.from_vscode").lazy_load()
+require("luasnip.loaders.from_vscode").lazy_load({ exclude = { "all" } })
 
 luasnip.filetype_extend("lua", { "luadoc" })
 -- luasnip.filetype_extend("rust", { "rustdoc" })

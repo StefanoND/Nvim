@@ -51,7 +51,14 @@ return {
       "WhoIsSethDaniel/mason-tool-installer.nvim",
     },
     lazy = false,
-    cmd = { "Mason", "MasonInstall", "MasonInstallAll", "MasonUninstall", "MasonUninstallAll", "MasonLog" },
+    cmd = {
+      "Mason",
+      "MasonInstall",
+      "MasonInstallAll",
+      "MasonUninstall",
+      "MasonUninstallAll",
+      "MasonLog",
+    },
     build = ":MasonUpdate",
     config = function()
       require("stf.config.lsp.mason")
@@ -82,7 +89,11 @@ return {
     "L3MON4D3/LuaSnip",
     version = "2.*",
     build = function()
-      if vim.fn.has("win64") ~= 1 and vim.fn.has("win32") ~= 1 and vim.fn.has("win16") ~= 1 then
+      if
+        vim.fn.has("win64") ~= 1
+        and vim.fn.has("win32") ~= 1
+        and vim.fn.has("win16") ~= 1
+      then
         return "make install_jsregexp"
       end
     end,
@@ -188,7 +199,7 @@ return {
       "ray-x/lsp_signature.nvim",
     },
   },
-  -- {
-  --   "PhilippeChab/nwscript-ee-language-server",
-  -- },
+  {
+    "PhilippeChab/nwscript-ee-language-server",
+  },
 }

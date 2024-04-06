@@ -4,14 +4,17 @@ local opts = { noremap = true, silent = true }
 
 neogen.setup({
   snippet_engine = "luasnip",
+  languages = {
+    nwscript = require("stf.plugins.neogen.nwscript"),
+  },
 })
 
-vim.keymap.set("n", "<leader>gf", function()
+vim.keymap.set("n", "<leader>ngf", function()
   neogen.generate({ type = "func" })
 end, opts)
-vim.keymap.set("n", "<leader>gc", function()
+vim.keymap.set("n", "<leader>ngc", function()
   neogen.generate({ type = "class" })
 end, opts)
-vim.keymap.set("n", "<leader>gt", function()
+vim.keymap.set("n", "<leader>ngt", function()
   neogen.generate({ type = "type" })
 end, opts)

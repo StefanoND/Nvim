@@ -34,17 +34,46 @@ vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]], opts)
 vim.keymap.set("n", "Q", "<nop>", opts)
 
 -- tmux
-vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>", opts)
+vim.keymap.set(
+  "n",
+  "<C-f>",
+  "<cmd>silent !tmux neww tmux-sessionizer<CR>",
+  opts
+)
 -- vim.keymap.set("n", "<M-h>", "<cmd>TmuxNavigateLeft<CR>", opts)
 -- vim.keymap.set("n", "<M-j>", "<cmd>TmuxNavigateDown<CR>", opts)
 -- vim.keymap.set("n", "<M-k>", "<cmd>TmuxNavigateUp<CR>", opts)
 -- vim.keymap.set("n", "<M-l>", "<cmd>TmuxNavigateRight<CR>", opts)
 
 -- Window management
-vim.keymap.set("n", "<leader>%", "<C-w>v", { desc = "Split window vertically" }, opts) -- split window vertically
-vim.keymap.set("n", '<leader>"', "<C-w>s", { desc = "Split window horizontally" }, opts) -- split window horizontally
-vim.keymap.set("n", "<leader>0", "<C-w>=", { desc = "Make splits equal size" }, opts) -- make split windows equal width & height
-vim.keymap.set("n", "<leader>sc", "<cmd>close<CR>", { desc = "Close current split" }, opts) -- close current split window
+vim.keymap.set(
+  "n",
+  "<leader>%",
+  "<C-w>v",
+  { desc = "Split window vertically" },
+  opts
+) -- split window vertically
+vim.keymap.set(
+  "n",
+  '<leader>"',
+  "<C-w>s",
+  { desc = "Split window horizontally" },
+  opts
+) -- split window horizontally
+vim.keymap.set(
+  "n",
+  "<leader>0",
+  "<C-w>=",
+  { desc = "Make splits equal size" },
+  opts
+) -- make split windows equal width & height
+vim.keymap.set(
+  "n",
+  "<leader>sc",
+  "<cmd>close<CR>",
+  { desc = "Close current split" },
+  opts
+) -- close current split window
 vim.keymap.set("n", "<C-h>", "<Cmd>wincmd h<CR>", opts)
 vim.keymap.set("n", "<C-j>", "<Cmd>wincmd j<CR>", opts)
 vim.keymap.set("n", "<C-k>", "<Cmd>wincmd k<CR>", opts)
@@ -57,10 +86,20 @@ vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz", opts)
 vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz", opts)
 
 -- Replace the word the cursor is on
-vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], opts)
+vim.keymap.set(
+  "n",
+  "<leader>s",
+  [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+  opts
+)
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", opts)
 
-vim.keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>", opts)
+vim.keymap.set(
+  "n",
+  "<leader>mr",
+  "<cmd>CellularAutomaton make_it_rain<CR>",
+  opts
+)
 vim.keymap.set("n", "<leader>it", "<cmd>InspectTree<CR>", opts)
 
 vim.keymap.set("n", "<leader><leader>", function()

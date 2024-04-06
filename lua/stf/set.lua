@@ -30,7 +30,11 @@ vim.opt.smartindent = true
 vim.opt.swapfile = false
 vim.opt.backup = false
 
-if vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 or vim.fn.has("win16") == 1 then
+if
+  vim.fn.has("win64") == 1
+  or vim.fn.has("win32") == 1
+  or vim.fn.has("win16") == 1
+then
   vim.opt.undodir = os.getenv("UserProfile") .. "/.vim/undodir" -- Must create this folder
 else -- I don't own/use a Mac, will update when/if I do
   vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir" -- Must create this folder
@@ -39,7 +43,7 @@ end
 vim.opt.undofile = true
 
 -- Search
-vim.opt.hlsearch = false
+vim.opt.hlsearch = true
 vim.opt.incsearch = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true -- If mixed case in search, assumes case-sensitive
@@ -71,7 +75,7 @@ vim.opt.updatetime = 50
 -- Better completion experience
 vim.opt.completeopt = "menu,menuone,preview,noselect"
 
-vim.opt.colorcolumn = "120"
+vim.opt.colorcolumn = "110"
 
 -- Concealer for Neorg
 vim.o.conceallevel = 2

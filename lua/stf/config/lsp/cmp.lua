@@ -9,6 +9,7 @@ local str = require("cmp.utils.str")
 local luasnip = require("luasnip")
 local lspkind = require("lspkind")
 local cmp_action = lsp.cmp_action()
+local neogen = require("neogen")
 
 local t = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
@@ -109,14 +110,22 @@ cmp_git.setup({
       debug_name = "gitlab_mrs",
       trigger_character = "!",
       action = function(sources, trigger_char, callback, params, git_info)
-        return sources.gitlab:get_merge_requests(callback, git_info, trigger_char)
+        return sources.gitlab:get_merge_requests(
+          callback,
+          git_info,
+          trigger_char
+        )
       end,
     },
     {
       debug_name = "github_issues_and_pr",
       trigger_character = "#",
       action = function(sources, trigger_char, callback, params, git_info)
-        return sources.github:get_issues_and_prs(callback, git_info, trigger_char)
+        return sources.github:get_issues_and_prs(
+          callback,
+          git_info,
+          trigger_char
+        )
       end,
     },
     {
@@ -134,12 +143,14 @@ cmp.setup({
   --   entries = "native",
   -- },
   enabled = function()
-    return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt" or require("cmp_dap").is_dap_buffer()
+    return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
+      or require("cmp_dap").is_dap_buffer()
   end,
   completion = {
     border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
     scrollbar = "║",
-    completeopt = "menu,menuone,preview,noselect",
+    completeopt = "menu,menuone,preview",
+    -- completeopt = "menu,menuone,preview,noselect",
   },
   formatting = {
     fields = {
@@ -231,14 +242,55 @@ cmp.setup({
       luasnip.lsp_expand(args.body)
     end,
   },
+
   mapping = cmp.mapping.preset.insert({
-    ["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
-    ["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
+    -- ["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
+    -- ["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
+
+    -- Move cursor to previous item in the completion menu. If completion
+    -- menu is not showing, we jump to the next snippet node *only* if we
+    -- are inside a snippet. This stops us from jumping back to an
+    -- unexpected place.
+    ["<C-k>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif neogen.jumpable(-1) then
+        neogen.jump_prev()
+      elseif luasnip.locally_jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { "i", "s" }), -- previous suggestion
+
+    -- Move cursor to next item in the completion menu. If completion menu
+    -- is not showing, we jump to the next snippet node *only* if we are
+    -- inside a snippet. This stops us from jumping back to an unexpected
+    -- place.
+    ["<C-j>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif neogen.jumpable() then
+        neogen.jump_next()
+      elseif luasnip.expand_or_locally_jumpable() then
+        luasnip.expand_or_jump()
+      else
+        fallback()
+      end
+    end, { "i", "s" }), -- next suggestion
+
     ["<C-u>"] = cmp.mapping.scroll_docs(-4),
     ["<C-d>"] = cmp.mapping.scroll_docs(4),
     ["<C-Space>"] = cmp.mapping.complete(),
     ["<C-e>"] = cmp.mapping.abort(), -- close completion window
-    ["<CR>"] = cmp.mapping.confirm({ select = false }),
+    ["<CR>"] = cmp.mapping.confirm({
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = false, -- No complete if not explicitly selected
+    }),
+    ["<C-CR>"] = cmp.mapping.confirm({
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true, -- As shown on ghost_text
+    }),
     ["<C-f>"] = cmp_action.luasnip_jump_forward(),
     ["<C-p>"] = cmp_action.luasnip_jump_backward(),
   }),

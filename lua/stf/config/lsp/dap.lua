@@ -43,12 +43,18 @@ dap.configurations.cs = {
 -- UNITY DEBUGGING
 -- https://docs.unity3d.com/Manual/ManagedCodeDebugging.html
 local omnisharp_bin
-if vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 or vim.fn.has("win16") == 1 then
-  omnisharp_bin = os.getenv("UserProfile") .. "/AppData/Local/nvim/omnisharp-mono_1.39.8/OmniSharp.exe"
+if
+  vim.fn.has("win64") == 1
+  or vim.fn.has("win32") == 1
+  or vim.fn.has("win16") == 1
+then
+  omnisharp_bin = os.getenv("UserProfile")
+    .. "/AppData/Local/nvim/omnisharp-mono_1.39.8/OmniSharp.exe"
   vim.g.OmniSharp_server_use_mono = true
 else -- I don't own/use a Mac, will update when/if I do
   -- omnisharp_bin = os.getenv("HOME") .. "/.config/stvim/omnisharp-linux-x64_1.39.8/run"
-  omnisharp_bin = os.getenv("HOME") .. "/.config/stvim/omnisharp-linux-x64-net6.0_1.39.8/OmniSharp"
+  omnisharp_bin = os.getenv("HOME")
+    .. "/.config/stvim/omnisharp-linux-x64-net6.0_1.39.8/OmniSharp"
   -- omnisharp_bin = os.getenv("HOME") .. "/.config/stvim/omnisharp-linux-x64-net6.0_1.39.11/OmniSharp"
 end
 
@@ -72,9 +78,18 @@ require("nvim-dap-virtual-text").setup()
 -- CATPPUCCIN COMPATIBILITY START
 local sign = vim.fn.sign_define
 
-sign("DapBreakpoint", { text = "●", texthl = "DapBreakpoint", linehl = "", numhl = "" })
-sign("DapBreakpointCondition", { text = "●", texthl = "DapBreakpointCondition", linehl = "", numhl = "" })
-sign("DapLogPoint", { text = "◆", texthl = "DapLogPoint", linehl = "", numhl = "" })
+sign(
+  "DapBreakpoint",
+  { text = "●", texthl = "DapBreakpoint", linehl = "", numhl = "" }
+)
+sign(
+  "DapBreakpointCondition",
+  { text = "●", texthl = "DapBreakpointCondition", linehl = "", numhl = "" }
+)
+sign(
+  "DapLogPoint",
+  { text = "◆", texthl = "DapLogPoint", linehl = "", numhl = "" }
+)
 -- CATPPUCCIN COMPATIBILITY END
 
 -- vim.fn.sign_define(
@@ -97,4 +112,9 @@ local opts = { noremap = true }
 vim.keymap.set("n", "<leader>dt", "<cmd>DapUiToggle<CR>", opts)
 vim.keymap.set("n", "<leader>db", "<cmd>DapToggleBreakpoint<CR>", opts)
 vim.keymap.set("n", "<leader>dc", "<cmd>DapContinue<CR>", opts)
-vim.keymap.set("n", "<leader>dr", "<cmd>require('dapui').open({reset = true})<CR>", opts)
+vim.keymap.set(
+  "n",
+  "<leader>dr",
+  "<cmd>require('dapui').open({reset = true})<CR>",
+  opts
+)

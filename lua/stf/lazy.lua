@@ -9,12 +9,13 @@ if not vim.loop.fs_stat(lazypath) then
     lazypath,
   })
 end
-vim.opt.rtp:prepend(lazypath)
+vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
 require("lazy").setup({
-  { import = "stf.plugins" },
-  { import = "stf.plugins.lsp" },
-  }, {
+  spec = {
+    { import = "stf.plugins" },
+    { import = "stf.plugins.lsp" },
+  },
   install = {
     colorscheme = { "catppuccin-mocha" },
   },
@@ -24,5 +25,20 @@ require("lazy").setup({
   },
   change_detection = {
     notify = false,
+  },
+  performance = {
+    rtp = {
+      -- disable some rtp plugins
+      disabled_plugins = {
+        "gzip",
+        -- "matchit",
+        -- "matchparen",
+        "netrwPlugin",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
+      },
+    },
   },
 })

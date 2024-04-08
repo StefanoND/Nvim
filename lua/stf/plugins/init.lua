@@ -134,7 +134,7 @@ return {
       -- Config here
     },
   },
-  -- {
+  -- { -- Not using yet
   --   "ThePrimeagen/refactoring.nvim",
   --   dependencies = {
   --     "nvim-lua/plenary.nvim",
@@ -243,17 +243,17 @@ return {
       require("stf.config.pomodoro")
     end,
   },
-  -- {
-  --   "tpope/vim-dadbod",
-  --   opt = true,
-  --   requires = {
-  --     "kristijanhusak/vim-dadbod-ui",
-  --     "kristijanhusak/vim-dadbod-completion",
-  --   },
-  --   config = function()
-  --     require("stf.config.dadbod").setup()
-  --   end,
-  -- },
+  {
+    "tpope/vim-dadbod",
+    opt = true,
+    dependencies = {
+      "kristijanhusak/vim-dadbod-ui",
+      "kristijanhusak/vim-dadbod-completion",
+    },
+    config = function()
+      require("stf.config.dadbod").setup()
+    end,
+  },
   "ThePrimeagen/git-worktree.nvim",
   {
     "rmagatti/goto-preview",
@@ -272,10 +272,11 @@ return {
   {
     "rcarriga/nvim-notify",
     config = function()
-      require("notify").setup({
-        background_colour = "#000000",
-        enabled = false,
-      })
+      require("notify").setup()
+      -- require("notify").setup({
+      --   background_colour = "#000000",
+      --   enabled = false,
+      -- })
     end,
   },
   -- {
@@ -319,27 +320,25 @@ return {
   {
     "HiPhish/rainbow-delimiters.nvim",
     config = function()
-      require("rainbow-delimiters.setup").setup(
-        --   {
-        --   strategy = {
-        --     [""] = require("rainbow-delimiters").strategy["global"],
-        --     commonlisp = require("rainbow-delimiters").strategy["local"],
-        --   },
-        --   query = {
-        --     [""] = "rainbow-delimiters",
-        --     latex = "rainbow-blocks",
-        --   },
-        --   highlight = {
-        --     "RainbowDelimiterRed",
-        --     "RainbowDelimiterYellow",
-        --     "RainbowDelimiterBlue",
-        --     "RainbowDelimiterOrange",
-        --     "RainbowDelimiterGreen",
-        --     "RainbowDelimiterViolet",
-        --     "RainbowDelimiterCyan",
-        --   },
-        -- }
-      )
+      require("rainbow-delimiters.setup").setup({
+        strategy = {
+          [""] = require("rainbow-delimiters").strategy["global"],
+          commonlisp = require("rainbow-delimiters").strategy["local"],
+        },
+        query = {
+          [""] = "rainbow-delimiters",
+          latex = "rainbow-blocks",
+        },
+        highlight = {
+          "RainbowDelimiterRed",
+          "RainbowDelimiterYellow",
+          "RainbowDelimiterBlue",
+          "RainbowDelimiterOrange",
+          "RainbowDelimiterGreen",
+          "RainbowDelimiterViolet",
+          "RainbowDelimiterCyan",
+        },
+      })
     end,
   },
   {
@@ -391,12 +390,5 @@ return {
       "TmuxNavigateRight",
       "TmuxNavigatePrevious",
     },
-    -- keys = {
-    --   { "<M-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
-    --   { "<M-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
-    --   { "<M-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
-    --   { "<M-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
-    --   { "<M-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
-    -- },
   },
 }

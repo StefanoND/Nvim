@@ -107,22 +107,23 @@ vim.keymap.set(
     desc = "",
   })
 )
--- vim.keymap.set("n", "<M-h>", "<cmd>TmuxNavigateLeft<CR>", opts)
--- vim.tbl_deep_extend("force", opts, {
---   desc = "",
--- })
--- vim.keymap.set("n", "<M-j>", "<cmd>TmuxNavigateDown<CR>", opts)
--- vim.tbl_deep_extend("force", opts, {
---   desc = "",
--- })
--- vim.keymap.set("n", "<M-k>", "<cmd>TmuxNavigateUp<CR>", opts)
--- vim.tbl_deep_extend("force", opts, {
---   desc = "",
--- })
--- vim.keymap.set("n", "<M-l>", "<cmd>TmuxNavigateRight<CR>", opts)
--- vim.tbl_deep_extend("force", opts, {
---   desc = "",
--- })
+
+vim.keymap.set("n", "<M-h>", "<cmd>TmuxNavigateLeft<CR>", opts)
+vim.tbl_deep_extend("force", opts, {
+  desc = "",
+})
+vim.keymap.set("n", "<M-j>", "<cmd>TmuxNavigateDown<CR>", opts)
+vim.tbl_deep_extend("force", opts, {
+  desc = "",
+})
+vim.keymap.set("n", "<M-k>", "<cmd>TmuxNavigateUp<CR>", opts)
+vim.tbl_deep_extend("force", opts, {
+  desc = "",
+})
+vim.keymap.set("n", "<M-l>", "<cmd>TmuxNavigateRight<CR>", opts)
+vim.tbl_deep_extend("force", opts, {
+  desc = "",
+})
 
 -- Window management
 vim.keymap.set(

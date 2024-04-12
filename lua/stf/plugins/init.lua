@@ -84,10 +84,22 @@ return {
   {
     "mbbill/undotree",
   },
+  -- {
+  --   "tpope/vim-fugitive",
+  --   config = function()
+  --     require("stf.config.fugitive")
+  --   end,
+  -- },
   {
-    "tpope/vim-fugitive",
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim", -- Required
+      -- Only one of the two below is needed
+      "sindrets/diffview.nvim", -- Optional
+      -- "nvim-telescope/telescope.nvim", -- Optional
+    },
     config = function()
-      require("stf.config.fugitive")
+      require("stf.config.neogit")
     end,
   },
   {

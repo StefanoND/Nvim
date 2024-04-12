@@ -68,7 +68,7 @@ vim.opt.splitright = true -- Split vertical window to the right
 vim.opt.splitbelow = true -- Split horizontal window to the bottom
 
 vim.opt.mousemoveevent = true
-vim.opt.scrolloff = 16
+vim.opt.scrolloff = 8
 vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
@@ -76,7 +76,7 @@ vim.opt.updatetime = 50
 -- Better completion experience
 vim.opt.completeopt = "menu,menuone,preview,noselect"
 
-vim.opt.colorcolumn = "110"
+vim.opt.colorcolumn = "100"
 
 -- Concealer for Neorg
 vim.o.conceallevel = 2

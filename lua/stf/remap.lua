@@ -268,21 +268,3 @@ end, opts)
 vim.tbl_deep_extend("force", opts, {
   desc = "Shout Out",
 })
-
--- Git
-vim.keymap.set("n", "<leader>ga", "<cmd>Git add .<CR>", opts)
-vim.tbl_deep_extend("force", opts, {
-  desc = "Git Add all",
-})
-vim.keymap.set("n", "<leader>gc", ':Git commit -m "', opts)
-vim.tbl_deep_extend("force", opts, {
-  desc = "Git Commit with comment",
-})
-vim.keymap.set("n", "<leader>gp", "<cmd>Git push -u origin HEAD<CR>", opts)
-vim.tbl_deep_extend("force", opts, {
-  desc = "Git Push HEAD",
-})
-vim.keymap.set("n", "<leader>gPR", "<cmd>Git pull --rebase<CR>", opts)
-vim.tbl_deep_extend("force", opts, {
-  desc = "Git Pull rebase",
-})

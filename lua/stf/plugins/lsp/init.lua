@@ -176,7 +176,7 @@ return {
 
         " Auto-wrap (actually auto-newline) comments at column 120
         " Pressing o/O in normal mode will continua a comment block.
-        let g:nwscript#format#textwidth = 110
+        let g:nwscript#format#textwidth = 100
         let g:nwscript#format#options = 'croqwa2lj'
 
         " Remove trailing whitespace when saving

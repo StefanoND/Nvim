@@ -2,61 +2,19 @@
 -- like fetching branches with telescope or blaming with fugitive
 local neogit = require("neogit")
 
+local opts = { silent = true, noremap = true, remap = false }
+
 neogit.setup({
-  vim.keymap.set(
-    "n",
-    "<leader>gs",
-    neogit.open,
-    { silent = true, noremap = true }
-  ),
+  vim.keymap.set("n", "<leader>gs", neogit.open, opts),
 
-  vim.keymap.set(
-    "n",
-    "<leader>gc",
-    ":Neogit commit<CR>",
-    { silent = true, noremap = true }
-  ),
+  vim.keymap.set("n", "<leader>gc", ":Neogit commit<CR>", opts),
+  vim.keymap.set("n", "<leader>gp", ":Neogit pull<CR>", opts),
+  vim.keymap.set("n", "<leader>gP", ":Neogit push<CR>", opts),
+  vim.keymap.set("n", "<leader>gb", ":Telescope git_branches<CR>", opts),
+  vim.keymap.set("n", "<leader>gB", ":G blame<CR>", opts),
 
-  vim.keymap.set(
-    "n",
-    "<leader>gp",
-    ":Neogit pull<CR>",
-    { silent = true, noremap = true }
-  ),
-
-  vim.keymap.set(
-    "n",
-    "<leader>gP",
-    ":Neogit push<CR>",
-    { silent = true, noremap = true }
-  ),
-
-  vim.keymap.set(
-    "n",
-    "<leader>gb",
-    ":Telescope git_branches<CR>",
-    { silent = true, noremap = true }
-  ),
-
-  vim.keymap.set(
-    "n",
-    "<leader>gB",
-    ":G blame<CR>",
-    { silent = true, noremap = true }
-  ),
-
-  vim.keymap.set(
-    "n",
-    "<leader>dvo",
-    ":DiffviewOpen<CR>",
-    { silent = true, noremap = true }
-  ),
-  vim.keymap.set(
-    "n",
-    "<leader>dvO",
-    ":DiffviewClose<CR>",
-    { silent = true, noremap = true }
-  ),
+  vim.keymap.set("n", "<leader>dvo", ":DiffviewOpen<CR>", opts),
+  vim.keymap.set("n", "<leader>dvO", ":DiffviewClose<CR>", opts),
 })
 
 -------------------------------------------------------------------------------------------------

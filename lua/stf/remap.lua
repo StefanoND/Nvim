@@ -1,5 +1,11 @@
 local opts = { noremap = true, silent = true }
 
+-- Vertical selection
+vim.keymap.set({ "n", "v" }, "<leader>ven", ":set ve=none<CR>", opts)
+
+-- Rectangular selection
+vim.keymap.set({ "n", "v" }, "<leader>vea", ":set ve=all<CR>", opts)
+
 vim.keymap.set(
   "n",
   "<leader>su",

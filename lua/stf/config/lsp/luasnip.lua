@@ -2,7 +2,7 @@ local luasnip = require("luasnip")
 
 local opts = { noremap = true, silent = true }
 
-local path = os.getenv("XDG_CONFIG_HOME") .. "/stvim/snippets"
+local path = os.getenv("XDG_CONFIG_HOME") .. "/nvim/snippets"
 
 -- require("luasnip.loaders.from_lua").lazy_load()
 require("luasnip.loaders.from_lua").lazy_load({ paths = path })
@@ -18,7 +18,7 @@ luasnip.filetype_extend("cpp", { "cppdoc" })
 luasnip.filetype_extend("sh", { "shelldoc" })
 -- luasnip.filetype_extend("sql", { "sqldoc" })
 -- luasnip.filetype_extend("markdown", { "mddoc" })
--- luasnip.filetype_extend("gdscript", { "gdscriptdoc" })
+luasnip.filetype_extend("gdscript", { "gdscriptdoc" })
 -- luasnip.filetype_extend("unrealengine", { "unrealdoc" })
 
 vim.keymap.set("i", "<C-s>e", function()

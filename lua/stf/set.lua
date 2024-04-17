@@ -93,3 +93,8 @@ vim.o.foldlevelstart = 99
 vim.o.foldenable = true
 
 vim.cmd("let g:netrw_liststlye = 3")
+
+local pipepath = vim.fn.stdpath("cache") .. "/server.pipe"
+if not vim.loop.fs_stat(pipepath) then
+  vim.fn.serverstart(pipepath)
+end

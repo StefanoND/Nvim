@@ -52,10 +52,10 @@ then
     .. "/AppData/Local/nvim/omnisharp-mono_1.39.8/OmniSharp.exe"
   vim.g.OmniSharp_server_use_mono = true
 else -- I don't own/use a Mac, will update when/if I do
-  -- omnisharp_bin = os.getenv("HOME") .. "/.config/stvim/omnisharp-linux-x64_1.39.8/run"
+  -- omnisharp_bin = os.getenv("HOME") .. "/.config/nvim/omnisharp-linux-x64_1.39.8/run"
   omnisharp_bin = os.getenv("HOME")
-    .. "/.config/stvim/omnisharp-linux-x64-net6.0_1.39.8/OmniSharp"
-  -- omnisharp_bin = os.getenv("HOME") .. "/.config/stvim/omnisharp-linux-x64-net6.0_1.39.11/OmniSharp"
+    .. "/.config/nvim/omnisharp-linux-x64-net6.0_1.39.8/OmniSharp"
+  -- omnisharp_bin = os.getenv("HOME") .. "/.config/nvim/omnisharp-linux-x64-net6.0_1.39.11/OmniSharp"
 end
 
 dap.adapters.unity = {

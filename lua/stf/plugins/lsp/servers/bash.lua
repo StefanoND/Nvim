@@ -31,6 +31,8 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.lsp.start({
       name = "bash-language-server",
       cmd = { "bash-language-server", "start" },
+      allowlist = { "sh", "bash" },
+      filetypes = { "sh", "bash" },
     })
   end,
 })

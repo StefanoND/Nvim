@@ -15,6 +15,7 @@ require("lazy").setup({
   spec = {
     { import = "stf.plugins" },
     { import = "stf.plugins.lsp" },
+    { import = "stf.plugins.lsp.servers" },
   },
   install = {
     colorscheme = { "catppuccin-mocha" },

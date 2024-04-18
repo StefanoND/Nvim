@@ -31,11 +31,7 @@ vim.opt.autoindent = true -- Copy indent from current line when starting a new o
 vim.opt.swapfile = false
 vim.opt.backup = false
 
-if
-  vim.fn.has("win64") == 1
-  or vim.fn.has("win32") == 1
-  or vim.fn.has("win16") == 1
-then
+if vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 or vim.fn.has("win16") == 1 then
   vim.opt.undodir = os.getenv("UserProfile") .. "/.vim/undodir" -- Must create this folder
 else -- I don't own/use a Mac, will update when/if I do
   vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir" -- Must create this folder
@@ -76,7 +72,15 @@ vim.opt.updatetime = 50
 -- Better completion experience
 vim.opt.completeopt = "menu,menuone,preview,noselect"
 
-vim.opt.colorcolumn = "100"
+-- Show gutter after column 100
+vim.opt.textwidth = 100
+vim.opt.colorcolumn = "+1"
+
+-- Spelling
+-- medical spellfile from https://github.com/melvio/medical-spell-files
+vim.opt.spelllang = { "en_us", "pt_pt", "pt_br", "medical" }
+vim.opt.spellfile = os.getenv("HOME") .. "/.config/nvim/spell/en.utf-8.add" -- extra words
+vim.opt.spelloptions = "camel" -- Split camelCase words when spellchecking
 
 -- Concealer for Neorg
 vim.o.conceallevel = 2

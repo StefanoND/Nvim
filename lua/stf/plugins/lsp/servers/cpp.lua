@@ -67,7 +67,7 @@ return {
       handlers = handlers,
       cmd = {
         "clangd",
-        "--offsetEncoding=utf-16",
+        "--offsetEncoding=utf-8",
         "--background-index",
         "--clang-tidy",
         "--header-insertion=iwyu",

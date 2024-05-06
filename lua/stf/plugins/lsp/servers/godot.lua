@@ -31,7 +31,12 @@ return {
     capabilities = lsp_defaults,
     -- cmd = vim.lsp.rpc.connect("127.0.0.1", 6007),
     on_attach = function(client, bufnr)
-      codelens(bufnr)
+      vim.opt.tabstop = 4
+      vim.opt.softtabstop = 4
+      vim.opt.shiftwidth = 4
+      vim.opt.expandtab = false -- Don't expand tab to spaces
+      vim.opt.smartindent = true
+      vim.opt.autoindent = true -- Copy indent from current line when starting a new one
       print("Hello Godot")
     end,
   }),

@@ -25,20 +25,11 @@ cmpcapabilities.textDocument.foldingRange = {
 
 lsp_defaults.capabilities = cmpcapabilities
 
-local codelens = function(bufnr)
-  vim.api.nvim_create_autocmd({ "TextChanged", "BufEnter", "InsertLeave" }, {
-    buffer = bufnr,
-    callback = vim.lsp.codelens.refresh,
-  })
-  -- Trigger codelens refresh
-  vim.api.nvim_exec_autocmds("User", { pattern = "LspAttach" })
-end
-
 return {
   lspconfig.gdscript.setup({
     handlers = handlers,
     capabilities = lsp_defaults,
-    cmd = vim.lsp.rpc.connect("127.0.0.1", 6007),
+    -- cmd = vim.lsp.rpc.connect("127.0.0.1", 6007),
     on_attach = function(client, bufnr)
       codelens(bufnr)
       print("Hello Godot")

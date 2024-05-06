@@ -17,48 +17,48 @@ return {
       -- }
 
       -- dap.configurations.gdscript = {
-      dap.configurations.cs = {
-        {
-          launch_game_instance = false,
-          launch_scene = false,
-          name = "Launch Scene",
-          project = "${workspaceFolder}",
-          request = "launch",
-          type = "godot",
-
-          -- address = "127.0.0.1",
-          -- port = 6006,
-          -- scene = "main|current|pinned|<path>",
-          -- editor_path = "<path>",
-          -- -- engine command line flags
-          -- profiling = false,
-          -- single_threaded_scene = false,
-          -- debug_collisions = false,
-          -- debug_paths = false,
-          -- debug_navigation = false,
-          -- debug_avoidance = false,
-          -- debug_stringnames = false,
-          -- frame_delay = 0,
-          -- time_scale = 1.0,
-          -- disable_vsync = false,
-          -- fixed_fps = 60,
-          -- -- anything else
-          -- additional_options = "",
-        },
-      }
+      -- dap.configurations.cs = {
+      --   {
+      --     launch_game_instance = false,
+      --     launch_scene = false,
+      --     name = "Launch Scene",
+      --     project = "${workspaceFolder}",
+      --     request = "launch",
+      --     type = "godot",
+      --
+      --     -- address = "127.0.0.1",
+      --     -- port = 6006,
+      --     -- scene = "main|current|pinned|<path>",
+      --     -- editor_path = "<path>",
+      --     -- -- engine command line flags
+      --     -- profiling = false,
+      --     -- single_threaded_scene = false,
+      --     -- debug_collisions = false,
+      --     -- debug_paths = false,
+      --     -- debug_navigation = false,
+      --     -- debug_avoidance = false,
+      --     -- debug_stringnames = false,
+      --     -- frame_delay = 0,
+      --     -- time_scale = 1.0,
+      --     -- disable_vsync = false,
+      --     -- fixed_fps = 60,
+      --     -- -- anything else
+      --     -- additional_options = "",
+      --   },
+      -- }
 
       -- UNITY DEBUGGING
       -- https://docs.unity3d.com/Manual/ManagedCodeDebugging.html
       local omnisharp_bin
       if vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 or vim.fn.has("win16") == 1 then
         omnisharp_bin = os.getenv("UserProfile")
-            .. "/AppData/Local/nvim/omnisharp-mono_1.39.8/OmniSharp.exe"
+          .. "/AppData/Local/nvim/omnisharp-mono_1.39.8/OmniSharp.exe"
         vim.g.OmniSharp_server_use_mono = true
       else -- I don't own/use a Mac, will update when/if I do
         -- omnisharp_bin = os.getenv("HOME") .. "/.config/nvim/omnisharp-linux-x64_1.39.8/run"
         omnisharp_bin = os.getenv("HOME")
-            -- .. "/.local/share/nvim/mason/packages/omnisharp/omnisharp"
-            .. "/.config/nvim/omnisharp-linux-x64-net6.0_1.39.8/OmniSharp"
+          -- .. "/.local/share/nvim/mason/packages/omnisharp/omnisharp"
+          .. "/.config/nvim/omnisharp-linux-x64-net6.0_1.39.8/OmniSharp"
         -- .. "/.config/nvim/omnisharp-linux-x64-net6.0_1.39.11/OmniSharp"
       end
 
@@ -68,13 +68,13 @@ return {
         args = { "/mnt/SSD_1TB_WORK/Unity/Editors/2023.2.5f1/Editor/Unity_s.debug" },
       }
 
-      -- dap.configurations.cs = {
-      --   {
-      --     type = "unity",
-      --     request = "attach",
-      --     name = "Unity Editor",
-      --   },
-      -- }
+      dap.configurations.cs = {
+        {
+          type = "unity",
+          request = "attach",
+          name = "Unity Editor",
+        },
+      }
 
       dapui.setup()
       require("nvim-dap-virtual-text").setup()

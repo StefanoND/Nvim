@@ -1,7 +1,7 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-require("stf.lazy")
+require("config.lazy")
 
 local augroup = vim.api.nvim_create_augroup
 local StfGroup = augroup("Stf", {})
@@ -34,8 +34,8 @@ vim.g.netrw_browse_split = 0
 vim.g.netrw_banner = 0
 vim.g.netrw_winsize = 25
 
-require("stf.set")
-require("stf.remap")
+require("config.set")
+require("config.remap")
 
 -- Load ftplugin files
 local ftmodule = "ftplugin.%s"
@@ -55,15 +55,12 @@ local function loadftmodule(ft, action)
   end
 end
 
-vim.api.nvim_create_autocmd(
-  { "FileType", "BufEnter", "BufWinEnter", "Colorscheme" },
-  {
-    pattern = { "*" },
-    callback = function()
-      loadftmodule(vim.bo.filetype, "ftplugin")
-    end,
-  }
-)
+vim.api.nvim_create_autocmd({ "FileType", "BufEnter", "BufWinEnter", "Colorscheme" }, {
+  pattern = { "*" },
+  callback = function()
+    loadftmodule(vim.bo.filetype, "ftplugin")
+  end,
+})
 
 vim.api.nvim_create_autocmd({ "FileType" }, {
   pattern = { "*" },
@@ -72,13 +69,10 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
   end,
 })
 
-vim.api.nvim_create_autocmd(
-  { "FileType", "BufEnter", "VimEnter", "BufWinEnter", "Colorscheme" },
-  {
-    pattern = { "*" },
-    callback = function()
-      loadftmodule(vim.bo.filetype, "syntax")
-    end,
-  }
-)
+vim.api.nvim_create_autocmd({ "FileType", "BufEnter", "VimEnter", "BufWinEnter", "Colorscheme" }, {
+  pattern = { "*" },
+  callback = function()
+    loadftmodule(vim.bo.filetype, "syntax")
+  end,
+})
 -- ftplugin end

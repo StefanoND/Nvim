@@ -9,7 +9,7 @@ return {
     neogen.setup({
       snippet_engine = "luasnip",
       languages = {
-        nwscript = require("stf.plugins.neogen.nwscript"),
+        nwscript = require("plugins.neogen.nwscript"),
       },
     })
 

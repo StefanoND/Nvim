@@ -135,5 +135,5 @@ return {
       })
     end,
   },
-  -- { import = "stf.plugins.lsp.servers" },
+  -- { import = "plugins.lsp.servers" },
 }

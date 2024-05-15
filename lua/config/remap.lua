@@ -274,3 +274,22 @@ end, opts)
 vim.tbl_deep_extend("force", opts, {
   desc = "Shout Out",
 })
+
+-- Diff
+vim.keymap.set(
+  "n",
+  "<leader>dt",
+  ":windo diffthis<CR>",
+  vim.tbl_deep_extend("force", opts, {
+    desc = "Diff current split windows",
+  })
+)
+
+vim.keymap.set(
+  "n",
+  "<leader>do",
+  ":windo diffoff<CR>",
+  vim.tbl_deep_extend("force", opts, {
+    desc = "Stop Diff",
+  })
+)

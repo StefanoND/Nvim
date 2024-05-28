@@ -71,9 +71,9 @@ return {
           auto_install = true,
 
           -- autotagging from nvim-ts-autotag plugin
-          autotag = {
-            enable = true,
-          },
+          -- autotag = {
+          --   enable = true,
+          -- },
 
           indent = {
             enable = true,

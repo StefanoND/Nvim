@@ -8,6 +8,21 @@ return {
       { "hrsh7th/cmp-cmdline" },
       { "onsails/lspkind.nvim" },
       { "L3MON4D3/LuaSnip" },
+      {
+        "SirVer/ultisnips",
+        init = function()
+          -- require("core.utils").lazy_load("ultisnips")
+          -- require("core.utils").load_mappings "ultisnips"
+          vim.g.UltiSnipsEditSplit = "horizontal"
+          vim.g.UltiSnipsExpandTrigger = "<c-j>" -- expand snippets using this hotkey
+          vim.g.UltiSnipsJumpForwardTrigger = "<c-j>"
+          vim.g.UltiSnipsJumpBackwardTrigger = "<c-k>" -- backwards jumps
+          vim.g.UltiSnipsListSnippets = "<c-l>" -- list available snippets for keyword
+          -- set the path for your ultisnip snippets
+          local ultisnips_snippets = vim.fn.expand("$HOME/.vim/UltiSnips") -- location of your snippets
+          vim.g.UltiSnipsSnippetDirectories = { ultisnips_snippets, "UltiSnips" }
+        end,
+      },
       { "saadparwaiz1/cmp_luasnip" },
       { "rafamadriz/friendly-snippets" },
       { "neovim/nvim-lspconfig" },
@@ -207,6 +222,7 @@ return {
               nvim_lua = "[api]",
               path = "[path]",
               luasnip = "[snip]",
+              ultisnips = "[usnips]",
               gh_issues = "[issues]",
               git = "[git]",
               cmp_git = "[cmp_git]",

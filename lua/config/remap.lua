@@ -293,3 +293,10 @@ vim.keymap.set(
     desc = "Stop Diff",
   })
 )
+
+-- splits a one liner {} block separated by ';' into separate lines
+vim.keymap.set(
+  "n",
+  "]j",
+  "f{i<CR><ESC>lli<CR><ESC>f;a<CR><ESC>f;a<CR><ESC>f;a<CR><ESC>f;a<CR><ESC>"
+)

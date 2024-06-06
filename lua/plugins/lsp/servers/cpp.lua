@@ -106,6 +106,10 @@ return {
           vim.tbl_deep_extend("force", opts, { desc = "Switch Source/Header (C/C++)" })
         )
 
+        -- Unreal.nvim mappings
+        vim.keymap.set("n", "<C-b>", "<cmd>UnrealBuild<CR>")
+        vim.keymap.set("n", "<F5>", "<cmd>UnrealRun<CR>")
+
         client.server_capabilities.signatureHelpProvider = false
         vim.opt.tabstop = 4
         vim.opt.softtabstop = 4

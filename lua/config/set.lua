@@ -1,5 +1,6 @@
 -- Line numbers
 vim.opt.nu = true
+vim.opt.rnu = true
 vim.opt.relativenumber = true
 
 vim.opt.encoding = "utf-8"
@@ -26,6 +27,7 @@ vim.opt.shiftwidth = 2 -- 2 Spaces for indent width
 vim.opt.expandtab = true -- Expand tab to spaces
 vim.opt.smartindent = true
 vim.opt.autoindent = true -- Copy indent from current line when starting a new one
+vim.opt.wrap = false
 
 -- Undo
 vim.opt.swapfile = false

@@ -1,6 +1,14 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-- globals
+-- vim.g.UltiSnipsExpandTrigger = "<tab>"
+-- vim.g.UltiSnipsJumpOrExpandTrigger = "<tab>"
+-- vim.g.UltiSnipsJumpForwardTrigger = "<c-b>"
+-- vim.g.UltiSnipsJumpBackwardTrigger = "<S-Tab>"
+-- vim.g.UltiSnipsEditSplit = "vertical"
+-- end globals
+
 require("config.lazy")
 
 local augroup = vim.api.nvim_create_augroup

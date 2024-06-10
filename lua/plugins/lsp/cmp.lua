@@ -8,6 +8,7 @@ return {
       { "hrsh7th/cmp-cmdline" },
       { "onsails/lspkind.nvim" },
       { "L3MON4D3/LuaSnip" },
+      { "saadparwaiz1/cmp_luasnip" },
       {
         "SirVer/ultisnips",
         init = function()
@@ -23,7 +24,7 @@ return {
           vim.g.UltiSnipsSnippetDirectories = { ultisnips_snippets, "UltiSnips" }
         end,
       },
-      { "saadparwaiz1/cmp_luasnip" },
+      { "quangnguyen30192/cmp-nvim-ultisnips" },
       { "rafamadriz/friendly-snippets" },
       { "neovim/nvim-lspconfig" },
       { "hrsh7th/cmp-nvim-lua" },
@@ -41,6 +42,7 @@ return {
       local luasnip = require("luasnip")
       local lspkind = require("lspkind")
       local cmp_action = lsp.cmp_action()
+      local cmp_ultisnips_mappings = require("cmp_nvim_ultisnips.mappings")
       local neogen = require("neogen")
 
       local t = function(str)
@@ -263,8 +265,12 @@ return {
           completion = cmp.config.window.bordered(),
         },
         snippet = {
+          -- REQUIRED - you must specify a snippet engine
           expand = function(args)
-            luasnip.lsp_expand(args.body)
+            -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+            -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+            -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
+            vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
           end,
         },
 
@@ -284,9 +290,12 @@ return {
             elseif luasnip.locally_jumpable(-1) then
               luasnip.jump(-1)
             else
-              fallback()
+              cmp_ultisnips_mappings.expand_or_jump_backwards(fallback)
             end
-          end, { "i", "s" }), -- previous suggestion
+          end, {
+            "i",
+            "s", --[[ "c" (to enable the mapping in command mode) ]]
+          }), -- previous suggestion
 
           -- Move cursor to next item in the completion menu. If completion menu
           -- is not showing, we jump to the next snippet node *only* if we are
@@ -300,9 +309,12 @@ return {
             elseif luasnip.expand_or_locally_jumpable() then
               luasnip.expand_or_jump()
             else
-              fallback()
+              cmp_ultisnips_mappings.expand_or_jump_forwards(fallback)
             end
-          end, { "i", "s" }), -- next suggestion
+          end, {
+            "i",
+            "s", --[[ "c" (to enable the mapping in command mode) ]]
+          }), -- next suggestion
 
           ["<C-u>"] = cmp.mapping.scroll_docs(-4),
           ["<C-d>"] = cmp.mapping.scroll_docs(4),
@@ -334,6 +346,7 @@ return {
           { name = "git" }, -- snippets
           { name = "cmp_git" }, -- snippets
           { name = "luasnip" }, -- snippets
+          { name = "ultisnips" }, -- snippets
           { name = "nvim_lsp" },
           { name = "nvim_lua" },
           { name = "neorg" },

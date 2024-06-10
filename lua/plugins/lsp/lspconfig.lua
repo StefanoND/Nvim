@@ -19,12 +19,6 @@ return {
     config = function() end, -- avoid duplicate setup call. It also loads in line 74 of cpp.lua
   },
   {
-    "zadirion/Unreal.nvim",
-    dependencies = {
-      { "tpope/vim-dispatch" },
-    },
-  },
-  {
     "habamax/vim-godot",
   },
   {

@@ -53,6 +53,37 @@ clangd_ext_opts = {
   },
 }
 
+local cppfuncs = function(client, bufnr)
+  local opts = { buffer = bufnr, noremap = true, remap = false }
+
+  vim.keymap.set(
+    "n",
+    "<leader>cR",
+    "<cmd>ClangdSwitchSourceHeader<cr>",
+    vim.tbl_deep_extend("force", opts, { desc = "Switch Source/Header (C/C++)" })
+  )
+
+  -- switch between header and source file
+  vim.keymap.set("n", "<M-o>", function()
+    local filename = vim.fn.expand("%:p")
+    local new_filename
+
+    if string.match(filename, ".h$") then
+      new_filename = string.gsub(filename, ".h$", ".cpp")
+    elseif string.match(filename, ".cpp$") then
+      new_filename = string.gsub(filename, ".cpp$", ".h")
+    end
+
+    if new_filename then
+      vim.cmd("e " .. new_filename)
+    end
+  end, opts)
+
+  -- Unreal.nvim mappings
+  vim.keymap.set("n", "<C-b>", "<cmd>UnrealBuild<CR>")
+  vim.keymap.set("n", "<F5>", "<cmd>UnrealRun<CR>")
+end
+
 return {
   -- Setup DAP ``adapter``
   -- {
@@ -97,24 +128,13 @@ return {
         },
       },
       on_attach = function(client, bufnr)
-        local opts = { buffer = bufnr, noremap = true, remap = false }
-
-        vim.keymap.set(
-          "n",
-          "<leader>cR",
-          "<cmd>ClangdSwitchSourceHeader<cr>",
-          vim.tbl_deep_extend("force", opts, { desc = "Switch Source/Header (C/C++)" })
-        )
-
-        -- Unreal.nvim mappings
-        vim.keymap.set("n", "<C-b>", "<cmd>UnrealBuild<CR>")
-        vim.keymap.set("n", "<F5>", "<cmd>UnrealRun<CR>")
+        cppfuncs(client, bufnr)
 
         client.server_capabilities.signatureHelpProvider = false
         vim.opt.tabstop = 4
         vim.opt.softtabstop = 4
         vim.opt.shiftwidth = 4
-        -- on_attach(client, bufnr)
+
         print("Hello C/C++")
       end,
       capabilities = lsp_defaults,

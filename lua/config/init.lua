@@ -12,17 +12,18 @@ vim.g.maplocalleader = " "
 require("config.lazy")
 
 local augroup = vim.api.nvim_create_augroup
-local StfGroup = augroup("Stf", {})
-
 local autocmd = vim.api.nvim_create_autocmd
-local yank_group = augroup("HighlightYank", {})
+
+-- Create group which will be cleared on reload so we don't have multiple autocommands
+local StfGroup = augroup("Stf", { clear = true })
 
 function R(name)
   require("plenary.reload").reload_module(name)
 end
 
+-- Highlight on yank
 autocmd("TextYankPost", {
-  group = yank_group,
+  group = StfGroup,
   pattern = "*",
   callback = function()
     vim.highlight.on_yank({
@@ -32,6 +33,7 @@ autocmd("TextYankPost", {
   end,
 })
 
+-- Remove whitespace on save
 autocmd({ "BufWritePre" }, {
   group = StfGroup,
   pattern = "*",

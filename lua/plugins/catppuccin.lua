@@ -27,7 +27,7 @@ return { -- colorscheme
         notify = true,
         mini = {
           enabled = true,
-          indentscope_color = "",
+          indentscope_color = "text",
         },
         native_lsp = {
           enabled = true,

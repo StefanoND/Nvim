@@ -23,6 +23,7 @@ vim.keymap.set(
     desc = "Clear search highlights",
   })
 )
+
 -- navigation
 vim.keymap.set("i", "<C-h>", "<left>", opts)
 vim.tbl_deep_extend("force", opts, {
@@ -71,6 +72,24 @@ vim.keymap.set("n", "<C-d>", "<C-d>zz", opts)
 vim.tbl_deep_extend("force", opts, {
   desc = "Half-page jump down",
 })
+
+-- Keep stuff centered while moving around
+vim.keymap.set("n", "*", "*zzzv", opts)
+vim.tbl_deep_extend("force", opts, {
+  desc = "Next item in search",
+})
+vim.keymap.set("n", "#", "#zzzv", opts)
+vim.tbl_deep_extend("force", opts, {
+  desc = "Previous item in search",
+})
+vim.keymap.set("n", ",", ",zzzv", opts)
+vim.tbl_deep_extend("force", opts, {
+  desc = "Next item in search",
+})
+vim.keymap.set("n", ";", ";zzzv", opts)
+vim.tbl_deep_extend("force", opts, {
+  desc = "Previous item in search",
+})
 vim.keymap.set("n", "n", "nzzzv", opts)
 vim.tbl_deep_extend("force", opts, {
   desc = "Next item in search",
@@ -80,23 +99,29 @@ vim.tbl_deep_extend("force", opts, {
   desc = "Previous item in search",
 })
 
-vim.keymap.set("x", "<leader>p", [["_dP]], opts)
-vim.tbl_deep_extend("force", opts, {
-  desc = "Paste preserving yank",
-})
-
+-- Register stuff
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], opts)
 vim.tbl_deep_extend("force", opts, {
   desc = "[y]ank copy to system clipboard (external paste support)",
 })
-vim.keymap.set({ "n", "v" }, "<leader>Y", [["+Y]], opts)
+vim.keymap.set({ "n", "v" }, "<leader>Y", [["+Y$]], opts)
 vim.tbl_deep_extend("force", opts, {
   desc = "[Y]ank copy to system clipboard (external paste support)",
 })
 
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]], opts)
 vim.tbl_deep_extend("force", opts, {
-  desc = "",
+  desc = "Delete without copying deleted content",
+})
+
+vim.keymap.set({ "n", "v" }, "<leader>x", [["_x]], opts)
+vim.tbl_deep_extend("force", opts, {
+  desc = "Cut without copying cut content",
+})
+
+vim.keymap.set("x", "<leader>p", [["_dP]], opts)
+vim.tbl_deep_extend("force", opts, {
+  desc = "Paste preserving yank",
 })
 
 vim.keymap.set("n", "Q", "<nop>", opts)
@@ -104,11 +129,21 @@ vim.tbl_deep_extend("force", opts, {
   desc = "No more [Q]uitting by mistake",
 })
 
+-- Keep things highlighted after moving with < and >
+vim.keymap.set("v", "<", "<gv", opts)
+vim.tbl_deep_extend("force", opts, {
+  desc = "Move left keeping highlight",
+})
+vim.keymap.set("v", ">", ">gv", opts)
+vim.tbl_deep_extend("force", opts, {
+  desc = "Move right keeping highlight",
+})
+
 -- tmux
 vim.keymap.set(
   "n",
   "<C-f>",
-  "<cmd>silent !tmux neww tmux-sessionizer<CR>",
+  "<cmd>silent !tmux neww ~/dotfiles/scripts/tmux-sessionizer<CR>",
   vim.tbl_deep_extend("force", opts, {
     desc = "",
   })
@@ -129,6 +164,15 @@ vim.tbl_deep_extend("force", opts, {
 vim.keymap.set("n", "<M-l>", "<cmd>TmuxNavigateRight<CR>", opts)
 vim.tbl_deep_extend("force", opts, {
   desc = "",
+})
+
+vim.keymap.set("n", "j", "gj", opts)
+vim.tbl_deep_extend("force", opts, {
+  desc = "Move down wrapped line",
+})
+vim.keymap.set("n", "k", "gk", opts)
+vim.tbl_deep_extend("force", opts, {
+  desc = "Move up wrapped line",
 })
 
 -- Window management
@@ -230,6 +274,10 @@ vim.tbl_deep_extend("force", opts, {
   desc = "",
 })
 vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz", opts)
+vim.tbl_deep_extend("force", opts, {
+  desc = "",
+})
+vim.keymap.set("n", "<leader>po", "<cmd>copen<CR>zz", opts)
 vim.tbl_deep_extend("force", opts, {
   desc = "",
 })

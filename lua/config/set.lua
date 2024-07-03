@@ -25,9 +25,13 @@ vim.opt.tabstop = 2 -- 2 Spaces for tabs
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2 -- 2 Spaces for indent width
 vim.opt.expandtab = true -- Expand tab to spaces
+vim.opt.cindent = true
 vim.opt.smartindent = true
 vim.opt.autoindent = true -- Copy indent from current line when starting a new one
 vim.opt.wrap = false
+
+vim.opt.breakindent = true
+vim.opt.linebreak = true
 
 -- Undo
 vim.opt.swapfile = false
@@ -48,6 +52,9 @@ vim.opt.ignorecase = true -- Ignore case when searching
 vim.opt.smartcase = true -- If mixed case in search, assumes case-sensitive
 
 vim.opt.cursorline = true -- Highlight current/cursor line
+
+-- Keep buffers in memory
+vim.opt.hidden = false
 
 -- Use truecolor in the terminal, when it's supported
 if vim.fn.has("termguicolors") == 1 then

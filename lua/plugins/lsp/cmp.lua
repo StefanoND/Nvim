@@ -43,7 +43,6 @@ return {
       local lspkind = require("lspkind")
       local cmp_action = lsp.cmp_action()
       local cmp_ultisnips_mappings = require("cmp_nvim_ultisnips.mappings")
-      local neogen = require("neogen")
 
       local t = function(str)
         return vim.api.nvim_replace_termcodes(str, true, true, true)
@@ -285,8 +284,6 @@ return {
           ["<C-k>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_prev_item()
-            elseif neogen.jumpable(-1) then
-              neogen.jump_prev()
             elseif luasnip.locally_jumpable(-1) then
               luasnip.jump(-1)
             else
@@ -304,8 +301,6 @@ return {
           ["<C-j>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
-            elseif neogen.jumpable() then
-              neogen.jump_next()
             elseif luasnip.expand_or_locally_jumpable() then
               luasnip.expand_or_jump()
             else

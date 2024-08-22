@@ -20,15 +20,7 @@ return {
     require("luasnip.loaders.from_vscode").lazy_load({ exclude = { "all" } })
 
     luasnip.filetype_extend("lua", { "luadoc" })
-    -- luasnip.filetype_extend("rust", { "rustdoc" })
-    luasnip.filetype_extend("cs", { "csharpdoc" })
-    luasnip.filetype_extend("c", { "cdoc" })
-    luasnip.filetype_extend("cpp", { "cppdoc" })
     luasnip.filetype_extend("sh", { "shelldoc" })
-    -- luasnip.filetype_extend("sql", { "sqldoc" })
-    -- luasnip.filetype_extend("markdown", { "mddoc" })
-    luasnip.filetype_extend("gdscript", { "gdscriptdoc" })
-    -- luasnip.filetype_extend("unrealengine", { "unrealdoc" })
 
     vim.keymap.set("i", "<C-s>e", function()
       luasnip.expand()

@@ -1,5 +1,7 @@
 # nvim
 
+## Minimal version
+
 ### My own vanilla neovim config from scratch
 
 ## FOR WINDOWS USERS

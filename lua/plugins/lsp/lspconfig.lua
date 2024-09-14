@@ -11,23 +11,6 @@ end
 
 return {
   {
-    "bfrg/vim-cpp-modern",
-  },
-  {
-    "p00f/clangd_extensions.nvim",
-    -- lazy = true,
-    config = function() end, -- avoid duplicate setup call. It also loads in line 74 of cpp.lua
-  },
-  {
-    "habamax/vim-godot",
-  },
-  {
-    "OmniSharp/omnisharp-vim",
-    dependencies = {
-      "ctrlpvim/ctrlp.vim",
-    },
-  },
-  {
     "neovim/nvim-lspconfig",
     cmd = { "LspInfo", "LspInstall", "LspStart" },
     event = { "BufReadPre", "BufNewFile" },
@@ -147,7 +130,7 @@ return {
           focusable = false,
           style = "minimal",
           border = "rounded",
-          source = "always",
+          source = true,
           header = "",
           prefix = "",
         },
@@ -155,5 +138,4 @@ return {
       })
     end,
   },
-  -- { import = "plugins.lsp.servers" },
 }

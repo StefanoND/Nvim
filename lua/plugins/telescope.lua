@@ -17,7 +17,6 @@ return {
     "nvim-tree/nvim-web-devicons",
   },
   config = function()
-    local nv = require("unreal.commands")
     local telescope = require("telescope")
     local actions = require("telescope.actions")
 

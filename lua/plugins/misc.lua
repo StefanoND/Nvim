@@ -11,10 +11,6 @@ return {
     },
   },
   {
-    "eandrju/cellular-automaton.nvim",
-    event = "VeryLazy",
-  },
-  {
     "mg979/vim-visual-multi",
     event = "VeryLazy",
   },
@@ -69,12 +65,6 @@ return {
       })
     end,
   },
-  -- {
-  --   "norcalli/nvim-colorizer.lua",
-  --   config = function()
-  --     require("colorizer").setup()
-  --   end,
-  -- },
   {
     "ThePrimeagen/vim-be-good",
     config = function()
@@ -100,5 +90,14 @@ return {
       "TmuxNavigateRight",
       "TmuxNavigatePrevious",
     },
+  },
+  {
+    "tpope/vim-repeat",
+    lazy = true,
+    -- use function to overwrite default event, otherwise it just merges with the default
+    -- and `VeryLazy` keeps existing
+    event = function()
+      return { "BufReadPost", "BufNewFile" }
+    end,
   },
 }

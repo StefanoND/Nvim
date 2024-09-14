@@ -4,7 +4,6 @@ return {
   config = function()
     local lualine = require("lualine")
     local lazy_status = require("lazy.status") -- to configure lazy pending updates count
-    local unrealCommands = require("unreal.commands")
 
     local GetFilePath = function()
       local winWidth = vim.api.nvim_win_get_width(0)
@@ -20,7 +19,6 @@ return {
       sections = {
         lualine_a = { "mode" },
         lualine_b = { "branch", "diff", "diagnostics" },
-        lualine_c = { unrealCommands.GetStatusBar },
         lualine_x = {
           {
             lazy_status.updates,
@@ -36,7 +34,6 @@ return {
       inactive_sections = {
         lualine_a = { "mode" },
         lualine_b = { "branch", "diff", "diagnostics" },
-        lualine_c = { unrealCommands.GetStatusBar },
       },
       tabline = {},
       winbar = {

@@ -53,8 +53,9 @@ vim.opt.smartcase = true -- If mixed case in search, assumes case-sensitive
 
 vim.opt.cursorline = true -- Highlight current/cursor line
 
--- Keep buffers in memory
-vim.opt.hidden = false
+-- Don't keep buffers in memory
+-- Must be true if using "Bufferline" plugin
+vim.opt.hidden = true
 
 -- Use truecolor in the terminal, when it's supported
 if vim.fn.has("termguicolors") == 1 then

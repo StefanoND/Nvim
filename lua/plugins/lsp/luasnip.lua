@@ -11,10 +11,7 @@ return {
 
     local opts = { noremap = true, silent = true }
 
-    local path = os.getenv("XDG_CONFIG_HOME") .. "/nvim/snippets"
-
     -- require("luasnip.loaders.from_lua").lazy_load()
-    require("luasnip.loaders.from_lua").lazy_load({ paths = path })
     require("luasnip.loaders.from_snipmate").lazy_load()
     -- require("luasnip.loaders.from_vscode").lazy_load()
     require("luasnip.loaders.from_vscode").lazy_load({ exclude = { "all" } })

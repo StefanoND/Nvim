@@ -55,7 +55,7 @@ return {
         }),
 
         formatting.shellharden,
-        formatting.stylua,
+        -- formatting.stylua,
 
         -- actions.gitsigns,
         -- actions.gitsigns.with({

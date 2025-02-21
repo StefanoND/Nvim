@@ -143,18 +143,45 @@ return {
       -- CATPPUCCIN COMPATIBILITY START
       local sign = vim.fn.sign_define
 
-      sign("DapBreakpoint", { text = "●", texthl = "DapBreakpoint", linehl = "", numhl = "" })
-      sign(
-        "DapBreakpointCondition",
-        { text = "●", texthl = "DapBreakpointCondition", linehl = "", numhl = "" }
-      )
-      sign("DapLogPoint", { text = "◆", texthl = "DapLogPoint", linehl = "", numhl = "" })
-      -- CATPPUCCIN COMPATIBILITY END
+      local dapBreakpoint = {
+        breakpoint = {
+          text = "●",
+          texthl = "DapBreakpoint",
+          linehl = "",
+          numhl = "",
+        },
+        breakpointCondition = {
+          text = "●",
+          texthl = "DapBreakpointCondition",
+          linehl = "",
+          numhl = "",
+        },
+        dapLogPoint = {
+          text = "◆",
+          texthl = "DapLogPoint",
+          linehl = "",
+          numhl = "",
+        },
+        rejected = {
+          text = "●",
+          texthl = "LspDiagnosticsSignHint",
+          linehl = "",
+          numhl = "",
+        },
+        stopped = {
+          text = "",
+          texthl = "LspDiagnosticsSignInformation",
+          linehl = "DiagnosticUnderlineInfo",
+          numhl = "LspDiagnosticsSignInformation",
+        },
+      }
 
-      -- vim.fn.sign_define(
-      --   "DapBreakpoint",
-      --   { text = "🔴", texthl = "DapBreakpoint", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }
-      -- )
+      sign("DapBreakpoint", dapBreakpoint.breakpoint)
+      sign("DapBreakpointCondition", dapBreakpoint.breakpointCondition)
+      sign("DapLogPoint", dapBreakpoint.dapLogPoint)
+      sign("DapStopped", dapBreakpoint.stopped)
+      sign("DapBreakpointRejected", dapBreakpoint.rejected)
+      -- CATPPUCCIN COMPATIBILITY END
 
       dap.listeners.after.event_initialized.dapui_config = function()
         dapui.open()

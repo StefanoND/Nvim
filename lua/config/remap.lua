@@ -24,24 +24,6 @@ vim.keymap.set(
   })
 )
 
--- navigation
-vim.keymap.set("i", "<C-h>", "<left>", opts)
-vim.tbl_deep_extend("force", opts, {
-  desc = "Move cursor left while in insert mode",
-})
-vim.keymap.set("i", "<C-j>", "<down>", opts)
-vim.tbl_deep_extend("force", opts, {
-  desc = "Move cursor down while in insert mode",
-})
-vim.keymap.set("i", "<C-k>", "<up>", opts)
-vim.tbl_deep_extend("force", opts, {
-  desc = "Move cursor up while in insert mode",
-})
-vim.keymap.set("i", "<C-l>", "<right>", opts)
-vim.tbl_deep_extend("force", opts, {
-  desc = "Move cursor right while in insert mode",
-})
-
 vim.keymap.set("n", "D", "<cmd>bd<CR>", opts)
 vim.tbl_deep_extend("force", opts, {
   desc = "Cloes current buffer/tab",
@@ -51,14 +33,23 @@ vim.tbl_deep_extend("force", opts, {
   desc = "Same as 'dd'",
 })
 
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", opts)
-vim.tbl_deep_extend("force", opts, {
-  desc = "Move selection up",
-})
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", opts)
-vim.tbl_deep_extend("force", opts, {
-  desc = "Move selection down",
-})
+-- vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", opts)
+-- vim.tbl_deep_extend("force", opts, {
+--   desc = "Move selection up",
+-- })
+-- vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", opts)
+-- vim.tbl_deep_extend("force", opts, {
+--   desc = "Move selection down",
+-- })
+--
+-- vim.keymap.set("v", "H", ":m 'd-2<CR>gv=gv", opts)
+-- vim.tbl_deep_extend("force", opts, {
+--   desc = "Move selection left",
+-- })
+-- vim.keymap.set("v", "L", ":m 'p+1<CR>gv=gv", opts)
+-- vim.tbl_deep_extend("force", opts, {
+--   desc = "Move selection right",
+-- })
 
 vim.keymap.set("n", "J", "mzJ`z", opts)
 vim.tbl_deep_extend("force", opts, {
@@ -124,7 +115,7 @@ vim.tbl_deep_extend("force", opts, {
   desc = "Paste preserving yank",
 })
 
-vim.keymap.set("n", "Q", "<nop>", opts)
+vim.keymap.set("n", "Q", "<Nop>", opts)
 vim.tbl_deep_extend("force", opts, {
   desc = "No more [Q]uitting by mistake",
 })
@@ -149,19 +140,19 @@ vim.keymap.set(
   })
 )
 
-vim.keymap.set("n", "<M-h>", "<cmd>TmuxNavigateLeft<CR>", opts)
+vim.keymap.set("n", "<S-Left>", "<cmd>TmuxNavigateLeft<CR>", opts)
 vim.tbl_deep_extend("force", opts, {
   desc = "",
 })
-vim.keymap.set("n", "<M-j>", "<cmd>TmuxNavigateDown<CR>", opts)
+vim.keymap.set("n", "<S-Down>", "<cmd>TmuxNavigateDown<CR>", opts)
 vim.tbl_deep_extend("force", opts, {
   desc = "",
 })
-vim.keymap.set("n", "<M-k>", "<cmd>TmuxNavigateUp<CR>", opts)
+vim.keymap.set("n", "<S-Up>", "<cmd>TmuxNavigateUp<CR>", opts)
 vim.tbl_deep_extend("force", opts, {
   desc = "",
 })
-vim.keymap.set("n", "<M-l>", "<cmd>TmuxNavigateRight<CR>", opts)
+vim.keymap.set("n", "<S-Right>", "<cmd>TmuxNavigateRight<CR>", opts)
 vim.tbl_deep_extend("force", opts, {
   desc = "",
 })
@@ -251,23 +242,6 @@ vim.keymap.set(
   })
 )
 
-vim.keymap.set("n", "<C-h>", "<Cmd>wincmd h<CR>", opts)
-vim.tbl_deep_extend("force", opts, {
-  desc = "",
-})
-vim.keymap.set("n", "<C-j>", "<Cmd>wincmd j<CR>", opts)
-vim.tbl_deep_extend("force", opts, {
-  desc = "",
-})
-vim.keymap.set("n", "<C-k>", "<Cmd>wincmd k<CR>", opts)
-vim.tbl_deep_extend("force", opts, {
-  desc = "",
-})
-vim.keymap.set("n", "<C-l>", "<Cmd>wincmd l<CR>", opts)
-vim.tbl_deep_extend("force", opts, {
-  desc = "",
-})
-
 -- vim's quickfix navigation
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz", opts)
 vim.tbl_deep_extend("force", opts, {
@@ -343,8 +317,4 @@ vim.keymap.set(
 )
 
 -- splits a one liner {} block separated by ';' into separate lines
-vim.keymap.set(
-  "n",
-  "]j",
-  "f{i<CR><ESC>lli<CR><ESC>f;a<CR><ESC>f;a<CR><ESC>f;a<CR><ESC>f;a<CR><ESC>"
-)
+vim.keymap.set("n", "]j", "f{i<CR><ESC>lli<CR><ESC>f;a<CR><ESC>f;a<CR><ESC>f;a<CR><ESC>f;a<CR><ESC>")

@@ -2,11 +2,10 @@ return {
   { -- file explorer for neovim
     "nvim-tree/nvim-tree.lua",
     version = "*",
-    event = "VeryLazy",
+    -- event = "VeryLazy",
+    lazy = false,
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
-      local nvimtree = require("nvim-tree")
-
       local opts = { noremap = true, silent = true }
 
       vim.keymap.set("n", "<leader>op", "<cmd>NvimTreeToggle<CR>", opts)
@@ -14,16 +13,13 @@ return {
       vim.keymap.set("n", "<leader>ec", "<cmd>NvimTreeCollapse<CR>", opts)
       vim.keymap.set("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>", opts)
 
-      -- recommended settings from nvim-tree documetation
-      vim.g.loaded_netrw = 1
-      vim.g.loaded_netrwPlugin = 1
-
       -- change color for arrows in tree to light blue
       -- vim.cmd([[ highlight NvimTreeIndentMarker guifg=#3FC5FF]])
       vim.cmd([[ highlight NvimTreeFolderArrowClosed guifg=#3FC5FF ]])
       vim.cmd([[ highlight NvimTreeFolderArrowOpen guifg=#3FC5FF ]])
 
-      local setup = {
+      -- configure nvim-tree
+      require("nvim-tree").setup({
         respect_buf_cwd = true,
         -- sync_root_with_cwd = true, -- Previously update_cwd
         update_focused_file = {
@@ -70,10 +66,7 @@ return {
         git = {
           ignore = false,
         },
-      }
-
-      -- configure nvim-tree
-      nvimtree.setup(setup)
+      })
     end,
   },
   {

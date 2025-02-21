@@ -182,50 +182,51 @@ return {
         nowait = false,
       }
 
+      local extend = function(desc)
+        vim.tbl_deep_extend("force", opts, { desc = desc })
+      end
+
       whichKey.add({
         {
           {
             mode = { "n" },
-            d = {
-              name = "DAP",
-              -- u = { ":lua require('dapui').toggle()<CR>", opts },
-              -- b = { "<cmd>DapToggleBreakpoint<CR>", opts },
-              -- c = { "<cmd>DapContinue<CR>", opts },
-              -- r = { ":lua require('dapui').open({reset = true})<CR>", opts },
-              R = { "<cmd>lua require('dap').run_to_cursor()<cr>", "Run to Cursor" },
-              E = {
+            {
+              -- du = { ":lua require('dapui').toggle()<CR>", opts },
+              -- db = { "<cmd>DapToggleBreakpoint<CR>", opts },
+              -- dc = { "<cmd>DapContinue<CR>", opts },
+              -- dr = { ":lua require('dapui').open({reset = true})<CR>", opts },
+              { "dR", "<cmd>lua require('dap').run_to_cursor()<cr>", extend("Run to Cursor") },
+              {
+                "dE",
                 "<cmd>lua require('dapui').eval(vim.fn.input '[Expression] > ')<cr>",
-                "Evaluate Input",
+                extend("Evaluate Input"),
               },
-              C = {
+              {
+                "dC",
                 "<cmd>lua require('dap').set_breakpoint(vim.fn.input '[Condition] > ')<cr>",
-                "Conditional Breakpoint",
+                extend("Conditional Breakpoint"),
               },
-              U = { "<cmd>lua require('dapui').toggle()<cr>", "Toggle UI" },
-              b = { "<cmd>lua require('dap').step_back()<cr>", "Step Back" },
-              c = { "<cmd>lua require('dap').continue()<cr>", "Continue" },
-              d = { "<cmd>lua require('dap').disconnect()<cr>", "Disconnect" },
-              g = { "<cmd>lua require('dap').session()<cr>", "Get Session" },
-              h = { "<cmd>lua require('dap.ui.widgets').hover()<cr>", "Hover Variables" },
-              S = { "<cmd>lua require('dap.ui.widgets').scopes()<cr>", "Scopes" },
-              i = { "<cmd>lua require('dap').step_into()<cr>", "Step Into" },
-              o = { "<cmd>lua require('dap').step_over()<cr>", "Step Over" },
-              p = { "<cmd>lua require('dap').pause.toggle()<cr>", "Pause" },
-              q = { "<cmd>lua require('dap').close()<cr>", "Quit" },
-              r = { "<cmd>lua require('dap').repl.toggle()<cr>", "Toggle Repl" },
-              s = { "<cmd>lua require('dap').continue()<cr>", "Start" },
-              t = { "<cmd>lua require('dap').toggle_breakpoint()<cr>", "Toggle Breakpoint" },
-              x = { "<cmd>lua require('dap').terminate()<cr>", "Terminate" },
-              u = { "<cmd>lua require('dap').step_out()<cr>", "Step Out" },
+              { "dU", "<cmd>lua require('dapui').toggle()<cr>", extend("Toggle UI") },
+              { "db", "<cmd>lua require('dap').step_back()<cr>", extend("Step Back") },
+              { "dc", "<cmd>lua require('dap').continue()<cr>", extend("Continue") },
+              { "dD", "<cmd>lua require('dap').disconnect()<cr>", extend("Disconnect") },
+              { "dg", "<cmd>lua require('dap').session()<cr>", extend("Get Session") },
+              { "dh", "<cmd>lua require('dap.ui.widgets').hover()<cr>", extend("Hover Variables") },
+              { "dS", "<cmd>lua require('dap.ui.widgets').scopes()<cr>", extend("Scopes") },
+              { "di", "<cmd>lua require('dap').step_into()<cr>", extend("Step Into") },
+              { "do", "<cmd>lua require('dap').step_over()<cr>", extend("Step Over") },
+              { "dp", "<cmd>lua require('dap').pause.toggle()<cr>", extend("Pause") },
+              { "dq", "<cmd>lua require('dap').close()<cr>", extend("Quit") },
+              { "dr", "<cmd>lua require('dap').repl.toggle()<cr>", extend("Toggle Repl") },
+              { "ds", "<cmd>lua require('dap').continue()<cr>", extend("Start") },
+              { "dt", "<cmd>lua require('dap').toggle_breakpoint()<cr>", extend("Toggle Breakpoint") },
+              { "dx", "<cmd>lua require('dap').terminate()<cr>", extend("Terminate") },
+              { "du", "<cmd>lua require('dap').step_out()<cr>", extend("Step Out") },
             },
           },
           {
             mode = { "n", "v" },
-            {
-              "de",
-              "<cmd>lua require('dapui').eval()<cr>",
-              vim.tbl_deep_extend("force", opts, { desc = "Evaluate" }),
-            },
+            { "de", "<cmd>lua require('dapui').eval()<cr>", extend("Evaluate") },
           },
         },
       })

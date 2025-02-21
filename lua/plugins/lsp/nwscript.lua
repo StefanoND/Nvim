@@ -1,5 +1,17 @@
 return {
   {
+    "jd28/nwscript-lsp",
+    dependencies = {
+      "ray-x/lsp_signature.nvim",
+    },
+  },
+  {
+    "jd28/arclight-py",
+  },
+  {
+    "PhilippeChab/nwscript-ee-language-server",
+  },
+  {
     "squattingmonk/vim-nwscript",
     config = function()
       -- Luascript doesn't work, let's use vim.cmd([[]]) to run Vimscript inside it
@@ -29,17 +41,5 @@ return {
         " let g:nwscript#ctags#includes = ['~/.local/share/nwscript']
       ]])
     end,
-  },
-  {
-    "jd28/nwscript-lsp",
-    dependencies = {
-      "ray-x/lsp_signature.nvim",
-    },
-  },
-  {
-    "jd28/arclight-py",
-  },
-  {
-    "PhilippeChab/nwscript-ee-language-server",
   },
 }

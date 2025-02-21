@@ -107,4 +107,5 @@
 
 (nwnsc_macro) @macro
 
-; (comment) @comment
+; Comments
+(comment) @comment

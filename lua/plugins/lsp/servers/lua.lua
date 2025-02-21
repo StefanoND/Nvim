@@ -25,20 +25,10 @@ cmpcapabilities.textDocument.foldingRange = {
 
 lsp_defaults.capabilities = cmpcapabilities
 
-local codelens = function(bufnr)
-  vim.api.nvim_create_autocmd({ "TextChanged", "BufEnter", "InsertLeave" }, {
-    buffer = bufnr,
-    callback = vim.lsp.codelens.refresh,
-  })
-  -- Trigger codelens refresh
-  vim.api.nvim_exec_autocmds("User", { pattern = "LspAttach" })
-end
-
 return {
   lspconfig.lua_ls.setup({
     handlers = handlers,
     on_attach = function(client, bufnr)
-      codelens(bufnr)
       print("Hello Lua")
     end,
     capabilities = lsp_defaults,

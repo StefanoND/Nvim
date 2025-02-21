@@ -8,10 +8,7 @@ local util = require("lspconfig.util")
 
 local handlers = {
   ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
-  ["textDocument/signatureHelp"] = vim.lsp.with(
-    vim.lsp.handlers.signature_help,
-    { border = "rounded" }
-  ),
+  ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" }),
 }
 
 local lsp_defaults = lspconfig.util.default_config
@@ -25,15 +22,6 @@ cmpcapabilities.textDocument.foldingRange = {
 }
 
 lsp_defaults.capabilities = cmpcapabilities
-
-local codelens = function(bufnr)
-  vim.api.nvim_create_autocmd({ "TextChanged", "BufEnter", "InsertLeave" }, {
-    buffer = bufnr,
-    callback = vim.lsp.codelens.refresh,
-  })
-  -- Trigger codelens refresh
-  vim.api.nvim_exec_autocmds("User", { pattern = "LspAttach" })
-end
 
 -- on_attach {
 
@@ -52,14 +40,14 @@ if vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 or vim.fn.has("win16") =
     },
   })
   omnisharp_bin = os.getenv("UserProfile")
-    .. "/AppData/Local/nvim/omnisharp-mono_1.39.8/OmniSharp.exe"
+    .. "/AppData/Local/nvim/Utilities/omnisharp-mono_1.39.8/OmniSharp.exe"
   vim.g.OmniSharp_server_use_mono = true
 else -- I don't own/use a Mac, will update when/if I do
-  -- omnisharp_bin = os.getenv("HOME") .. "/.config/nvim/omnisharp-linux-x64_1.39.8/run"
+  -- omnisharp_bin = os.getenv("HOME") .. "/.config/nvim/Utilities/omnisharp-linux-x64_1.39.8/run"
   omnisharp_bin = os.getenv("HOME")
     -- .. "/.local/share/nvim/mason/packages/omnisharp/omnisharp"
-    .. "/.config/nvim/omnisharp-linux-x64-net6.0_1.39.8/OmniSharp"
-  -- .. "/.config/nvim/omnisharp-linux-x64-net6.0_1.39.11/OmniSharp"
+    .. "/.config/nvim/Utilities/omnisharp-linux-x64-net6.0_1.39.8/OmniSharp"
+  -- .. "/.config/nvim/Utilities/omnisharp-linux-x64-net6.0_1.39.11/OmniSharp"
 end
 
 vim.g.OmniSharp_server_stdio = 1
@@ -232,7 +220,6 @@ return {
         range = true,
       }
 
-      codelens(bufnr)
       print("Hello Omnisharp")
     end,
   }),

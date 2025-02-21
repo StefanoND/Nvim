@@ -10,7 +10,7 @@ return {
 
     local opts = { noremap = true, silent = true }
 
-    vim.keymap.set("n", "<C-t>", "<cmd>lua require'toggleterm'.exec('ranger')<CR>", opts)
+    vim.keymap.set("n", "<C-t>", "<cmd>lua require'toggleterm'.exec('yazi')<CR>", opts)
 
     vim.keymap.set("n", "<leader>h", "<cmd>ToggleTerm<CR>", opts)
     vim.keymap.set("t", "<esc>", [[<C-\><C-n>]])

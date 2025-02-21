@@ -25,13 +25,15 @@ return {
         ["core.dirman"] = { -- Manages Neorg workspaces
           config = {
             workspaces = {
-              main = "~/org",
+              main = "~/norg",
+              learn = "~/norg/learn",
             },
+            default_workspace = "main",
           },
         },
         ["core.export"] = {},
       },
     })
   end,
-  -- build = ":Neorg sync-parsers",
+  build = ":Neorg sync-parsers",
 }

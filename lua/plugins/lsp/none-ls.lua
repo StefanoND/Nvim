@@ -2,29 +2,10 @@ return {
   {
     "nvimtools/none-ls.nvim",
     dependencies = {
-      { "jay-babu/mason-null-ls.nvim", event = { "BufReadPre", "BufNewFile" } },
       "nvimtools/none-ls-extras.nvim",
     },
     event = "VeryLazy",
     config = function()
-      local mason_null_ls = require("mason-null-ls")
-
-      mason_null_ls.setup({
-        ensure_installed = {
-          "shellharden", -- bash formatter and linter
-          "clang-format", -- C/C++ formatter
-          "cmakelang", -- CMAKE formatter and linter
-          "csharpier", -- C# formatter
-          "gdtoolkit", -- Godot formatter and linter
-          "biome", -- formatter and linter
-          "stylua", -- Lua formatter and linter
-          "sql-formatter", -- SQL formatter
-          "prettier", -- Prettier formatter
-        },
-        automatic_installation = true,
-        handlers = {},
-      })
-
       local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
       local null_ls = require("null-ls")
       local null_ls_utils = require("null-ls.utils")
@@ -67,10 +48,10 @@ return {
         formatting.cmake_format,
         formatting.csharpier,
         formatting.gdformat,
-        formatting.prettier,
+        -- formatting.prettier,
         -- formatting.rustfmt,
         formatting.shellharden,
-        formatting.sqlfluff,
+        -- formatting.sqlfluff,
         formatting.stylua,
 
         -- actions.gitsigns,

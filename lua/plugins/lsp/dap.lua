@@ -2,11 +2,72 @@ return {
   {
     "mfussenegger/nvim-dap",
     dependencies = {
+      {
+        "rcarriga/nvim-dap-ui",
+        dependencies = {
+          "nvim-neotest/nvim-nio",
+        },
+      },
+      {
+        "jay-babu/mason-nvim-dap.nvim",
+        dependencies = {
+          "williamboman/mason.nvim",
+        },
+        opts = {
+          handlers = {},
+        },
+      },
       "theHamsta/nvim-dap-virtual-text",
+      "nvim-telescope/telescope-dap.nvim",
+      "jbyuki/one-small-step-for-vimkind",
     },
     config = function()
       local dap = require("dap")
       local dapui = require("dapui")
+
+      -- local getOS = function()
+      --   if vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 or vim.fn.has("win16") == 1 then
+      --     return os.getenv("UserProfile") .. "/AppData/Local/nvim/mason/packages/codelldb/codelldb.exe"
+      --   else -- I don't own/use a Mac, will update when/if I do
+      --     return os.getenv("HOME") .. "/.local/share/nvim/mason/packages/codelldb/codelldb"
+      --   end
+      -- end
+      --
+      -- local lldbPath = getOS()
+      --
+      -- dap.adapters.codelldb = {
+      --   type = "executable",
+      --   command = lldbPath,
+      --   env = {
+      --     LLDG_LAUNCH_FLAG_LAUNCH_IN_TTY = "YES",
+      --   },
+      --   name = "codelldb",
+      --   detached = function()
+      --     if vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 or vim.fn.has("win16") == 1 then
+      --       return false
+      --     else -- I don't own/use a Mac, will update when/if I do
+      --       return true
+      --     end
+      --   end,
+      -- }
+      --
+      -- dap.adapters.cpp = dap.adapters.codelldb
+      --
+      -- dap.configurations.cpp = {
+      --   {
+      --     name = "Launch file",
+      --     type = "codelldb",
+      --     request = "launch",
+      --     program = function()
+      --       return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+      --     end,
+      --     cwd = "${workspaceFolder}",
+      --     stopOnEntry = false,
+      --   },
+      -- }
+
+      dap.configurations.c = dap.configurations.cpp
+      dap.configurations.rust = dap.configurations.cpp
 
       -- -- GODOT DEBUGGING
       -- -- Need "netcat" installed
@@ -52,20 +113,20 @@ return {
       local omnisharp_bin
       if vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 or vim.fn.has("win16") == 1 then
         omnisharp_bin = os.getenv("UserProfile")
-          .. "/AppData/Local/nvim/omnisharp-mono_1.39.8/OmniSharp.exe"
+          .. "/AppData/Local/nvim/Utilities/omnisharp-mono_1.39.8/OmniSharp.exe"
         vim.g.OmniSharp_server_use_mono = true
       else -- I don't own/use a Mac, will update when/if I do
-        -- omnisharp_bin = os.getenv("HOME") .. "/.config/nvim/omnisharp-linux-x64_1.39.8/run"
+        -- omnisharp_bin = os.getenv("HOME") .. "/.config/nvim/Utilities/omnisharp-linux-x64_1.39.8/run"
         omnisharp_bin = os.getenv("HOME")
           -- .. "/.local/share/nvim/mason/packages/omnisharp/omnisharp"
-          .. "/.config/nvim/omnisharp-linux-x64-net6.0_1.39.8/OmniSharp"
-        -- .. "/.config/nvim/omnisharp-linux-x64-net6.0_1.39.11/OmniSharp"
+          .. "/.config/nvim/Utilities/omnisharp-linux-x64-net6.0_1.39.8/OmniSharp"
+        -- .. "/.config/nvim/Utilities/omnisharp-linux-x64-net6.0_1.39.11/OmniSharp"
       end
 
       dap.adapters.unity = {
         type = "executable",
         command = omnisharp_bin,
-        args = { "/mnt/SSD_1TB_WORK/Unity/Editors/2023.2.5f1/Editor/Unity_s.debug" },
+        args = { os.getenv("UNITY_DEBUG_DIR") },
       }
 
       dap.configurations.cs = {
@@ -95,39 +156,82 @@ return {
       --   { text = "🔴", texthl = "DapBreakpoint", linehl = "DapBreakpoint", numhl = "DapBreakpoint" }
       -- )
 
-      dap.listeners.after.event_initialized["dapui_config"] = function()
+      dap.listeners.after.event_initialized.dapui_config = function()
         dapui.open()
       end
-      dap.listeners.before.event_terminated["dapui_config"] = function()
+      dap.listeners.before.attach.dapui_config = function()
+        dapui.open()
+      end
+      dap.listeners.before.launch.dapui_config = function()
+        dapui.open()
+      end
+      dap.listeners.before.event_terminated.dapui_config = function()
         dapui.close()
       end
-      dap.listeners.before.event_exited["dapui_config"] = function()
+      dap.listeners.before.event_exited.dapui_config = function()
         dapui.close()
       end
 
-      local opts = { noremap = true }
+      local keymapN = {
+        d = {
+          name = "DAP",
+          -- u = { ":lua require('dapui').toggle()<CR>", opts },
+          -- b = { "<cmd>DapToggleBreakpoint<CR>", opts },
+          -- c = { "<cmd>DapContinue<CR>", opts },
+          -- r = { ":lua require('dapui').open({reset = true})<CR>", opts },
+          R = { "<cmd>lua require('dap').run_to_cursor()<cr>", "Run to Cursor" },
+          E = { "<cmd>lua require('dapui').eval(vim.fn.input '[Expression] > ')<cr>", "Evaluate Input" },
+          C = {
+            "<cmd>lua require('dap').set_breakpoint(vim.fn.input '[Condition] > ')<cr>",
+            "Conditional Breakpoint",
+          },
+          U = { "<cmd>lua require('dapui').toggle()<cr>", "Toggle UI" },
+          b = { "<cmd>lua require('dap').step_back()<cr>", "Step Back" },
+          c = { "<cmd>lua require('dap').continue()<cr>", "Continue" },
+          d = { "<cmd>lua require('dap').disconnect()<cr>", "Disconnect" },
+          e = { "<cmd>lua require('dapui').eval()<cr>", "Evaluate" },
+          g = { "<cmd>lua require('dap').session()<cr>", "Get Session" },
+          h = { "<cmd>lua require('dap.ui.widgets').hover()<cr>", "Hover Variables" },
+          S = { "<cmd>lua require('dap.ui.widgets').scopes()<cr>", "Scopes" },
+          i = { "<cmd>lua require('dap').step_into()<cr>", "Step Into" },
+          o = { "<cmd>lua require('dap').step_over()<cr>", "Step Over" },
+          p = { "<cmd>lua require('dap').pause.toggle()<cr>", "Pause" },
+          q = { "<cmd>lua require('dap').close()<cr>", "Quit" },
+          r = { "<cmd>lua require('dap').repl.toggle()<cr>", "Toggle Repl" },
+          s = { "<cmd>lua require('dap').continue()<cr>", "Start" },
+          t = { "<cmd>lua require('dap').toggle_breakpoint()<cr>", "Toggle Breakpoint" },
+          x = { "<cmd>lua require('dap').terminate()<cr>", "Terminate" },
+          u = { "<cmd>lua require('dap').step_out()<cr>", "Step Out" },
+        },
+      }
 
-      vim.keymap.set("n", "<leader>dt", "<cmd>DapUiToggle<CR>", opts)
-      vim.keymap.set("n", "<leader>db", "<cmd>DapToggleBreakpoint<CR>", opts)
-      vim.keymap.set("n", "<leader>dc", "<cmd>DapContinue<CR>", opts)
-      vim.keymap.set("n", "<leader>dr", "<cmd>require('dapui').open({reset = true})<CR>", opts)
+      local keymapV = {
+        d = {
+          name = "Debug",
+          e = { "<cmd>lua require('dapui').eval()<cr>", "Evaluate" },
+        },
+      }
+
+      local whichKey = require("which-key")
+
+      local opts = {
+        prefix = "<leader>",
+        buffer = nil,
+        silent = true,
+        noremap = true,
+        nowait = false,
+      }
+
+      local optsN = {
+        vim.tbl_deep_extend("force", opts, { mode = "n" }),
+      }
+
+      local optsV = {
+        vim.tbl_deep_extend("force", opts, { mode = "v" }),
+      }
+
+      whichKey.register(keymapN, optsN)
+      whichKey.register(keymapV, optsV)
     end,
-  },
-  {
-    "jay-babu/mason-nvim-dap.nvim",
-    dependencies = {
-      "williamboman/mason.nvim",
-      "mfussenegger/nvim-dap",
-    },
-    opts = {
-      handlers = {},
-    },
-  },
-  {
-    "rcarriga/nvim-dap-ui",
-    dependencies = {
-      "mfussenegger/nvim-dap",
-      "nvim-neotest/nvim-nio",
-    },
   },
 }

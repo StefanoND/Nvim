@@ -11,7 +11,7 @@ return {
 
         " Auto-wrap (actually auto-newline) comments at column 120
         " Pressing o/O in normal mode will continua a comment block.
-        let g:nwscript#format#textwidth = 100
+        let g:nwscript#format#textwidth = 105
         let g:nwscript#format#options = 'croqwa2lj'
 
         " Remove trailing whitespace when saving
@@ -35,6 +35,9 @@ return {
     dependencies = {
       "ray-x/lsp_signature.nvim",
     },
+  },
+  {
+    "jd28/arclight-py",
   },
   {
     "PhilippeChab/nwscript-ee-language-server",

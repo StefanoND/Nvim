@@ -54,7 +54,7 @@ vim.opt.smartcase = true -- If mixed case in search, assumes case-sensitive
 vim.opt.cursorline = true -- Highlight current/cursor line
 
 -- Keep buffers in memory
-vim.opt.hidden = false
+vim.opt.hidden = true
 
 -- Use truecolor in the terminal, when it's supported
 if vim.fn.has("termguicolors") == 1 then
@@ -76,13 +76,13 @@ vim.opt.mousemoveevent = true
 vim.opt.scrolloff = 8
 vim.opt.isfname:append("@-@")
 
-vim.opt.updatetime = 50
+vim.opt.updatetime = 60
 
 -- Better completion experience
 vim.opt.completeopt = "menu,menuone,preview,noselect"
 
 -- Show gutter after column 100
-vim.opt.textwidth = 100
+vim.opt.textwidth = 105
 vim.opt.colorcolumn = "+1"
 
 -- Spelling
@@ -111,3 +111,5 @@ local pipepath = vim.fn.stdpath("cache") .. "/server.pipe"
 if not vim.loop.fs_stat(pipepath) then
   vim.fn.serverstart(pipepath)
 end
+
+vim.g.python3_host_prog = "/usr/bin/python3"

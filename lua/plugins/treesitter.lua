@@ -84,7 +84,6 @@ return {
             "markdown",
             "markdown_inline",
             "nwscript",
-            "org",
             "query",
             "rust",
             "sql",

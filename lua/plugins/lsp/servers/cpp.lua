@@ -15,14 +15,14 @@ cmpcapabilities.textDocument.foldingRange = {
   lineFoldingOnly = true,
 }
 
-lsp_defaults.capabilities = cmpcapabilities
+lsp_defaults.capabilities = {
+  cmpcapabilities,
+  offsetEncoding = { "utf-16" },
+}
 
 local handlers = {
   ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
-  ["textDocument/signatureHelp"] = vim.lsp.with(
-    vim.lsp.handlers.signature_help,
-    { border = "rounded" }
-  ),
+  ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" }),
 }
 
 local clangd_ext_opts = require("clangd_extensions").opts
@@ -80,79 +80,56 @@ local cppfuncs = function(client, bufnr)
   end, opts)
 
   -- Unreal.nvim mappings
-  vim.keymap.set("n", "<C-b>", "<cmd>UnrealBuild<CR>")
-  vim.keymap.set("n", "<F5>", "<cmd>UnrealRun<CR>")
+  vim.keymap.set("n", "<C-b>", "<cmd>UnrealBuild<CR>", opts)
+  vim.keymap.set("n", "<F5>", "<cmd>UnrealRun<CR>", opts)
 end
 
 return {
-  -- Setup DAP ``adapter``
-  -- {
-  --   "mason-nvim-dap.nvim",
-  --   opts = {
-  --     ensure_installed = { "`adapter`" },
-  --   },
-  -- },
-
   lspconfig.clangd.setup({
-    require("clangd_extensions").setup(vim.tbl_deep_extend("force", clangd_ext_opts or {}, {
-      handlers = handlers,
-      cmd = {
-        "clangd",
-        "--offsetEncoding=utf-8",
-        "--background-index",
-        "--clang-tidy",
-        "--header-insertion=iwyu",
-        "--completion-style=detailed",
-        "--function-arg-placeholders",
-        "--fallback-style=microsoft",
-      },
-      default_config = {
-        root_dir = function(fname)
-          return require("lspconfig.util").root_pattern(
-            "Makefile",
-            "configure.ac",
-            "configure.in",
-            "config.h.in",
-            "meson.build",
-            "meson_options.txt",
-            "build.ninja"
-          )(fname) or require("lspconfig.util").root_pattern(
-            "compile_commands.json",
-            "compile_flags.txt"
-          )(fname) or require("lspconfig.util").find_git_ancestor(fname)
-        end,
-        init_options = {
-          usePlaceholders = true,
-          completeUnimported = true,
-          clangdFileStatus = true,
-        },
-      },
-      on_attach = function(client, bufnr)
-        cppfuncs(client, bufnr)
-
-        client.server_capabilities.signatureHelpProvider = false
-        vim.opt.tabstop = 4
-        vim.opt.softtabstop = 4
-        vim.opt.shiftwidth = 4
-
-        print("Hello C/C++")
+    -- require("clangd_extensions").setup(vim.tbl_deep_extend("force", clangd_ext_opts or {}, {
+    opts = require("clangd_extensions").setup(clangd_ext_opts or {}),
+    handlers = handlers,
+    cmd = {
+      "clangd",
+      -- "--offsetEncoding=utf-16",
+      "--background-index",
+      "--clang-tidy",
+      "--header-insertion=iwyu",
+      "--completion-style=detailed",
+      "--function-arg-placeholders",
+      "--fallback-style=microsoft",
+    },
+    default_config = {
+      root_dir = function(fname)
+        return require("lspconfig.util").root_pattern(
+          "Makefile",
+          "configure.ac",
+          "configure.in",
+          "config.h.in",
+          "meson.build",
+          "meson_options.txt",
+          "build.ninja"
+        )(fname) or require("lspconfig.util").root_pattern(
+          "compile_commands.json",
+          "compile_flags.txt"
+        )(fname) or require("lspconfig.util").find_git_ancestor(fname)
       end,
-      capabilities = lsp_defaults,
-    })),
-  }),
+      init_options = {
+        usePlaceholders = true,
+        completeUnimported = true,
+        clangdFileStatus = true,
+      },
+    },
+    on_attach = function(client, bufnr)
+      cppfuncs(client, bufnr)
 
-  -- Setup null-ls with `clang_format`
-  -- {
-  --   "nvimtools/none-ls.nvim",
-  --   opts = function(_, opts)
-  --     local nls = require("null-ls")
-  --     opts.sources = vim.list_extend(opts.sources, {
-  --       nls.builtins.formatting.clang_format.with({
-  --         extra_args = {
-  --           "-style=file:" .. vim.fn.expand("~/Desktop/Projects/C/.clang-format"),
-  --         },
-  --       }),
-  --     })
-  --   end,
-  -- },
+      client.server_capabilities.signatureHelpProvider = false
+      vim.opt.tabstop = 4
+      vim.opt.softtabstop = 4
+      vim.opt.shiftwidth = 4
+
+      print("Hello C/C++")
+    end,
+    capabilities = lsp_defaults,
+  }),
 }

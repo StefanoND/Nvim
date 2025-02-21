@@ -4,8 +4,9 @@ lsp.extend_lspconfig()
 lsp.setup()
 
 -- Change these to the correct path
-local nwdocs = "/mnt/SSD_1TB_WORK/WoSEE/Documents"
-local nwroot = "/mnt/SSD_1TB_GAMES/SteamLibrary/steamapps/common/Neverwinter Nights"
+--vim.opt.undodir = os.getenv("HOME")
+local nwdocs = os.getenv("HOME") .. "/Documents/Neverwinter Nights"
+local nwroot = os.getenv("HOME") .. "/.local/share/Steam/steamapps/common/Neverwinter Nights"
 
 local lspconfig = require("lspconfig")
 local configs = require("lspconfig.configs")
@@ -20,7 +21,8 @@ vim.api.nvim_exec(
 if not configs.nwscript_language_server then
   configs.nwscript_language_server = {
     default_config = {
-      cmd = { "nwscript-language-server" },
+      -- cmd = { "nwscript-language-server" },
+      cmd = { "nwscriptd" },
       filetypes = { "nwscript", "nss" },
       root_dir = lspconfig.util.root_pattern(".git", "nasher.cfg"),
     },
@@ -117,9 +119,12 @@ return {
       --     hi! link doxygenBrief Comment
       --     hi! TSComment gui=NONE
       --   ]])
+
+      -- Enable snippet support (if your completion plugin supports snippets)
     end,
     settings = {
-      ["nwscript-language-server"] = {
+      -- ["nwscript-language-server"] = {
+      ["nwscriptd"] = {
         disableSnippets = "off",
       },
       ["nwscript-ee-lsp"] = {

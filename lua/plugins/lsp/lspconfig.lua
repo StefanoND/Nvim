@@ -1,22 +1,14 @@
 --@diagnostic disable: missing.fields
 
-local codelens = function(bufnr)
-  vim.api.nvim_create_autocmd({ "TextChanged", "BufEnter", "InsertLeave" }, {
-    buffer = bufnr,
-    callback = vim.lsp.codelens.refresh,
-  })
-  -- Trigger codelens refresh
-  vim.api.nvim_exec_autocmds("User", { pattern = "LspAttach" })
-end
-
 return {
   {
     "bfrg/vim-cpp-modern",
   },
   {
     "p00f/clangd_extensions.nvim",
+    dependencies = { "mortepau/codicons.nvim" },
     -- lazy = true,
-    config = function() end, -- avoid duplicate setup call. It also loads in line 74 of cpp.lua
+    config = function() end, -- avoid duplicate setup call.
   },
   {
     "habamax/vim-godot",
@@ -59,13 +51,19 @@ return {
       -- { "OmniSharp/omnisharp-vim" },
       -- { "Hoffs/omnisharp-extended-lsp.nvim" },
     },
-    config = function()
-      vim.api.nvim_create_autocmd("User", {
-        pattern = "LspAttach",
-        once = true,
-        callback = vim.lsp.codelens.refresh,
-      })
-
+    opts = function()
+      local ret = {
+        inlay_hints = {
+          enabled = true,
+          exclude = { "vue" }, -- filetypes for which you don't want to enable inlay hints
+        },
+        codelens = {
+          enabled = true,
+        },
+      }
+      return ret
+    end,
+    config = function(_, opts)
       -- Change the Diagnostic symbols in the sign column (gutter)
       local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
       for type, icon in pairs(signs) do
@@ -73,70 +71,139 @@ return {
         vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
       end
 
-      -- local on_attach = function(client, bufnr)
+      local lgroup = vim.api.nvim_create_augroup("UserLspConfig", {})
+
       vim.api.nvim_create_autocmd("LspAttach", {
-        group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-        callback = function(client, bufnr)
+        group = lgroup,
+        callback = function(event)
           -- Enable completion triggered by <c-x><c-o>
           -- vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
           vim.api.nvim_command("setlocal omnifunc=v:lua.vim.lsp.omnifunc")
 
+          local buffer = event.data.buffer
+          local bufnr = event.buf
+          local client = vim.lsp.get_client_by_id(event.data.client_id)
+
           -- vim.cmd("TwilightEnable")
-          local opts = { buffer = bufnr, noremap = true, remap = false }
+          local lopts = { buffer = bufnr, noremap = true, remap = false }
+
+          -- Codelens
+          if client and client.supports_method(vim.lsp.protocol.Methods.codeLens) then
+            local enableCodelens = function()
+              vim.lsp.codelens.refresh()
+              vim.api.nvim_create_autocmd("User", {
+                pattern = "LspAttach",
+                once = true,
+                callback = vim.lsp.codelens.refresh,
+              })
+              vim.api.nvim_create_autocmd(
+                { "BufEnter", "CursorHold", "InsertLeave", "TextChanged" },
+                {
+                  buffer = buffer,
+                  callback = vim.lsp.codelens.refresh,
+                }
+              )
+            end
+
+            if opts.codelens.enabled and vim.lsp.codelens then
+              enableCodelens()
+            end
+            vim.keymap.set(
+              { "n", "v" },
+              "<leader>cl",
+              vim.lsp.codelens.run,
+              vim.tbl_deep_extend("force", lopts, { desc = "Run Codelens" })
+            )
+
+            vim.keymap.set(
+              "n",
+              "<leader>cL",
+              vim.lsp.codelens.refresh,
+              vim.tbl_deep_extend("force", lopts, { desc = "Refresh & Display Codelens" })
+            )
+
+            vim.keymap.set("n", "<leader>cle", function()
+              enableCodelens()
+            end, vim.tbl_deep_extend(
+              "force",
+              lopts,
+              { desc = "Refresh & Display Codelens" }
+            ))
+          end
+
+          -- Toggle inlay hints in your code, if the language server you are using supports them
+          -- This may be unwanted, since they displace some of your code
+          -- if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
+          -- main.on_supports_method("textDocument/inlayHint", function(client, buffer)
+          if client and client.supports_method(vim.lsp.protocol.Methods.inlayHint) then
+            if
+              vim.api.nvim_buf_is_valid(bufnr)
+              and vim.bo[bufnr].buftype == ""
+              and not vim.tbl_contains(opts.inlay_hints.exclude, vim.bo[bufnr].filetype)
+            then
+              vim.keymap.set("n", "<leader>th", function()
+                vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = buffer }))
+              end, vim.tbl_deep_extend(
+                "force",
+                lopts,
+                { desc = "(t)oggle inlay (h)ints" }
+              ))
+            end
+          end
 
           vim.keymap.set(
             "n",
             "gpd",
             "<cmd>lua require('goto-preview').goto_preview_definition()<CR>",
-            opts
+            lopts
           )
-          vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
+          vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", lopts)
           vim.keymap.set(
             "n",
             "gpD",
             "<cmd>lua require('goto-preview').goto_preview_declaration()<CR>",
-            opts
+            lopts
           )
-          vim.keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
+          vim.keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", lopts)
           vim.keymap.set(
             "n",
             "gpi",
             "<cmd>lua require('goto-preview').goto_preview_implementation()<CR>",
-            opts
+            lopts
           )
-          vim.keymap.set("n", "gw", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", opts)
-          vim.keymap.set("n", "gw", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", opts)
-          vim.keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
+          vim.keymap.set("n", "gw", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", lopts)
+          vim.keymap.set("n", "gw", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", lopts)
+          vim.keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", lopts)
           vim.keymap.set(
             "n",
             "gpr",
             "<cmd>lua require('goto-preview').goto_preview_references()<CR>",
-            opts
+            lopts
           )
-          vim.keymap.set("n", "gtd", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
+          vim.keymap.set("n", "gtd", "<cmd>lua vim.lsp.buf.type_definition()<CR>", lopts)
           vim.keymap.set(
             "n",
             "gpt",
             "<cmd>lua require('goto-preview').goto_preview_type_definition()<CR>",
-            opts
+            lopts
           )
-          vim.keymap.set("n", "gP", "<cmd>lua require('goto-preview').close_all_win()<CR>", opts)
-          vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-          vim.keymap.set("i", "<C-s>h", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-          vim.keymap.set("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-          vim.keymap.set("n", "<leader>cr", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
+          vim.keymap.set("n", "gP", "<cmd>lua require('goto-preview').close_all_win()<CR>", lopts)
+          vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", lopts)
+          vim.keymap.set("i", "<C-s>h", "<cmd>lua vim.lsp.buf.signature_help()<CR>", lopts)
+          vim.keymap.set("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", lopts)
+          vim.keymap.set("n", "<leader>cr", "<cmd>lua vim.lsp.buf.rename()<CR>", lopts)
 
-          vim.keymap.set("n", "<leader>vd", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
+          vim.keymap.set("n", "<leader>vd", "<cmd>lua vim.diagnostic.open_float()<CR>", lopts)
           vim.keymap.set(
             { "n", "x" },
             "<leader>cf",
             "<cmd>lua vim.lsp.buf.format({ async = true, timeout_ms = 10000 })<CR>",
-            opts
+            lopts
           )
 
           -- C# Adventures
-          if client.name ~= "omnisharp" then
-            vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+          if client and client.name ~= "omnisharp" then
+            vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", lopts)
           end
         end,
       })
@@ -147,7 +214,8 @@ return {
           focusable = false,
           style = "minimal",
           border = "rounded",
-          source = "always",
+          -- source = "always",
+          source = true,
           header = "",
           prefix = "",
         },

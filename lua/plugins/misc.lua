@@ -38,6 +38,9 @@ return {
     },
   },
   {
+    "mbbill/undotree",
+  },
+  {
     "mg979/vim-visual-multi",
     event = "VeryLazy",
   },

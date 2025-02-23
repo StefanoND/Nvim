@@ -1,17 +1,23 @@
+local opts = { silent = true, noremap = true, remap = false }
+
+local extend = function(desc)
+  vim.tbl_deep_extend("force", opts, { desc = desc })
+end
+
 return {
   "NeogitOrg/neogit",
   dependencies = {
     "nvim-lua/plenary.nvim", -- Required
+    "sindrets/diffview.nvim", -- Optional - Diff Integration
     -- Only one of the two below is needed
-    "sindrets/diffview.nvim", -- Optional
-    -- "nvim-telescope/telescope.nvim", -- Optional
+    "nvim-telescope/telescope.nvim", -- Optional
+    "ibhagwan/fzf-lua", -- optional
+    "echasnovski/mini.pick", -- optional
   },
   config = function()
     -- This contains mainly Neogit but also a bunch of Git settings
     -- like fetching branches with telescope or blaming with fugitive
     local neogit = require("neogit")
-
-    local opts = { silent = true, noremap = true, remap = false }
 
     neogit.setup({
       vim.keymap.set("n", "<leader>gs", neogit.open, opts),
@@ -26,45 +32,10 @@ return {
       vim.keymap.set("n", "<leader>dvO", ":DiffviewClose<CR>", opts),
     })
 
-    -------------------------------------------------------------------------------------------------
-    -------------------------------------------------------------------------------------------------
-    -------------------------------------------------------------------------------------------------
-    -- -- Git
-    -- vim.keymap.set("n", "<leader>ga", "<cmd>Git add .<CR>", opts)
-    -- vim.tbl_deep_extend("force", opts, {
-    --   desc = "Git Add all",
-    -- })
-    -- vim.keymap.set("n", "<leader>gc", ':Git commit -m "', opts)
-    -- vim.tbl_deep_extend("force", opts, {
-    --   desc = "Git Commit with comment",
-    -- })
-    -- vim.keymap.set("n", "<leader>gp", "<cmd>Git push -u origin HEAD<CR>", opts)
-    -- vim.tbl_deep_extend("force", opts, {
-    --   desc = "Git Push HEAD",
-    -- })
-    -- vim.keymap.set("n", "<leader>gPR", "<cmd>Git pull --rebase<CR>", opts)
-    -- vim.tbl_deep_extend("force", opts, {
-    --   desc = "Git Pull rebase",
-    -- })
-    -------------------------------------------------------------------------------------------------
-    -------------------------------------------------------------------------------------------------
-    -------------------------------------------------------------------------------------------------
-    --     vim.keymap.set("n", "<leader>gfa", function()
-    --       vim.cmd.Git("add")
-    --     end, opts)
-    --
-    --     vim.keymap.set("n", "<leader>gfc", function()
-    --       vim.cmd.Git("commit")
-    --     end, opts)
-    --
-    --     vim.keymap.set("n", "<leader>gfp", function()
-    --       vim.cmd.Git("push", "-u", "origin", "HEAD")
-    --     end, opts)
-    --
-    --     -- rebase always
-    --     vim.keymap.set("n", "<leader>gfPR", function()
-    --       vim.cmd.Git({ "pull", "--rebase" })
-    --     end, opts)
-    --   end,
+    -- Git
+    vim.keymap.set("n", "<leader>ga", "<cmd>Git add .<CR>", extend("Git Add all"))
+    -- vim.keymap.set("n", "<leader>gc", ':Git commit -m "', extend("Git Commit with comment"))
+    -- vim.keymap.set("n", "<leader>gp", "<cmd>Git push -u origin HEAD<CR>", extend("Git Push HEAD")
+    vim.keymap.set("n", "<leader>gPR", "<cmd>Git pull --rebase<CR>", extend("Git Pull rebase"))
   end,
 }

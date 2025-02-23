@@ -85,6 +85,7 @@ return {
             "markdown_inline",
             "nwscript",
             "query",
+            "regex",
             "rust",
             "sql",
             "vim",

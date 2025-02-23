@@ -1,5 +1,22 @@
 return {
   {
+    "nvim-tree/nvim-web-devicons",
+    config = function()
+      local devicons = require("nvim-web-devicons")
+
+      devicons.set_icon({
+        gql = {
+          icon = " ",
+          color = "#e535ab",
+          cterm_color = "199",
+          name = "GraphQL",
+        },
+      })
+
+      devicons.setup()
+    end,
+  },
+  {
     "folke/which-key.nvim",
     event = "VeryLazy",
     dependencies = {
@@ -75,12 +92,6 @@ return {
       })
     end,
   },
-  -- {
-  --   "norcalli/nvim-colorizer.lua",
-  --   config = function()
-  --     require("colorizer").setup()
-  --   end,
-  -- },
   {
     "ThePrimeagen/vim-be-good",
     config = function()
@@ -134,5 +145,13 @@ return {
         },
       })
     end,
+  },
+  {
+    "2kabhishek/nerdy.nvim",
+    dependencies = {
+      "folke/snacks.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
+    cmd = "Nerdy",
   },
 }

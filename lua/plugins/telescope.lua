@@ -51,6 +51,7 @@ return {
     vim.keymap.set("n", "<leader>fb", builtin.buffers, opts)
     vim.keymap.set("n", "<leader>fh", builtin.help_tags, opts)
     vim.keymap.set("n", "<leader>fgf", builtin.git_files, opts)
+    vim.keymap.set("n", "<leader>fm", builtin.marks, opts)
 
     -- find document symbols eitheir through lsp if available
     -- otherwise fallback to treesitter
@@ -77,6 +78,11 @@ return {
     end, opts)
     vim.keymap.set("n", "<leader>fs", function()
       builtin.grep_string({ search = vim.fn.input("Grep > ") })
+    end, opts)
+
+    require("telescope").load_extension("nerdy")
+    vim.keymap.set("n", "<leader>fn", function()
+      telescope.extensions.nerdy.nerdy()
     end, opts)
   end,
 }
